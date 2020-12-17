@@ -1,0 +1,10 @@
+# config/cloudinary.yml
+development:
+  cloud_name: "flamel"
+  api_key: "286661883861397"
+  api_secret: "UJ3jXIIpCUs2D0kCJ28s12SEkGU"
+
+production:
+  cloud_name: "flamel"
+  api_key: "286661883861397"
+  api_secret: "UJ3jXIIpCUs2D0kCJ28s12SEkGU"
