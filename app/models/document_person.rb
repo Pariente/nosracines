@@ -1,4 +1,4 @@
 class DocumentPerson < ActiveRecord::Base
-  belong_to :document
-  belong_to :person
+  belongs_to :document
+  belongs_to :person
 end
