@@ -1,3 +1,3 @@
-class Alias < ActiveRecord::Base
+class Alias < ApplicationRecord
   belongs_to :person
 end

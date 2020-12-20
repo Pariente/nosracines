@@ -1,0 +1,111 @@
+<div class="section landing_header">
+  <h1>Nos Racines</h1>
+  <p>25 ans de collection d’histoires, de documents, de photographies, d’enregistrements sur l’histoire croisée de deux familles.</p>
+  <%= render "pages/search_input" %>
+</div>
+<div class="section landing_today">
+  <h2>Aujourd'hui</h2>
+  <%= render 'landing/highlighted_card',
+    mirrored: "",
+    header_title: "Aujourd'hui",
+    date: "9 novembre",
+    title: "La nuit de cristal",
+    description: "La nuit de Cristal est le pogrom contre les Juifs du Troisième Reich qui se déroula dans la nuit du 9 au 10 novembre 1938 et dans la journée qui suivit.",
+    btn_path: "root_path",
+    footer_text: "Cet évènement est relié à des éléments et des personnes :",
+    pic: "kristallnacht.png",
+    stats: [
+      {
+        icon: "people_outline",
+        value: "7",
+        unit: "personne"
+      },
+      {
+        icon: "photo",
+        value: "53",
+        unit: "photo"
+      },
+      {
+        icon: "movie",
+        value: "8",
+        unit: "film"
+      },
+      {
+        icon: "folder_open",
+        value: "4",
+        unit: "document"
+      }
+    ]
+   %>
+
+   <%= render 'landing/highlighted_card',
+    mirrored: "mirrored",
+    header_title: "Portrait du jour",
+    date: "",
+    title: "Gilta Sankowicz",
+    description: "Gitele (et sa sœur Rojza à droite) est née en Pologne le 12 décembre 1924 et vivait en France dans le 3e arrondissement de Paris au 31-33 rue du Temple.\n\nLe 31 juillet 1942, elle est déportée par le 13e convoi pour Auschwitz où elle meurt le 4 août 1942.",
+    btn_path: "root_path",
+    footer_text: "Cette personne est reliée à des éléments et d’autres personnes :",
+    pic: "gilta.png",
+    stats: [
+      {
+        icon: "people_outline",
+        value: "7",
+        unit: "personne"
+      },
+      {
+        icon: "photo",
+        value: "53",
+        unit: "photo"
+      },
+      {
+        icon: "movie",
+        value: "8",
+        unit: "film"
+      },
+      {
+        icon: "folder_open",
+        value: "4",
+        unit: "document"
+      }
+    ]
+   %>
+</div>
+<div class="section landing_souvenir">
+  <div class="souvenir_card">
+    <h2>Souvenir</h2>
+    <p>Retrouvez ici toutes les traces du quotidien ordinaire comme exceptionnel de nos parents. </p>
+  </div>
+  <div class="flex flex-row flex-wrap justify-evenly">
+    <%= render "landing/category",
+      title: "Personnes",
+      icon: "people_outline",
+      description: "Membres de la famille Milgrom-Sankowicz, amis et personnes auxquels leurs destins sont liés."
+    %>
+    <%= render "landing/category",
+      title: "Lieux",
+      icon: "location_on",
+      description: "En Pologne, en France ou ailleurs, ces lieux ont été le théâtre de nos vies."
+    %>
+    <%= render "landing/category",
+      title: "Évènements",
+      icon: "calendar_today",
+      description: "Chronologiquement, ou pour chaque personne, retrouvez le fil de leurs vies : naissances, mariages, évènements historiques."
+    %>
+    <%= render "landing/category",
+      title: "Photographies",
+      icon: "photo",
+      description: "Portraits, photographies historiques, phtographies personnelles."
+    %>
+    <%= render "landing/category",
+      title: "Films",
+      icon: "movie",
+      description: "Entretiens, témoignages, enregistrements lors d’évènements importants."
+    %>
+    <%= render "landing/category",
+      title: "Documents",
+      icon: "folder_open",
+      description: "État civil, papiers d’archive, faux papiers, fiches de déportés."
+    %>
+  </div>
+</div>

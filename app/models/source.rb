@@ -1,3 +1,3 @@
-class Source < ActiveRecord::Base
-  has_many :documents_sources
+class Source < ApplicationRecord
+  has_many :document_sources
 end

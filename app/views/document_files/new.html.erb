@@ -1,0 +1,5 @@
+<%= simple_form_for(@document_file) do |f| %>
+  <%= f.input :url, as: :file %>
+  <%= f.input :document_id, as: :integer %>
+  <%= f.button :submit, "Valider", :type => "submit"%>
+<% end %>

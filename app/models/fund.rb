@@ -1,3 +1,3 @@
-class Fund < ActiveRecord::Base
+class Fund < ApplicationRecord
   has_many :documents
 end

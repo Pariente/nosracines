@@ -1,0 +1,255 @@
+@font-face {
+  font-family: "Allison";
+  src: url(asset-path('Allison_Script.otf')) format("opentype");
+}
+
+body {
+  background-color: $white;
+  color: $text_color;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0px
+}
+
+p {
+  line-height: 28px;
+}
+
+.landing_header {
+  align-items: center;
+  background-color: $bison;
+  background-image: url(asset-path('background_01.png'));
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $olive;
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  font-weight: 300;
+  padding-top: 100px !important;
+  padding-bottom: 0px !important;
+
+  h1 {
+    font-family: "Allison";
+    font-size: 100px;
+    font-weight: 100;
+    margin: 20px 0px;
+    text-align: center
+  }
+
+  p {
+    line-height: 35px;
+    margin-bottom: 40px;
+    max-width: 580px;
+    text-align: center
+  }
+}
+
+div.section {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 70px;
+  width: 100%
+}
+
+.landing_today {
+  background-color: $bg_color;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    color: $olive;
+    font-family: "Allison";
+    font-size: 80px;
+    font-weight: 100;
+    margin: 20px 0px;
+    text-align: left
+  }
+}
+
+.highlighted_card {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 70px;
+
+  .card_info {
+    background-color: $white;
+    box-shadow: 0px 2px 4px 0px $bison;
+    box-sizing: border-box;
+
+    margin-top: 80px;
+    max-width: 100%;
+    padding: 40px;
+    width: 50%;
+    z-index: 100;
+
+    .card_info_header {
+      align-items: baseline;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
+
+      .title {
+        color: $bison;
+        font-family: "Montserrat";
+        font-size: 20px;
+        font-weight: 700;
+        margin-right: 20px
+      }
+
+      .date {
+        color: $olive;
+        font-family: "Montaga";
+        font-size: 20px
+      }
+    }
+
+    .card_info_body {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+
+      .title {
+        color: $olive;
+        font-family: "Montaga";
+        font-size: 40px
+      }
+
+      p {
+        margin: 10px 0px 10px 0px
+      }
+
+      a {
+        margin: auto;
+        text-decoration: none
+      }
+
+      .btn {
+        background-color: $olive;
+        border-radius: 100px;
+        color: $white;
+        margin: 20px 0px;
+        padding: 10px 20px;
+        width: fit-content
+      }
+    }
+
+    .card_info_footer {
+      .text {
+        color: $olive;
+        font-family: "Montaga";
+        font-size: 13px
+      }
+
+      .stats {
+        color: $bison;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 20px;
+
+        .stat {
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+
+          .material-icons {
+            font-size: 24px
+          }
+
+          .value {
+            font-family: "Montaga";
+            font-size: 36px
+          }
+
+          .unit {
+            font-family: "Montaga";
+            margin-top: -5px
+          }
+        }
+      }
+    }
+  }
+
+  .card_pic {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+    box-sizing: border-box;
+    height: fit-content;
+    margin-left: -70px;
+    max-width: 100%;
+    width: 50%
+  }
+}
+
+.highlighted_card.mirrored {
+  flex-direction: row-reverse;
+  .card_info {
+    margin-left: -70px
+  }
+  .card_pic {
+    margin-left: initial
+  }
+}
+
+.landing_souvenir {
+  background-color: $linen;
+  color: $olive;
+
+  .souvenir_card {
+    align-items: center;
+    background-color: $white;
+    background-image: url(asset-path('olive_branch.png'));
+    background-position: center left;
+    background-repeat: no-repeat;
+    box-shadow: 2px 4px 13px 2px $bison;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    margin-top: -150px;
+    padding: 50px;
+    text-align: center;
+
+    h2 {
+      color: $olive;
+      font-family: "Allison";
+      font-size: 80px;
+      font-weight: 100;
+      margin: 0px 0px 20px 0px;
+      text-align: center
+    }
+  }
+}
+
+.category {
+  align-items: center;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 $bison;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  padding: 60px 20px 40px 20px;
+  text-align: center;
+  width: 300px;
+
+  .material-icons {
+    color: $linen;
+    font-size: 100px;
+    margin-bottom: 20px
+  }
+
+  .title {
+    color: $olive;
+    font-family: "Montaga";
+    font-size: 30px;
+    margin-bottom: 10px
+  }
+
+  .description {
+    color: $text_color;
+    font-size: 13px;
+    font-weight: 100
+  }
+}

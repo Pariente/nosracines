@@ -1,0 +1,30 @@
+<div class="highlighted_card <%= mirrored %>">
+  <div class="card_info">
+    <div class="card_info_header">
+      <span class="title"><%= header_title %></span>
+      <span class="date"><%= date %></span>
+    </div>
+    <div class="card_info_body">
+      <span class="title"><%= title %></span>
+      <p><%= description %></p>
+      <%= link_to yield(btn_path) do %>
+        <div class="btn">En apprendre plus</div>
+      <% end %>
+    </div>
+    <div class="card_info_footer">
+      <span class="text"><%= footer_text %></span>
+      <div class="stats">
+        <% stats.each do |stat| %>
+          <div class="stat">
+            <div>
+              <i class="material-icons"><%= stat.fetch(:icon) %></i>
+              <span class="value"><%= stat.fetch(:value) %></span>
+            </div>
+            <span class="unit"><%= stat.fetch(:unit).pluralize(stat.fetch(:value)) %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%= image_tag(pic, class: "card_pic") %>
+</div>

@@ -1,0 +1,33 @@
+.nav_menu {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 30px;
+  position: absolute;
+  width: 100%;
+
+  a {
+    color: $olive;
+    text-decoration: underline;
+
+    &:hover {
+      color: $text_color
+    }
+  }
+
+  .nav_menu_left {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
+    max-width: 600px
+  }
+
+  .nav_menu_account {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-grow: 1
+  }
+}
