@@ -14,8 +14,9 @@ Trestle.resource(:document_people) do
   # Customize the form fields shown on the new/edit views.
   #
   # form do |document_person|
-  #   text_field :name
-  #
+  #   select :document, Document.all
+  #   select :person, Person.all
+  
   #   row do
   #     col { datetime_field :updated_at }
   #     col { datetime_field :created_at }

@@ -1,9 +1,11 @@
 <div class="search_input">
-  <input type="text" placeholder="Trouver un document ou une personne...">
-  </input>
-  <div class="search_btn">
-    <a href="#">
-      <i class="material-icons">search</i>
-    </a>
-  </div>
+  <%= simple_form_for :search, url: search_results_path, method: "GET", html: { class: 'form-inline' } do |f| %>
+    <%= f.input :keywords, input_html: {value: @keywords, placeholder: "Trouver un document ou une personne...", autocomplete: "off"}, label: false %>
+    </input>
+    <div class="search_btn">
+      <%= f.button :button, type: "submit", class: "btn btn-primary" do %>
+        <i class="material-icons">search</i>
+      <% end %>
+    </div>
+  <% end %>
 </div>

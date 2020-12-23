@@ -1,0 +1,23 @@
+<div class="section search_header">
+  <h1>Résultats de la recherche</h1>
+  <%= render "pages/search_input", value: @keywords %>
+</div>
+<div class="filters_bar">
+  <span>Filtrer les résultats</span>
+  <i class="material-icons">expand_more</i>
+</div>
+
+<%= render "pages/search_category_people",
+      people: @people %>
+
+<%= render "pages/search_category_document", 
+      category: "Photographies",
+      icon: "image",
+      docs: @images
+%>
+
+<%= render "pages/search_category_document", 
+      category: "Documents",
+      icon: "folder_open",
+      docs: @texts
+%>

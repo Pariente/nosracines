@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="document_viewer">
+    <% file = @document.document_files.first %>
+    <% if ["png", "jpg", "jpeg"].include?(file.original_format) %>
+      <%= cl_image_tag file.url.key %>
+    <% else %>
+      <%= cl_image_tag file.url.key, format: "png" %>
+    <% end %>
+      <h1><%= @document.name %></h1>
+      <div class="flex flex-row">
+        <span class="date"><%= @document.date&.year %></span>
+        <span class="location"><%= @document.location %></span>
+      </div>
+  </div>
+  <div class="document_info">
+    <div class="row">
+      <div>
+        <i class="material-icons">calendar_today</i>Juillet 1980
+      </div>
+      <div>
+        <i class="material-icons">location_on</i>Nice, France
+      </div>
+    </div>
+    <div class="row">
+      <i class="material-icons">people_outline</i>
+      <% @document.people.each do |p| %>
+        <%= link_to p.name, person_path(p) %>
+      <% end %>
+    </div>
+    <div class="row">
+      <i class="material-icons">short_text</i>
+      <p>Premières vacances à la mer des enfants. La famille Frydlender est hébergée par la cousine de Rachel, Elisabeth Goldberg (1932-2003) à Nice. C’est sûrement Salomon Frydlender (1930-2009) qui prend la photo.</p>
+    </div>
+  </div>
+</div>

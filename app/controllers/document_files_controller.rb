@@ -6,7 +6,7 @@ class DocumentFilesController < ApplicationController
   def create
     @document_file = DocumentFile.new(document_file_params)
     @document_file.save
-    redirect_to document_file_path(@document_file)
+    redirect_to new_document_file_path
   end
 
   def show

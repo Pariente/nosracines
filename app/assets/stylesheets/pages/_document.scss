@@ -1,0 +1,95 @@
+.document_viewer {
+  align-items: center;
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 $bison;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 40px;
+  max-width: 1200px;
+  padding: 50px;
+  width: 100%;
+
+  img {
+    box-shadow: 0 2px 4px 0 $bison;
+    width: 100%
+  }
+
+  h1 {
+    color: $olive;
+    font-family: "Montaga";
+    font-weight: 100
+  }
+
+  .date {
+    font-size: 25px;
+    font-weight: 100
+  }
+
+  .places {
+    color: $olive;
+    font-size: 20px;
+    font-weight: 100;
+    margin-top: 20px;
+    text-transform: uppercase;
+
+    .place {
+      margin-right: 10px;
+      margin-left: 10px;
+
+      &:first-of-type {
+        margin-left: 0px
+      }
+    }
+  }
+}
+
+.document_info {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 $bison;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-weight: 100;
+  justify-content: space-between;
+  margin-top: 40px;
+  max-width: 1200px;
+  padding: 30px 20px;
+  width: 100%;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+
+    &:last-of-type {
+      margin-bottom: 0px
+    }
+
+    div {
+      margin-right: 30px
+    }
+  }
+
+  .material-icons {
+    color: $olive;
+    margin-right: 10px
+  }
+
+  a {
+    color: $olive;
+    font-weight: 400;
+    margin-right: 30px;
+
+    &:hover {
+      color: $text_color
+    }
+  }
+
+  p {
+    margin: 0px
+  }
+}

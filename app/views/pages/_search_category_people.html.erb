@@ -1,0 +1,31 @@
+<!-- *** PERSONNES *** -->
+<div class="section search_category">
+  <div class="search_category_header">
+    <i class="material-icons">people_outline</i>
+    <h2>Personnes</h2>
+  </div>
+  <div class="search_results">
+    <% people.each do |person| %>
+      <div class="result_card">
+        <%= link_to person_path(person) do %>
+          <% file = person.profile_picture %>
+          <% if file.original_format == 'pdf' %>
+            <%= cl_image_tag file.url.key, format: "png", width: "300", height: "300", crop: "fill" %>
+          <% else %>
+            <%= cl_image_tag file.url.key, width: "300", height: "300", crop: "fill" %>
+          <% end %>
+          <div class="result_card_info">
+            <span class="name"><%= person.first_name %> <%= person.middle_name %> <%= person.last_name %></span>
+            <% unless person.nee == "" || person.nee == nil %>
+              <span class="name">née <%= person.nee %></span>
+            <% end %>
+            <div class="flex flex-column">
+              <span class="date"><%= person.birth_date&.year %> - <%= person.death_date&.year %></span>
+              <span class="location"></span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

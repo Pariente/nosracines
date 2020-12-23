@@ -1,0 +1,12 @@
+<!-- *** DOCUMENTS *** -->
+<div class="section search_category">
+  <div class="search_category_header">
+    <i class="material-icons"><%= icon %></i>
+    <h2><%= category %></h2>
+  </div>
+  <div class="search_results">
+    <% docs.each do |doc| %>
+      <%= render "pages/result_card", doc: doc %>
+    <% end %>
+  </div>
+</div>
