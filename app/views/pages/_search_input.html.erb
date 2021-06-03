@@ -3,7 +3,7 @@
     <%= f.input :keywords, input_html: {value: @keywords, placeholder: "Trouver un document ou une personne...", autocomplete: "off"}, label: false %>
     </input>
     <div class="search_btn">
-      <%= f.button :button, type: "submit", class: "btn btn-primary" do %>
+      <%= f.button :button, type: "submit" do %>
         <i class="material-icons">search</i>
       <% end %>
     </div>

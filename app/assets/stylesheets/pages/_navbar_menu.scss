@@ -27,7 +27,59 @@
   .nav_menu_account {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    flex-grow: 1
+    flex-grow: 1;
+    justify-content: flex-end
+  }
+}
+
+.admin_nav_menu {
+  border: 1px solid $olive;
+  border-width: 0px 1px 0px 0px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  overflow-x: hidden;
+  padding: 20px 0px 0px 0px;
+  position: fixed;
+  width: 200px;
+  z-index: 1;
+
+  top: 0;
+  left: 0;
+
+  .nav_title {
+    font-family: "Montaga";
+    font-size: 28px;
+    margin: 0px;
+    padding: 0px 0px 20px 10px;
+  }
+
+  a {
+    color: $olive;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $linen
+    }
+  }
+
+  .admin_nav_item {
+    align-items: center;
+    border: 1px solid $olive;
+    border-width: 1px 0px 0px 0px;
+    display: flex;
+    height: 60px;
+    padding: 0px 10px;
+
+    &:last-of-type {
+      border-bottom-width: 1px
+    }
+  }
+
+  i.material-icons {
+    margin-right: 5px
   }
 }

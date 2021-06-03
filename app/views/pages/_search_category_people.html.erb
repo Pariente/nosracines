@@ -8,16 +8,12 @@
     <% people.each do |person| %>
       <div class="result_card">
         <%= link_to person_path(person) do %>
-          <% file = person.profile_picture %>
-          <% if file.original_format == 'pdf' %>
-            <%= cl_image_tag file.url.key, format: "png", width: "300", height: "300", crop: "fill" %>
-          <% else %>
-            <%= cl_image_tag file.url.key, width: "300", height: "300", crop: "fill" %>
-          <% end %>
+          <% pic = person.profile_pic.present? ? person.profile_pic.key : "default_profile_pic" %>
+          <%= cl_image_tag pic, width: "300", height: "300", crop: "fill" %>
           <div class="result_card_info">
             <span class="name"><%= person.first_name %> <%= person.middle_name %> <%= person.last_name %></span>
-            <% unless person.nee == "" || person.nee == nil %>
-              <span class="name">née <%= person.nee %></span>
+            <% unless person.spouse_name == "" || person.spouse_name == nil %>
+              <span class="name">épouse <%= person.spouse_name %></span>
             <% end %>
             <div class="flex flex-column">
               <span class="date"><%= person.birth_date&.year %> - <%= person.death_date&.year %></span>

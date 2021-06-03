@@ -9,13 +9,22 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= render "pages/navbar_menu" %>
-    <%= yield %>
+    <% if content_for?(:navbar) %>
+      <div class="main">
+        <%= yield(:navbar) %>
+        <%= yield %>
+      </div>
+    <% else %>
+       <%= render "pages/navbar_menu" %>
+       <%= yield %>
+    <% end %>
   </body>
 </html>

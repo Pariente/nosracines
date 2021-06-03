@@ -1,0 +1,28 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to people_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<h1>Ajouter un lien de parenté pour <%= @parent_a.name %></h1>
+<%= simple_form_for(@family_link) do |link| %>
+  <div class="form-half">
+    <div class="left">
+      <%= link.input  :person_b_id,
+                      label: "Proche",
+                      collection: Person.order(:last_name), 
+                      prompt: "Personne en relation",
+                      label_method: :full_name_index, 
+                      input_html: { name: 'person[family_links_attributes][0][person_b_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="right">
+      <%= link.input  :link_b_to_a,
+                      label: "Ce proche est son/sa",
+                      collection: ["Mère", "Père",  "Sœur", "Frère", "Fille", "Fils", "Cousine", "Cousin", "Tante", "Oncle", "Grand-mère", "Grand-père"],
+                      input_html: { name: 'person[family_links_attributes][0][link_b_to_a]' },
+                      prompt: "Lien de parenté" %>
+    </div>
+  </div>
+<% end %>

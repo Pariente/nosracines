@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   resources :documents
   resources :document_files
   resources :people
+  resources :family_links
+
 end

@@ -1,0 +1,81 @@
+.admin_top_bar {
+  align-items: end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+
+.admin_table {
+  border: 1px solid $olive;
+  border-collapse: collapse;
+  margin-top: 30px;
+  width: 100%;
+
+  td, th {
+    border: 1px solid $olive;
+    border-width: 1px 0px 1px 0px
+  }
+
+  th {
+    height: 50px;
+    padding: 0px 10px;
+    text-align: left
+  }
+
+  td {
+    padding: 0px 10px
+  }
+
+  img {
+    display: block;
+    padding: 5px 0px
+  }
+
+  tr:nth-of-type(2n+1) {
+    background-color: $white
+  }
+
+  .pic_cell {
+    width: 80px
+  }
+
+  .spouse_name {
+    font-size: 14px
+  }
+}
+
+.pagination_row {
+  display: flex;
+  font-weight: 600;
+  justify-content: center;
+  padding: 20px 0px;
+  width: 100%;
+  
+  nav.pagination {
+    a, a:hover, a:visited {
+      color: $olive
+    }
+  }
+}
+
+a.back_link {
+  align-items: center;
+  color: $olive;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px !important;
+  margin-top: 30px;
+  text-decoration: none;
+
+  &:hover {
+    color: $bison
+  }
+
+  i.material-icons {
+    font-size: 16px
+  }
+
+  span {
+    text-decoration: underline
+  }
+}

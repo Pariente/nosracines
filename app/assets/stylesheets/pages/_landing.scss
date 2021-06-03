@@ -12,8 +12,47 @@ body {
   margin: 0px
 }
 
+.main {
+  margin-left: 200px;
+  padding: 0px 20px
+}
+
+h1 {
+  color: $olive;
+  font-family: "Montaga";
+  font-size: 40px
+}
+
 p {
   line-height: 28px
+}
+
+.btn {
+  align-items: center;
+  background-color: $olive;
+  border-radius: 100px;
+  border-width: 0px;
+  box-sizing: border-box;
+  color: $white;
+  cursor: pointer;
+  display: flex;
+  font-family: "Montserrat";
+  font-size: 18px;
+  height: 62px;
+  padding: 10px 20px;
+  width: fit-content;
+
+  i.material-icons {
+    margin-right: 5px
+  }
+}
+
+.btn-red {
+  background-color: #CE3D39
+}
+
+a.btn {
+  text-decoration: none
 }
 
 .landing_header {

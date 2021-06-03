@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_19_120838) do
+ActiveRecord::Schema.define(version: 2021_05_06_120208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2020_12_19_120838) do
     t.bigint "person_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "category"
     t.index ["person_id"], name: "index_aliases_on_person_id"
   end
 
@@ -56,6 +57,7 @@ ActiveRecord::Schema.define(version: 2020_12_19_120838) do
     t.bigint "document_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.index ["document_id"], name: "index_document_files_on_document_id"
   end
 
@@ -86,7 +88,18 @@ ActiveRecord::Schema.define(version: 2020_12_19_120838) do
     t.bigint "fund_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "box"
+    t.text "notes"
     t.index ["fund_id"], name: "index_documents_on_fund_id"
+  end
+
+  create_table "family_links", force: :cascade do |t|
+    t.integer "person_a_id"
+    t.integer "person_b_id"
+    t.string "link_a_to_b"
+    t.string "link_b_to_a"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "funds", force: :cascade do |t|
@@ -99,12 +112,17 @@ ActiveRecord::Schema.define(version: 2020_12_19_120838) do
     t.string "first_name"
     t.string "middle_name"
     t.string "last_name"
-    t.string "nee"
+    t.string "spouse_name"
     t.date "birth_date"
     t.date "death_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "profile_pic"
+    t.text "biography"
+    t.string "gender"
+    t.string "birth_place"
+    t.string "death_place"
+    t.text "notes"
   end
 
   create_table "sources", force: :cascade do |t|

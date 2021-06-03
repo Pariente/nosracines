@@ -28,6 +28,9 @@ gem 'trestle'
 # Simpleform: managing forms in a simpler way
 gem 'simple_form'
 
+# Kaminari: pagination
+gem 'kaminari'
+
 # Sunspot
 # gem 'sunspot_rails'
 # gem 'sunspot_solr'

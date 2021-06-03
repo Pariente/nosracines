@@ -11,11 +11,11 @@ class PagesController < ApplicationController
       first_name  = Person.arel_table[:first_name]
       middle_name = Person.arel_table[:middle_name]
       last_name   = Person.arel_table[:last_name]
-      nee         = Person.arel_table[:nee]
+      spouse_name = Person.arel_table[:spouse_name]
       @people = Person.where(first_name.matches("%#{@keywords}%")).or(
                 Person.where(middle_name.matches("%#{@keywords}%"))).or(
                 Person.where(last_name.matches("%#{@keywords}%"))).or(
-                Person.where(nee.matches("%#{@keywords}%"))
+                Person.where(spouse_name.matches("%#{@keywords}%"))
       )
 
       # Documents

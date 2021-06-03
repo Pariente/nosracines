@@ -1,15 +1,11 @@
 <div class="container">
   <div class="person_header">
-    <% file = @person.profile_picture %>
-    <% if file.original_format == 'pdf' %>
-      <%= cl_image_tag file.url.key, format: "png", width: "300", height: "300", crop: "fill" %>
-    <% else %>
-      <%= cl_image_tag file.url.key, width: "300", height: "300", crop: "fill" %>
-    <% end %>
+    <% pic = @person.profile_pic.present? ? @person.profile_pic.key : "default_profile_pic" %>
+    <%= cl_image_tag pic, width: "300", height: "300", crop: "fill", gravity: "face" %>
     <div class="person_header_info">
       <h1><%= @person.name %></h1>
-      <% unless @person.nee == "" %>
-        <span class="nee">née <%= @person.nee %></span>
+      <% unless @person.spouse_name == "" %>
+        <span class="nee">épouse <%= @person.spouse_name %></span>
       <% end %>
       <span class="date"><%= @person.birth_date&.year %> - <%= @person.death_date&.year %></span>
       <div class="places">
