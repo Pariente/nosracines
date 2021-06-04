@@ -22,9 +22,6 @@ gem 'jbuilder', '~> 2.7'
 gem 'carrierwave'
 gem 'cloudinary'
 
-# Trestle: admin framework
-gem 'trestle'
-
 # Simpleform: managing forms in a simpler way
 gem 'simple_form'
 

@@ -1,0 +1,173 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_people_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<h1><%= @person.full_name_index %></h1>
+<div class="admin-show flex flex-row">
+  <div class="mr10">
+    <% pic = @person.profile_pic.present? ? @person.profile_pic.key : "default_profile_pic" %>
+    <%= cl_image_tag pic, width: "300", height: "300", crop: "fill", gravity: "face" %>
+  </div>
+  <div class="flex flex-column flex-grow-1">
+    <div>
+      <p>
+        <% if @person.gender == "0" %>
+          Mme
+        <% elsif @person.gender == "1" %>
+          M.
+        <% end %>
+      </p>
+    </div>
+    <div class="half">
+      <div class="left">
+        <label>Nom de naissance</label>
+        <p><%= @person.last_name.upcase %></p>
+      </div>
+      <% unless @person.spouse_name == "" %>
+        <div class="right">
+          <label>Nom d'épouse</label>
+          <p><%= @person.spouse_name.upcase %></p>
+        </div>
+      <% end %>
+    </div>
+    <div class="half">
+      <div class="left">
+        <label>Prénom</label>
+        <p><%= @person.first_name %></p>
+      </div>
+      <% unless @person.middle_name == "" %>
+        <div class="right">
+          <label>Autres prénoms</label>
+          <p><%= @person.middle_name %></p>
+        </div>
+      <% end %>
+    </div>
+    <hr>
+    <% unless @aliases.nil? %>
+      <% @aliases.each do |a| %>
+        <div class="half">
+          <div class="left">
+            <label>Type</label>
+            <p><%= a.category %></p>
+          </div>
+          <div class="right">
+            <label>Alias</label>
+            <p><%= a.name %></p>
+          </div>
+        </div>
+      <% end %>
+      <hr>
+    <% end %>
+    <div class="half">
+      <% unless @person.birth_date.nil? %>
+        <div class="left">
+          <label>Date de naissance</label>
+          <p><%= @person.birth_date %></p>
+        </div>
+      <% end %>
+      <% unless @person.birth_place == "" %>
+        <div class="right">
+          <label>Lieu de naissance</label>
+          <p><%= @person.birth_place %></p>
+        </div>
+      <% end %>
+    </div>
+    <div class="half">
+      <% unless @person.death_date.nil? %>
+        <div class="left">
+          <label>Date de décès</label>
+          <p><%= @person.death_date %></p>
+        </div>
+      <% end %>
+      <% unless @person.death_place == "" %>
+        <div class="right">
+          <label>Lieu de décès</label>
+          <p><%= @person.death_place %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="admin-show">
+  <% unless @person.biography == "" %>
+    <div>
+      <h3>Biographie</h3>
+      <p><%= @person.biography %></p>
+    </div>
+    <hr>
+  <% end %>
+  <% unless @links.nil? %>
+    <h3>Liens de parenté</h3>
+    <table class="admin_table">
+      <tr>
+        <th class="center">ID</th>
+        <th class="pic_cell">Aperçu</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Lien</th>
+        <th>Action</th>
+      </tr>
+      <% @links.each do |link| %>
+        <%  if link.person_a_id == @person.id
+              p = Person.find(link.person_b_id)
+              fam_link = link.link_b_to_a
+            else
+              p = Person.find(link.person_a_id)
+              fam_link = link.link_a_to_b
+            end %>
+        <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
+        <tr>
+          <td class="center">
+            <%= p.id %>
+          </td>
+          <td class="pic_cell">
+            <%= cl_image_tag pic, width: "100", height: "100", crop: "fill", gravity: "face" %>
+          </td>
+          <td>
+            <%= link_to admin_person_path(p.id) do %>
+              <%= p.last_name.upcase %>
+            <% end %>
+            <% if p.spouse_name.present? %>
+              <br>
+              <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
+            <% end %>
+          </td>
+          <td><%= p.first_name %></td>
+          <td>
+            <%= fam_link %>
+          </td>
+          <td>
+            <%= link_to admin_family_link_delete_path(link, person_id: @person.id) do %>
+              Supprimer le lien
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <% @b_links.each do |link| %>
+        <% person_a = Person.find(link.person_a_id) %>
+        <% pic = person_a.profile_pic.present? ? person_a.profile_pic.key : "default_profile_pic" %>
+        <tr>
+          <td>
+            <%= cl_image_tag pic, width: "100", height: "100", crop: "fill", gravity: "face" %>
+            <%= person_a.full_name_index %>
+          </td>
+          <td>
+            <%= link.link_a_to_b %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <%= link_to new_admin_family_link_path(person_id: @person.id) do %>
+      Ajouter un lien de parenté
+    <% end %>
+  <% end %>
+  <% unless @person.notes == "" %>
+    <hr>
+    <h3>Notes</h3>
+    <p><%= @person.notes %></p>
+  <% end %>
+</div>

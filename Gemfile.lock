@@ -221,11 +221,6 @@ GEM
     thor (1.1.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
-    trestle (0.9.5)
-      activemodel (>= 4.2.0)
-      kaminari (>= 1.1.0)
-      railties (>= 4.2.0)
-      sprockets-rails (>= 2.0.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -275,7 +270,6 @@ DEPENDENCIES
   simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
-  trestle
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)

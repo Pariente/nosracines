@@ -1,7 +1,10 @@
-class PeopleController < ApplicationController
+class Admin::PeopleController < ApplicationController
   def show
     @person = Person.find(params[:id])
     @documents = @person.documents
+    @a_links = @person.a_links
+    @b_links = @person.b_links
+    @links = @a_links + @b_links
 
     # Images
     image_formats = ["png", "jpg", "jpeg", "tiff"]
@@ -15,6 +18,17 @@ class PeopleController < ApplicationController
   def index
     @people = Person.all
     @people = @people.order(created_at: :desc).page params[:page]
+  end
+
+  def new
+    @person = Person.new
+    @person.a_links.build
+    @person.aliases.build
+  end
+
+  def create
+    @person = Person.create(person_params)
+    redirect_to admin_person_path(@person)
   end
 
   def person_params

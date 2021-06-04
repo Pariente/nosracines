@@ -9,4 +9,15 @@ Rails.application.routes.draw do
   resources :people
   resources :family_links
 
+  namespace :admin do
+    resources :people do
+      resources :family_links
+      resources :aliases
+    end
+
+    resources :family_links do
+      get "delete"
+    end
+  end
+
 end

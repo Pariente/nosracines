@@ -1,12 +1,12 @@
 <% content_for :navbar do %>
   <%= render "pages/admin_navbar" %>
 <% end %>
-<%= link_to people_path, class: "back_link" do %>
+<%= link_to admin_people_path, class: "back_link" do %>
   <i class="material-icons">arrow_back_ios</i>
   <span>Annuler et revenir à l'index</span>
 <% end %>
 <h1>Créer une nouvelle fiche personne</h1>
-<%= simple_form_for(@person) do |f| %>
+<%= simple_form_for [:admin, @person] do |f| %>
   <div class="form-half">
     <div class="left">
       <%= f.input :gender, 
@@ -111,33 +111,6 @@
               as: :text,
               placeholder: "Renseigner ici la biographie de cette personne. Par exemple les différents évènements qui ont marqué sa vie, ses engagements etc." %>
   <hr>
-  <div class="family-link hidden">
-    <%= f.simple_fields_for :family_links do |link| %>
-      <div class="form-half">
-        <div class="left">
-          <%= link.input  :person_b_id,
-                          label: "Proche",
-                          collection: Person.order(:last_name), 
-                          prompt: "Personne en relation",
-                          label_method: :full_name_index, 
-                          input_html: { name: 'person[family_links_attributes][0][person_b_id]' },
-                          value_method: :id %>
-        </div>
-        <div class="right">
-          <%= link.input  :link_b_to_a,
-                          label: "Ce proche est son/sa",
-                          collection: ["Épouse", "Époux", "Mère", "Père", "Sœur", "Frère", "Fille", "Fils", "Cousine", "Cousin", "Tante", "Oncle", "Nièce", "Neveu", "Grand-mère", "Grand-père", "Petite-fille", "Petit-fils"],
-                          input_html: { name: 'person[family_links_attributes][0][link_b_to_a]' },
-                          prompt: "Lien de parenté" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <div class="flex flex-row">
-    <button class="btn btn-red remove-family-link block hidden mr10">Enlever le dernier lien</button>
-    <button class="btn add-family-link block">Ajouter un lien de parenté</button>
-  </div>
-  <hr>
   <%= f.input :notes, 
               label: "Carnet de notes", 
               as: :text,
@@ -189,47 +162,6 @@
       lastAlias.addClass('hidden');
     } else {
       lastAlias.remove();
-    }
-  });
-
-  // Add Family Link
-  var attributes = ["person_b_id", "link_b_to_a"];
-  var i = $('.family-link').length;
-
-  $('.add-family-link').click(function(event){
-    event.preventDefault();
-    var familyLinks = $('.family-link').length;
-    var lastFamilyLink = $('.family-link').last();
-    var removeButton = $('.remove-family-link').last();
-    removeButton.removeClass('hidden');
-
-    if (familyLinks == 1 && lastFamilyLink.hasClass('hidden')) {
-      lastFamilyLink.removeClass('hidden');
-    } else {
-      var newFamilyLink = lastFamilyLink.clone();
-      newFamilyLink.find('select').each(function(j) {
-        $(this).attr('name', 'person[family_links_attributes]['+i+']['+ attributes[j] +']');
-        $(this).removeAttr('id');
-      });
-      lastFamilyLink.after(newFamilyLink);
-    }
-    i++;
-  });
-
-  // Remove Family Link
-  $('.remove-family-link').click(function(event){
-    event.preventDefault();
-
-    var removeButton = $('.remove-family-link').last();
-    var familyLinks = $('.family-link').length;
-    var lastFamilyLink = $('.family-link').last();
-
-    if (familyLinks == 1) {
-      removeButton.addClass('hidden');
-      lastFamilyLink.val('');
-      lastFamilyLink.addClass('hidden');
-    } else {
-      lastFamilyLink.remove();
     }
   });
 </script>

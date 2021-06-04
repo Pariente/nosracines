@@ -1,36 +1,31 @@
-class PeopleController < ApplicationController
-  def show
-    @person = Person.find(params[:id])
-    @documents = @person.documents
-
-    # Images
-    image_formats = ["png", "jpg", "jpeg", "tiff"]
-    @images = @documents.select {|d| image_formats.include?(d.format) }
-
-    # Texts
-    text_formats = ["pdf", "txt", "doc", "docx"]
-    @texts = @documents.select {|d| text_formats.include?(d.format) }
+class Admin::FamilyLinksController < ApplicationController
+  def new
+    @family_link = FamilyLink.new()
+    @person = Person.find(params[:person_id])
   end
 
-  def index
-    @people = Person.all
-    @people = @people.order(created_at: :desc).page params[:page]
+  def create
+    @person = Person.find(params[:person_id])
+    links = params.as_json["family_links"]
+    links.each do |l|
+      person_b = Person.find(l[1]["person_b_id"])
+      link_b_to_a = l[1]["link_b_to_a"]
+      link_a_to_b = reciprocal_link(link_b_to_a, @person.gender)
+
+      @person.a_links.create(
+        person_a_id: @person.id,
+        person_b_id: person_b.id,
+        link_a_to_b: link_a_to_b,
+        link_b_to_a: link_b_to_a)
+    end
+    redirect_to admin_person_path(@person)
   end
 
-  def person_params
-    params.require(:person).permit(
-      :first_name,
-      :last_name,
-      :middle_name,
-      :spouse_name,
-      :birth_date,
-      :death_date,
-      :profile_pic,
-      :biography,
-      :gender,
-      :birth_place,
-      :death_place,
-      :notes)
+  def delete
+    @fam_link = FamilyLink.find(params[:family_link_id])
+    person = Person.find(params[:person_id])
+    @fam_link.destroy
+    redirect_to admin_person_path(person)
   end
 
   def reciprocal_link(link, gender_a)
