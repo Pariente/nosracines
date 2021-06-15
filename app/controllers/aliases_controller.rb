@@ -18,4 +18,11 @@ class AliasesController < ApplicationController
     end
     redirect_to admin_person_path(@person)
   end
+
+  def delete
+    @alias = Alias.find(params[:alias_id])
+    person = Person.find(params[:person_id])
+    @alias.destroy
+    redirect_to admin_person_path(person)
+  end
 end

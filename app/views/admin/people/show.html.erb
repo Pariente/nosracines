@@ -61,11 +61,17 @@
         <tr>
           <th>Catégorie</th>
           <th>Alias</th>
+          <th>Action</th>
         </tr>
         <% @aliases.each do |a| %>
           <tr>
             <td><%= a.category%></td>
             <td><%= a.name%></td>
+            <td>
+              <%= link_to alias_delete_path(a, person_id: @person.id) do %>
+                Supprimer le lien
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </table>

@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   resources :document_files
   resources :people
   resources :family_links
-  resources :aliases
+  resources :aliases do
+    get "delete"
+  end
 
   namespace :admin do
     resources :people do
