@@ -6,7 +6,7 @@
   <span>Annuler</span>
 <% end %>
 <h1>Ajouter des liens de parenté à <%= @person.name %></h1>
-  <%= simple_form_for(@family_link) do |link| %>
+  <%= simple_form_for [:admin, @family_link] do |link| %>
     <div class="family-link">
       <div class="form-half">
         <div class="left">
@@ -31,7 +31,7 @@
       <button class="btn btn-red btn-mini remove-family-link block hidden mr10">Enlever le dernier lien</button>
       <button class="btn btn-mini add-family-link block">Ajouter un lien de parenté</button>
     </div>
-    <%= button_tag type: "submit", class: "btn" do %>
+    <%= button_tag type: "submit", class: "btn", name: "person_id", value: @person.id do %>
       Valider
     <% end %>
   <% end %>

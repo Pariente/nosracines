@@ -6,7 +6,7 @@ class Admin::FamilyLinksController < ApplicationController
 
   def create
     @person = Person.find(params[:person_id])
-    links = params.as_json["family_links"]
+    links = params.as_json["family_link"]
     links.each do |l|
       person_b = Person.find(l[1]["person_b_id"])
       link_b_to_a = l[1]["link_b_to_a"]

@@ -49,19 +49,22 @@ p {
 }
 
 .btn-red,
-a.btn-red {
+a.btn-red,
+button.btn-red {
   background-color: $red
 }
 
 .btn-red.btn-mini,
-a.btn-red.btn-mini {
+a.btn-red.btn-mini,
+button.btn-red.btn-mini {
   background-color: transparent;
-  border-color: $red;
-  color: $red
+  border-color: $red !important;
+  color: $red !important
 }
 
 .btn.btn-mini,
-a.btn.btn-mini {
+a.btn.btn-mini,
+button.btn.btn-mini {
   background-color: transparent;
   border: 2px solid $olive;
   color: $olive
