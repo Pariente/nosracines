@@ -1,11 +1,11 @@
 <% content_for :navbar do %>
   <%= render "pages/admin_navbar" %>
 <% end %>
-<%= link_to admin_people_path, class: "back_link" do %>
+<%= link_to admin_person_path(@person), class: "back_link" do %>
   <i class="material-icons">arrow_back_ios</i>
-  <span>Annuler et revenir à l'index</span>
+  <span>Annuler et revenir à la fiche</span>
 <% end %>
-<h1>Créer une nouvelle fiche personne</h1>
+<h1>Modifier la fiche de <%= @person.name %></h1>
 <%= simple_form_for [:admin, @person] do |f| %>
   <div class="form-half">
     <div class="left">
@@ -15,7 +15,6 @@
                   collection: [['0', 'Femme'], ['1', 'Homme']], 
                   label_method: :second, 
                   value_method: :first,
-                  checked: ['0', 'Femme'],
                   required: true %>
     </div>
     <div class="right">
@@ -93,7 +92,7 @@
               as: :text,
               placeholder: "Renseigner ici les commentaires historiographiques qui concernent cette personne. Par exemple comment ses informations ont été obtenues, quelle institution détient certains documents." %>
   <%= button_tag type: "submit", class: "btn" do %>
-    <i class="material-icons">person_add</i> Créer la fiche
+    <i class="material-icons">person_outline</i> Modifier la fiche
   <% end %>
 <% end %>
 

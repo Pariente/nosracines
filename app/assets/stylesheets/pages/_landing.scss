@@ -39,6 +39,7 @@ p {
   font-family: "Montserrat";
   font-size: 18px;
   height: 62px;
+  margin-bottom: 10px;
   padding: 10px 20px;
   width: fit-content;
 
@@ -47,12 +48,23 @@ p {
   }
 }
 
-.btn-red {
-  background-color: #CE3D39
+.btn-red,
+a.btn-red {
+  background-color: $red
 }
 
-a.btn {
-  text-decoration: none
+.btn-red.btn-mini,
+a.btn-red.btn-mini {
+  background-color: transparent;
+  border-color: $red;
+  color: $red
+}
+
+.btn.btn-mini,
+a.btn.btn-mini {
+  background-color: transparent;
+  border: 2px solid $olive;
+  color: $olive
 }
 
 .landing_header {
@@ -320,6 +332,14 @@ div.section {
 
 .center {
   text-align: center !important
+}
+
+.justify-between {
+  justify-content: space-between
+}
+
+.align-baseline {
+  align-items: baseline
 }
 
 /* Margins */

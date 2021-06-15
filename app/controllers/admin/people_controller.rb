@@ -32,6 +32,16 @@ class Admin::PeopleController < ApplicationController
     redirect_to admin_person_path(@person)
   end
 
+  def edit
+    @person = Person.find(params[:id])
+  end
+
+  def update
+    @person = Person.find(params[:id])
+    @person.update(person_params)
+    redirect_to admin_person_path(@person)
+  end
+
   def person_params
     params.require(:person).permit(
       :first_name,

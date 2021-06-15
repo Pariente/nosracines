@@ -5,7 +5,17 @@
   <i class="material-icons">arrow_back_ios</i>
   <span>Annuler et revenir à l'index</span>
 <% end %>
-<h1><%= @person.full_name_index %></h1>
+<div class="flex flex-row justify-between align-baseline">
+  <div>
+    <h1><%= @person.full_name_index %></h1>
+  </div>
+  <div>
+    <%= link_to edit_admin_person_path(@person), class: "btn btn-mini" do %>
+      <i class="material-icons">manage_accounts</i>
+      <span>Modifier la fiche</span>
+    <% end %>
+  </div>
+</div>
 <div class="admin-show flex flex-row">
   <div class="mr10">
     <% pic = @person.profile_pic.present? ? @person.profile_pic.key : "default_profile_pic" %>
@@ -49,8 +59,8 @@
     <% unless @aliases == [] %>
       <table class="admin_table">
         <tr>
-          <th>Catégorie de l'alias</th>
-          <th>Alias complet</th>
+          <th>Catégorie</th>
+          <th>Alias</th>
         </tr>
         <% @aliases.each do |a| %>
           <tr>
@@ -61,7 +71,7 @@
       </table>
     <% end %>
     <hr>
-    <%= link_to "Ajouter un alias", new_alias_path(person_id: @person.id) %>
+    <%= link_to "Ajouter un alias", new_alias_path(person_id: @person.id), class: "btn btn-mini" %>
     <div class="half">
       <% unless @person.birth_date.nil? %>
         <div class="left">
@@ -162,9 +172,9 @@
         </tr>
       <% end %>
     </table>
-    <%= link_to new_admin_family_link_path(person_id: @person.id) do %>
-      Ajouter un lien de parenté
-    <% end %>
+  <% end %>
+  <%= link_to new_admin_family_link_path(person_id: @person.id), class: "btn btn-mini" do %>
+    Ajouter un lien de parenté
   <% end %>
   <% unless @person.notes == "" %>
     <hr>

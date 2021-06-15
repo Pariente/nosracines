@@ -8,6 +8,11 @@ a:hover {
   text-decoration: none
 }
 
+a.btn {
+  color: $white;
+  text-decoration: none
+}
+
 .admin_top_bar {
   align-items: end;
   display: flex;
