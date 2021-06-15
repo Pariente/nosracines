@@ -1,11 +1,11 @@
 <% content_for :navbar do %>
   <%= render "pages/admin_navbar" %>
 <% end %>
-<%= link_to admin_people_path(@person), class: "back_link" do %>
+<%= link_to admin_person_path(@person), class: "back_link" do %>
   <i class="material-icons">arrow_back_ios</i>
   <span>Annuler</span>
 <% end %>
-<h1>Ajouter des liens de parenté à <%= @person.full_name_index %></h1>
+<h1>Ajouter des liens de parenté à <%= @person.name %></h1>
   <%= simple_form_for(@family_link) do |link| %>
     <div class="family-link">
       <div class="form-half">

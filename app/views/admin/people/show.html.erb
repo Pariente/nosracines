@@ -46,21 +46,22 @@
       <% end %>
     </div>
     <hr>
-    <% unless @aliases.nil? %>
-      <% @aliases.each do |a| %>
-        <div class="half">
-          <div class="left">
-            <label>Type</label>
-            <p><%= a.category %></p>
-          </div>
-          <div class="right">
-            <label>Alias</label>
-            <p><%= a.name %></p>
-          </div>
-        </div>
-      <% end %>
-      <hr>
+    <% unless @aliases == [] %>
+      <table class="admin_table">
+        <tr>
+          <th>Catégorie de l'alias</th>
+          <th>Alias complet</th>
+        </tr>
+        <% @aliases.each do |a| %>
+          <tr>
+            <td><%= a.category%></td>
+            <td><%= a.name%></td>
+          </tr>
+        <% end %>
+      </table>
     <% end %>
+    <hr>
+    <%= link_to "Ajouter un alias", new_alias_path(person_id: @person.id) %>
     <div class="half">
       <% unless @person.birth_date.nil? %>
         <div class="left">
@@ -100,7 +101,7 @@
     </div>
     <hr>
   <% end %>
-  <% unless @links.nil? %>
+  <% unless @links == [] %>
     <h3>Liens de parenté</h3>
     <table class="admin_table">
       <tr>

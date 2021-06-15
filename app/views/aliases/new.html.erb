@@ -1,0 +1,79 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_person_path(@person), class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler</span>
+<% end %>
+<h1>Ajouter des alias à <%= @person.name %></h1>
+  <%= simple_form_for(@alias) do |a| %>
+    <div class="alias-form">
+      <div class="form-half">
+        <div class="left">
+          <%= a.input :category,
+                      label: "Type",
+                      as: :string,
+                      input_html: { name: 'alias[0][category]' },
+                      placeholder: "ex : Nom de guerre" %>
+        </div>
+        <div class="right">
+          <%= a.input :name,
+                      label: "Alias",
+                      as: :string,
+                      input_html: { name: 'alias[0][name]' },
+                      placeholder: "ex : Dassault" %>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red remove-alias block hidden mr10">Enlever le dernier lien</button>
+      <button class="btn add-alias block">Ajouter un alias</button>
+    </div>
+    <%= button_tag type: "submit", name: "person_id", value: @person.id, class: "btn" do %>
+      Valider
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  // Add Alias
+  var alias_attributes = ["category", "name"];
+  var k = $('.alias-form').length;
+
+  $('.add-alias').click(function(event){
+    event.preventDefault();
+    var aliases = $('.alias-form').length;
+    var lastAlias = $('.alias-form').last();
+    var removeButton = $('.remove-alias').last();
+    removeButton.removeClass('hidden');
+
+    if (aliases == 1 && lastAlias.hasClass('hidden')) {
+      lastAlias.removeClass('hidden');
+    } else {
+      var newAlias = lastAlias.clone();
+      newAlias.find('input').each(function(j) {
+        $(this).attr('name', 'alias['+k+']['+ alias_attributes[j] +']');
+        $(this).removeAttr('id');
+      });
+      lastAlias.after(newAlias);
+    }
+    k++;
+  });
+
+  // Remove Alias
+  $('.remove-alias').click(function(event){
+    event.preventDefault();
+
+    var removeButton = $('.remove-alias').last();
+    var aliases = $('.alias-form').length;
+    var lastAlias = $('.alias-form').last();
+
+    if (aliases == 1) {
+      removeButton.addClass('hidden');
+      lastAlias.val('');
+      lastAlias.addClass('hidden');
+    } else {
+      lastAlias.remove();
+    }
+  });
+</script>

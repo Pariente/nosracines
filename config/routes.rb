@@ -8,11 +8,11 @@ Rails.application.routes.draw do
   resources :document_files
   resources :people
   resources :family_links
+  resources :aliases
 
   namespace :admin do
     resources :people do
       resources :family_links
-      resources :aliases
     end
 
     resources :family_links do

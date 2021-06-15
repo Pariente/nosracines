@@ -5,6 +5,7 @@ class Admin::PeopleController < ApplicationController
     @a_links = @person.a_links
     @b_links = @person.b_links
     @links = @a_links + @b_links
+    @aliases = @person.aliases
 
     # Images
     image_formats = ["png", "jpg", "jpeg", "tiff"]
