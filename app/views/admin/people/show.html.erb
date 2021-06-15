@@ -6,8 +6,11 @@
   <span>Annuler et revenir à l'index</span>
 <% end %>
 <div class="flex flex-row justify-between align-baseline">
-  <div>
+  <div class="flex flex-row align-baseline">
     <h1><%= @person.full_name_index %></h1>
+    <%= link_to person_path(@person) do %>
+      (voir la fiche)
+    <% end %>
   </div>
   <div>
     <%= link_to edit_admin_person_path(@person), class: "btn btn-mini" do %>
