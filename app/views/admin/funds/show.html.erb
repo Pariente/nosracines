@@ -1,0 +1,18 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_funds_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<div class="flex flex-row justify-between align-baseline">
+  <div class="flex flex-row align-baseline">
+    <h1><%= @fund.name %></h1>
+  </div>
+  <div>
+    <%= link_to edit_admin_fund_path, class: "btn btn-mini" do %>
+      <i class="material-icons">edit</i>
+      <span>Modifier la fiche</span>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_funds_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<h1>Ajouter un nouveau fonds</h1>
+<%= simple_form_for [:admin, @fund] do |f| %>
+  <%= f.input :name, 
+              label: "Nom",
+              placeholder: "ex : Fonds d'archive de la Mairie de Paris",
+              as: :string %>
+  <%= button_tag type: "submit", class: "btn" do %>
+    <i class="material-icons">inventory_2</i> Ajouter le fonds
+  <% end %>
+<% end %>

@@ -4,7 +4,7 @@
 
 <h1>Documents</h1>
 <div class="admin_top_bar">
-  <%= render "pages/search_input" %>
+  <%= render "admin/documents/search_input" %>
   <%= link_to new_admin_document_path, class: "btn" do %>
     <i class="material-icons">note_add</i>
     Ajouter un document
@@ -35,6 +35,7 @@
             <%= cl_image_tag file.url.key, format: "png", width: "80", height: "80", crop: "fill" %>
           <% end %>
         <% end %>
+      </td>
       <td>
         <%= link_to admin_document_path(d.id) do %>
           <%= d.name %>

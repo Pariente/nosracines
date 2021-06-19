@@ -1,4 +1,17 @@
 class Admin::DocumentsController < ApplicationController
+  def search
+    @params = params["search"]
+    if @params.present?
+      @keywords = @params[:keywords]
+
+      # Documents
+      name = Document.arel_table[:name]
+      @documents = Document.where(name.matches("%#{@keywords}%"))
+    end
+    @documents = @documents.order(created_at: :desc).page params[:page]
+    render "admin/documents/index"
+  end
+
   def index
     @documents = Document.all
     @documents = @documents.order(created_at: :desc).page params[:page]
@@ -6,6 +19,7 @@ class Admin::DocumentsController < ApplicationController
 
   def show
     @document = Document.find(params[:id])
+    @document_people = @document.document_people
   end
 
   def new

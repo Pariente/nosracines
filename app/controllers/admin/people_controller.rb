@@ -1,4 +1,24 @@
 class Admin::PeopleController < ApplicationController
+  def search
+    @params = params["search"]
+    if @params.present?
+      @keywords = @params[:keywords]
+
+      # People
+      first_name  = Person.arel_table[:first_name]
+      middle_name = Person.arel_table[:middle_name]
+      last_name   = Person.arel_table[:last_name]
+      spouse_name = Person.arel_table[:spouse_name]
+      @people = Person.where(first_name.matches("%#{@keywords}%")).or(
+                Person.where(middle_name.matches("%#{@keywords}%"))).or(
+                Person.where(last_name.matches("%#{@keywords}%"))).or(
+                Person.where(spouse_name.matches("%#{@keywords}%"))
+      )
+    end
+    @people = @people.order(created_at: :desc).page params[:page]
+    render "admin/people/index"
+  end
+
   def show
     @person = Person.find(params[:id])
     @documents = @person.documents
