@@ -43,7 +43,10 @@
       <td><%= d.date %></td>
       <td><%= d.reference %></td>
       <td><%= d.fund.name %></td>
-      <td></td>
+      <td>
+        <%= link_to 'Modifier', edit_admin_document_path(d) %><br>
+        <%= link_to 'Voir', document_path(d) %>
+      </td>
     </tr>
   <% end %>
 </table>

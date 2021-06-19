@@ -1,0 +1,57 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_document_path(@document), class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir au document</span>
+<% end %>
+<h1>Modifier le document</h1>
+<%= simple_form_for [:admin, @document] do |f| %>
+  <%= f.input :name,
+              label: "Titre",
+              as: :string,
+              input_html: { autocomplete: 'off' },
+              placeholder: "ex : Passeport suisse de M. Stern" %>
+  <%= f.input :fund_id,
+              label: "Fonds",
+              collection: Fund.order(:name), 
+              prompt: "" %>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :date, 
+                  input_html: { autocomplete: 'off' },
+                  label: "Date", 
+                  as: :date_picker %>
+    </div>
+    <div class="right">
+      <%= f.input :location, 
+                  label: "Lieu", 
+                  as: :string %>
+    </div>
+  </div>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :reference, 
+                  label: "Référence", 
+                  as: :string %>
+    </div>
+    <div class="right">
+      <%= f.input :box, 
+                  label: "Boîte de stockage", 
+                  as: :string %>
+    </div>
+  </div>
+  <hr>
+  <%= f.input :notes, 
+              label: "Carnet de notes", 
+              as: :text,
+              placeholder: "Renseigner ici les commentaires historiographiques qui concernent ce document. Par exemple, comment il a été obtenu, quelle institution le détient, etc." %>
+  <%= button_tag type: "submit", class: "btn" do %>
+    Suivant
+  <% end %>
+<% end %>
+
+<script>
+  // DatePicker
+  $("input.date_picker").datepicker({ dateFormat: 'yy-mm-dd', changeYear: true, yearRange: '1800:2030' });
+</script>

@@ -17,6 +17,16 @@ class Admin::DocumentsController < ApplicationController
     redirect_to new_admin_document_document_file_path(document_id: @document.id)
   end
 
+  def edit
+    @document = Document.find(params[:id])
+  end
+
+  def update
+    @document = Document.find(params[:id])
+    @document.update(document_params)
+    redirect_to admin_document_path(@document)
+  end
+
   def document_params
     params.require(:document).permit(
       :name,
