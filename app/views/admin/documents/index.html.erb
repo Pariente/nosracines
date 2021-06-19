@@ -1,0 +1,52 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+
+<h1>Documents</h1>
+<div class="admin_top_bar">
+  <%= render "pages/search_input" %>
+  <%= link_to new_admin_document_path, class: "btn" do %>
+    <i class="material-icons">note_add</i>
+    Ajouter un document
+  <% end %>
+</div>
+
+<table class="admin_table">
+  <tr>
+    <th class="center">ID</th>
+    <th class="pic_cell">Aperçu</th>
+    <th>Nom</th>
+    <th>Date</th>
+    <th>Référence</th>
+    <th>Fonds</th>
+    <th>Actions</th>
+  </tr>
+  <% @documents.each do |d| %>
+    <tr>
+      <td class="center"><%= d.id %></td>
+      <td class="pic_cell">
+        <% file = d.document_files.first %>
+        <% if file.nil? %>
+          <%= cl_image_tag "default_document", width: "80", height: "80", crop: "fill" %>
+        <% else %>
+          <% if ["png", "jpg", "jpeg"].include?(file.original_format) %>
+            <%= cl_image_tag file.url.key, width: "80", height: "80", crop: "fill" %>
+          <% else %>
+            <%= cl_image_tag file.url.key, format: "png", width: "80", height: "80", crop: "fill" %>
+          <% end %>
+        <% end %>
+      <td>
+        <%= link_to admin_document_path(d.id) do %>
+          <%= d.name %>
+        <% end %>
+      </td>
+      <td><%= d.date %></td>
+      <td><%= d.reference %></td>
+      <td><%= d.fund.name %></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
+<div class="pagination_row">
+  <%= paginate @documents %>
+</div>

@@ -1,0 +1,53 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_document_path(@document), class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler</span>
+<% end %>
+<h1>Ajouter un fichier à <%= @document.name %></h1>
+  <%= simple_form_for [:admin, @document_file] do |d| %>
+    <div class="form-half">
+      <div class="left">
+        <%= d.input :url, 
+                    as: :file,
+                    label: "Fichier" %>
+      </div>
+      <div class="right">
+        <%= d.input :original_format,
+                    as: :string,
+                    label: "Format",
+                    collection: ["avi", "csv", "doc", "docx", "heic", "jpeg", "jpg", "gif", "mid", "mov", "mp3", "mp4", "pdf", "png", "ppt", "pptx", "svg", "txt", "wav", "wma", "wmv", "xlr", "xls", "xlsx", "xml", "zip", "zipx",] %>
+      </div>
+    </div>
+    <div class="form-half">
+      <div class="left">
+        <%= d.input :name, 
+                    as: :string,
+                    label: "Titre" %>
+      </div>
+      <div class="right">
+        <%= d.input :language, 
+                    as: :string,
+                    label: "Langue" %>
+      </div>
+    </div>
+    <div>
+      <%= d.input :transcript,
+                  as: :text,
+                  label: "Transcript" %>
+      <%= d.input :translation_fr,
+                  as: :text,
+                  label: "Traduction en français" %>
+      <%= d.input :comment,
+                  as: :text,
+                  label: "Commentaires" %>
+      <%= d.input :persons_position,
+                  as: :text,
+                  label: "Position des personnes" %>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "document_id", value: @document.id do %>
+      <i class="material-icons">edit</i> Modifier le fichier
+    <% end %>
+  <% end %>
+</div>

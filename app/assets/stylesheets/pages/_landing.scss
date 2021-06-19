@@ -14,12 +14,12 @@ body {
 
 .main {
   margin-left: 200px;
-  padding: 0px 20px
+  padding: 0px 20px 20px
 }
 
 h1 {
-  color: $olive;
-  font-family: "Montaga";
+  color: $text_color;
+  font-family: "Trykker";
   font-size: 40px;
   margin-right: 10px
 }
@@ -87,6 +87,7 @@ button.btn.btn-mini {
   padding-bottom: 0px !important;
 
   h1 {
+    color: $olive;
     font-family: "Allison";
     font-size: 100px;
     font-weight: 100;
@@ -156,7 +157,7 @@ div.section {
 
       .date {
         color: $olive;
-        font-family: "Montaga";
+        font-family: "Trykker";
         font-size: 20px
       }
     }
@@ -168,7 +169,7 @@ div.section {
 
       .title {
         color: $olive;
-        font-family: "Montaga";
+        font-family: "Trykker";
         font-size: 40px
       }
 
@@ -194,7 +195,7 @@ div.section {
     .card_info_footer {
       .text {
         color: $olive;
-        font-family: "Montaga";
+        font-family: "Trykker";
         font-size: 13px
       }
 
@@ -215,12 +216,12 @@ div.section {
           }
 
           .value {
-            font-family: "Montaga";
+            font-family: "Trykker";
             font-size: 36px
           }
 
           .unit {
-            font-family: "Montaga";
+            font-family: "Trykker";
             margin-top: -5px
           }
         }
@@ -297,7 +298,7 @@ div.section {
 
   .title {
     color: $olive;
-    font-family: "Montaga";
+    font-family: "Trykker";
     font-size: 30px;
     margin-bottom: 10px
   }

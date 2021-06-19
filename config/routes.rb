@@ -17,6 +17,14 @@ Rails.application.routes.draw do
       resources :family_links
     end
 
+    resources :documents do
+      resources :document_files
+    end
+
+    resources :document_files do
+      get "delete"
+    end
+
     resources :family_links do
       get "delete"
     end

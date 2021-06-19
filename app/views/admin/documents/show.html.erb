@@ -1,0 +1,120 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_documents_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<div class="flex flex-row justify-between align-baseline">
+  <div class="flex flex-row align-baseline">
+    <h1><%= @document.name %></h1>
+    <%= link_to document_path(@document) do %>
+      (voir la fiche)
+    <% end %>
+  </div>
+  <div>
+    <%= link_to root_path, class: "btn btn-mini" do %>
+      <i class="material-icons">edit</i>
+      <span>Modifier la fiche</span>
+    <% end %>
+  </div>
+</div>
+<div class="person_header admin-show flex flex-row">
+  <div class="mr10">
+    <% file = @document.document_files.first %>
+    <% if file.nil? %>
+      <%= cl_image_tag "default_document", width: "300", height: "300", crop: "fill" %>
+    <% else %>
+      <% if ["png", "jpg", "jpeg"].include?(file.original_format) %>
+        <%= cl_image_tag file.url.key, width: "300", height: "300", crop: "fill" %>
+      <% else %>
+        <%= cl_image_tag file.url.key, format: "png", width: "300", height: "300", crop: "fill" %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="person_header_info flex flex-column flex-grow-1">
+    <div>
+      <p class="flex flex-column">
+        <label>Titre</label>
+        <%= @document.name %>
+      </p>
+      <p class="flex flex-column">
+        <label>Fonds</label>
+        <%= @document.fund.name %>
+      </p>
+    </div>
+    <div class="half">
+      <% unless @document.date.nil? %>
+        <div class="left">
+          <label>Date</label>
+          <p><%= @document.date %></p>
+        </div>
+      <% end %>
+      <% unless @document.location.nil? %>
+        <div class="right">
+          <label>Lieu</label>
+          <p><%= @document.location %></p>
+        </div>
+      <% end %>
+    </div>
+    <div class="half">
+      <% unless @document.reference.nil? %>
+        <div class="left">
+          <label>Référence</label>
+          <p><%= @document.reference %></p>
+        </div>
+      <% end %>
+      <% unless @document.box.nil? %>
+        <div class="right">
+          <label>Boîte</label>
+          <p><%= @document.box %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+  <div class="show-section">
+    <h3>Fichiers</h3>
+    <% unless @document.document_files == [] %>
+      <table class="admin_table">
+        <tr>
+          <th class="center">ID</th>
+          <th class="pic_cell">Aperçu</th>
+          <th>Titre</th>
+          <th>Format</th>
+          <th>Action</th>
+        </tr>
+        <% @document.document_files.each do |f| %>
+          <tr>
+            <td class="center">
+              <%= f.id %>
+            </td>
+            <td class="pic_cell">
+              <% if ["png", "jpg", "jpeg"].include?(f.original_format) %>
+                <%= cl_image_tag f.url.key, width: "80", height: "80", crop: "fill" %>
+              <% else %>
+                <%= cl_image_tag f.url.key, format: "png", width: "80", height: "80", crop: "fill" %>
+              <% end %>
+            </td>
+            <td>
+              <%= f.name %>
+            </td>
+            <td><%= f.original_format %></td>
+            <td>
+              <%= link_to 'Supprimer', admin_document_file_delete_path(f) %><br>
+              <%= link_to 'Modifier', edit_admin_document_file_path(f) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    <%= link_to new_admin_document_document_file_path(document_id: @document.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add</i> Ajouter un fichier
+    <% end %>
+  </div>
+  <% unless @document.notes == "" %>
+    <div class="show-section">
+      <h3>Notes</h3>
+      <p><%= @document.notes %></p>
+    </div>
+  <% end %>

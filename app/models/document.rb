@@ -17,4 +17,9 @@ class Document < ApplicationRecord
 
     return people
   end
+
+  def self.fund
+    fund = Fund.find(self.fund_id)
+    return fund
+  end
 end

@@ -23,7 +23,7 @@ a.btn {
 .admin_table {
   border: 1px solid $olive;
   border-collapse: collapse;
-  margin-top: 30px;
+  margin-top: 0px;
   margin-bottom: 20px;
   width: 100%;
 
@@ -100,11 +100,42 @@ a.back_link {
   
   label {
     color: $bison;
-    font-weight: 400
+    font-family: "Montserrat";
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 20px
   }
+  
   p {
     font-size: 18px;
     font-weight: 600;
     margin-top: 5px
+  }
+}
+
+.show-section {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 $bison;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 40px;
+  max-width: 1200px;
+  padding: 10px 20px;
+  width: 100%;
+
+  h3 {
+    color: $olive;
+    font-family: "Trykker";
+    font-size: 25px;
+    font-weight: 100;
+    margin-bottom: 20px
+  }
+
+  p {
+    font-weight: 400;
+    margin-top: 0px
   }
 }

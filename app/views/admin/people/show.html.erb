@@ -19,12 +19,12 @@
     <% end %>
   </div>
 </div>
-<div class="admin-show flex flex-row">
+<div class="person_header admin-show flex flex-row">
   <div class="mr10">
     <% pic = @person.profile_pic.present? ? @person.profile_pic.key : "default_profile_pic" %>
     <%= cl_image_tag pic, width: "300", height: "300", crop: "fill", gravity: "face" %>
   </div>
-  <div class="flex flex-column flex-grow-1">
+  <div class="person_header_info flex flex-column flex-grow-1">
     <div>
       <p>
         <% if @person.gender == "0" %>
@@ -58,29 +58,30 @@
         </div>
       <% end %>
     </div>
-    <hr>
     <% unless @aliases == [] %>
+      <hr>
       <table class="admin_table">
         <tr>
-          <th>Catégorie</th>
           <th>Alias</th>
+          <th>Catégorie</th>
           <th>Action</th>
         </tr>
         <% @aliases.each do |a| %>
           <tr>
-            <td><%= a.category%></td>
             <td><%= a.name%></td>
+            <td><%= a.category%></td>
             <td>
               <%= link_to alias_delete_path(a, person_id: @person.id) do %>
-                Supprimer le lien
+                Supprimer
               <% end %>
             </td>
           </tr>
         <% end %>
       </table>
     <% end %>
-    <hr>
-    <%= link_to "Ajouter un alias", new_alias_path(person_id: @person.id), class: "btn btn-mini" %>
+    <%= link_to new_alias_path(person_id: @person.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add</i> Ajouter un alias
+    <% end %>
     <div class="half">
       <% unless @person.birth_date.nil? %>
         <div class="left">
@@ -111,15 +112,14 @@
     </div>
   </div>
 </div>
-<hr>
 <div class="admin-show">
   <% unless @person.biography == "" %>
-    <div>
+    <div class="show-section">
       <h3>Biographie</h3>
       <p><%= @person.biography %></p>
     </div>
-    <hr>
   <% end %>
+  <div class="show-section">
   <% unless @links == [] %>
     <h3>Liens de parenté</h3>
     <table class="admin_table">
@@ -183,11 +183,13 @@
     </table>
   <% end %>
   <%= link_to new_admin_family_link_path(person_id: @person.id), class: "btn btn-mini" do %>
-    Ajouter un lien de parenté
+    <i class="material-icons">add</i> Ajouter un lien de parenté
   <% end %>
+  </div>
   <% unless @person.notes == "" %>
-    <hr>
+  <div class="show-section">
     <h3>Notes</h3>
     <p><%= @person.notes %></p>
+  </div>
   <% end %>
 </div>
