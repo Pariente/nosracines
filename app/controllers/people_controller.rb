@@ -12,8 +12,7 @@ class PeopleController < ApplicationController
     @images = @documents.select {|d| image_formats.include?(d.format) }
 
     # Texts
-    text_formats = ["pdf", "txt", "doc", "docx"]
-    @texts = @documents.select {|d| text_formats.include?(d.format) }
+    @texts = @documents.select {|d| images_formats.exclude?(d.format) }
   end
 
   def index

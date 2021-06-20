@@ -19,7 +19,7 @@
           <p><%= @person.last_name.upcase %></p>
         </div>
         <% unless @person.spouse_name == "" %>
-          <div class="right">
+          <div class="left">
             <label>Nom d'épouse</label>
             <p><%= @person.spouse_name.upcase %></p>
           </div>
@@ -31,7 +31,7 @@
           <p><%= @person.first_name %></p>
         </div>
         <% unless @person.middle_name == "" %>
-          <div class="right">
+          <div class="left">
             <label>Autres prénoms</label>
             <p><%= @person.middle_name %></p>
           </div>
@@ -60,7 +60,7 @@
           </div>
         <% end %>
         <% unless @person.birth_place == "" %>
-          <div class="right">
+          <div class="left">
             <label>Lieu de naissance</label>
             <p><%= @person.birth_place %></p>
           </div>
@@ -74,7 +74,7 @@
           </div>
         <% end %>
         <% unless @person.death_place == "" %>
-          <div class="right">
+          <div class="left">
             <label>Lieu de décès</label>
             <p><%= @person.death_place %></p>
           </div>

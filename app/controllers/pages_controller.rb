@@ -20,7 +20,8 @@ class PagesController < ApplicationController
 
       # Documents
       name = Document.arel_table[:name]
-      @documents = Document.where(name.matches("%#{@keywords}%"))
+      @documents =  Document.where(name.matches("%#{@keywords}%"))
+      
       people_docs = []
       @people.each do |p|
         people_docs += p.documents
@@ -29,12 +30,11 @@ class PagesController < ApplicationController
       @documents = @documents.uniq
 
       # Images
-      image_formats = ["png", "jpg", "jpeg", "tiff"]
+      image_formats = ["gif", "png", "jpg", "jpeg", "tiff"]
       @images = @documents.select {|d| image_formats.include?(d.format) }
 
       # Texts
-      text_formats = ["pdf", "txt", "doc", "docx"]
-      @texts = @documents.select {|d| text_formats.include?(d.format) }
+      @texts = @documents.select {|d| image_formats.exclude?(d.format) }
     end
   end
 end

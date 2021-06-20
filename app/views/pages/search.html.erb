@@ -7,17 +7,23 @@
   <i class="material-icons">expand_more</i>
 </div>
 
-<%= render "pages/search_category_people",
-      people: @people %>
+<% unless @people == [] %>
+  <%= render "pages/search_category_people",
+        people: @people %>
+<% end %>
 
-<%= render "pages/search_category_document", 
-      category: "Photographies",
-      icon: "image",
-      docs: @images
-%>
+<% unless @images == [] %>
+  <%= render "pages/search_category_document", 
+        category: "Photographies",
+        icon: "image",
+        docs: @images
+  %>
+<% end %>
 
-<%= render "pages/search_category_document", 
-      category: "Documents",
-      icon: "text_snippet",
-      docs: @texts
-%>
+<% unless @texts == [] %>
+  <%= render "pages/search_category_document", 
+        category: "Documents",
+        icon: "text_snippet",
+        docs: @texts
+  %>
+<% end %>

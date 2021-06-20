@@ -59,23 +59,31 @@
   </div>
   <div class="document_info">
     <div class="row">
-      <div>
-        <i class="material-icons">calendar_today</i><%= @document.date %>
-      </div>
-      <div>
-        <i class="material-icons">location_on</i><%= @document.location %>
-      </div>
-    </div>
-    <div class="row">
-      <i class="material-icons">people_outline</i>
-      <% @document.people.each do |p| %>
-        <%= link_to p.full_name_index, person_path(p) %>
+      <% unless @document.date == "" || @document.date.nil? %>
+        <div>
+          <i class="material-icons">calendar_today</i><%= @document.date %>
+        </div>
+      <% end %>
+      <% unless @document.location == "" || @document.location.nil? %>
+        <div>
+          <i class="material-icons">location_on</i><%= @document.location %>
+        </div>
       <% end %>
     </div>
-    <div class="row">
-      <i class="material-icons">short_text</i>
-      <p><%= @document.notes %></p>
-    </div>
+    <% unless @document.people == [] %>
+      <div class="row">
+        <i class="material-icons">people_outline</i>
+        <% @document.people.each do |p| %>
+          <%= link_to p.full_name_index, person_path(p) %>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless @document.notes == "" || @document.notes.nil? %>
+      <div class="row">
+        <i class="material-icons">short_text</i>
+        <p><%= @document.notes %></p>
+      </div>
+    <% end %>
     <div class="row">
       <i class="material-icons">inventory_2</i>
       <div>
