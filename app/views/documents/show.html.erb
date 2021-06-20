@@ -1,35 +1,88 @@
 <div class="container">
   <div class="document_viewer">
-    <% file = @document.document_files.first %>
-    <% if ["png", "jpg", "jpeg"].include?(file.original_format) %>
-      <%= cl_image_tag file.url.key %>
+    <h1><%= @document.name %></h1>
+    <% if @document_file.nil? %>
+      <% file = @document.document_files.first %>
     <% else %>
-      <%= cl_image_tag file.url.key, format: "png" %>
+      <% file = @document_file %>
     <% end %>
-      <h1><%= @document.name %></h1>
+    <%= link_to file.url, target: "_blank" do %>
+      <% if ["pdf"].include?(file.original_format) %>
+        <%= cl_image_tag file.url.key, format: "png" %>
+      <% else %>
+        <%= cl_image_tag file.url.key %>
+      <% end %>
+    <% end %>
+    <div class="admin-show mt20">
+      <label>Titre</label>
+      <p><%= file.name %></p>
+
+      <% unless file.transcript == "" %>
+        <label>Transcript</label>
+        <p><%= file.transcript %></p>
+      <% end %>
+
+      <% unless file.translation_fr == "" %>
+        <label>Traduction en français</label>
+        <p><%= file.translation_fr %></p>
+      <% end %>
+      
+      <% unless file.comment == "" %>
+        <label>Commentaires</label>
+        <p><%= file.comment %></p>
+      <% end %>
+
+      <% unless file.persons_position == "" %>
+        <label>Position des personnes</label>
+        <p><%= file.persons_position %></p>
+      <% end %>
+      <label>Fichiers</label>
       <div class="flex flex-row">
-        <span class="date"><%= @document.date&.year %></span>
-        <span class="location"><%= @document.location %></span>
+        <% @document.document_files.each do |f| %>
+          <%= link_to document_path(document_file: f) do %>
+            <%  if f.id == file.id
+                  @active = "active"
+                else
+                  @active = ""
+                end %>
+            <div class="file-preview <%= @active %>">
+              <% if ["png", "jpg", "jpeg"].include?(f.original_format) %>
+                <%= cl_image_tag f.url.key, width: "200", height: "200", crop: "fill", class: "img-100" %>
+              <% else %>
+                <%= cl_image_tag f.url.key, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
       </div>
+    </div>
   </div>
   <div class="document_info">
     <div class="row">
       <div>
-        <i class="material-icons">calendar_today</i>Juillet 1980
+        <i class="material-icons">calendar_today</i><%= @document.date %>
       </div>
       <div>
-        <i class="material-icons">location_on</i>Nice, France
+        <i class="material-icons">location_on</i><%= @document.location %>
       </div>
     </div>
     <div class="row">
       <i class="material-icons">people_outline</i>
       <% @document.people.each do |p| %>
-        <%= link_to p.name, person_path(p) %>
+        <%= link_to p.full_name_index, person_path(p) %>
       <% end %>
     </div>
     <div class="row">
       <i class="material-icons">short_text</i>
-      <p>Premières vacances à la mer des enfants. La famille Frydlender est hébergée par la cousine de Rachel, Elisabeth Goldberg (1932-2003) à Nice. C’est sûrement Salomon Frydlender (1930-2009) qui prend la photo.</p>
+      <p><%= @document.notes %></p>
+    </div>
+    <div class="row">
+      <i class="material-icons">inventory_2</i>
+      <div>
+        <p><%= @document.fund.name %></p>
+        <p><%= @document.reference %></p>
+        <p><%= @document.box %></p>
+      </div>
     </div>
   </div>
 </div>
