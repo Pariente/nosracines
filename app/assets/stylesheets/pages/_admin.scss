@@ -57,6 +57,10 @@ a.btn {
   .spouse_name {
     font-size: 14px
   }
+
+  .font-small {
+    font-size: 14px
+  }
 }
 
 .pagination_row {
@@ -96,6 +100,7 @@ a.back_link {
 }
 
 .admin-show {
+  max-width: 1200px;
   width: 100%;
   
   label {
@@ -126,6 +131,14 @@ a.back_link {
   padding: 10px 20px;
   width: 100%;
 
+  h2 {
+    color: $olive;
+    font-family: "Trykker";
+    font-size: 25px;
+    font-weight: 100;
+    margin-bottom: 20px
+  }
+
   h3 {
     color: $olive;
     font-family: "Trykker";
@@ -137,5 +150,17 @@ a.back_link {
   p {
     font-weight: 400;
     margin-top: 0px
+  }
+}
+
+img {
+  &.img-300 {
+    height: 300px;
+    width: 300px
+  }
+
+  &.img-100 {
+    height: 100px;
+    width: 100px
   }
 }

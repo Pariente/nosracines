@@ -26,7 +26,7 @@
       <td><%= p.id %></td>
       <td class="pic_cell">
         <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
-        <%= cl_image_tag pic, format: "png", width: "80", height: "80", crop: "fill", gravity: "face" %></td>
+        <%= cl_image_tag pic, format: "png", width: "100", height: "100", crop: "fill", gravity: "face" %></td>
       <td>
         <%= p.last_name.upcase %>
         <% if p.spouse_name.present? %>

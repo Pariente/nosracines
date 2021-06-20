@@ -17,8 +17,8 @@
     <th class="pic_cell">Aperçu</th>
     <th>Nom</th>
     <th>Date</th>
-    <th>Référence</th>
-    <th>Fonds</th>
+    <th>Lieu</th>
+    <th>Personnes</th>
     <th>Actions</th>
   </tr>
   <% @documents.each do |d| %>
@@ -27,13 +27,9 @@
       <td class="pic_cell">
         <% file = d.document_files.first %>
         <% if file.nil? %>
-          <%= cl_image_tag "default_document", width: "80", height: "80", crop: "fill" %>
+          <%= cl_image_tag "default_document", width: "160", height: "160", crop: "fill", class: "img-100" %>
         <% else %>
-          <% if ["png", "jpg", "jpeg"].include?(file.original_format) %>
-            <%= cl_image_tag file.url.key, width: "80", height: "80", crop: "fill" %>
-          <% else %>
-            <%= cl_image_tag file.url.key, format: "png", width: "80", height: "80", crop: "fill" %>
-          <% end %>
+          <%= cl_image_tag file.url.key, format: "png", width: "160", height: "160", crop: "fill", class: "img-100" %>
         <% end %>
       </td>
       <td>
@@ -41,9 +37,20 @@
           <%= d.name %>
         <% end %>
       </td>
-      <td><%= d.date %></td>
-      <td><%= d.reference %></td>
-      <td><%= d.fund.name %></td>
+      <td><%= d.date&.year %></td>
+      <td><%= d.location %></td>
+      <td class="font-small">
+        <ul>
+          <% d.document_people.each do |dp| %>
+            <% person = dp.person%>
+            <li>
+              <%= link_to admin_person_path(person.id) do %>
+                <%= dp.person.full_name_index %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </td>
       <td>
         <%= link_to 'Modifier', edit_admin_document_path(d) %><br>
         <%= link_to 'Voir', document_path(d) %>

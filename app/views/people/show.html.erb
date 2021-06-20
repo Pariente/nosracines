@@ -1,40 +1,141 @@
 <div class="container">
-  <div class="person_header">
+  <div class="person_header admin-show">
     <% pic = @person.profile_pic.present? ? @person.profile_pic.key : "default_profile_pic" %>
-    <%= cl_image_tag pic, width: "300", height: "300", crop: "fill", gravity: "face" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
     <div class="person_header_info">
       <h1><%= @person.name %></h1>
-      <% unless @person.spouse_name == "" %>
-        <span class="nee">épouse <%= @person.spouse_name %></span>
+      <div>
+        <p>
+          <% if @person.gender == "0" %>
+            Mme
+          <% elsif @person.gender == "1" %>
+            M.
+          <% end %>
+        </p>
+      </div>
+      <div class="half">
+        <div class="left">
+          <label>Nom de naissance</label>
+          <p><%= @person.last_name.upcase %></p>
+        </div>
+        <% unless @person.spouse_name == "" %>
+          <div class="right">
+            <label>Nom d'épouse</label>
+            <p><%= @person.spouse_name.upcase %></p>
+          </div>
+        <% end %>
+      </div>
+      <div class="half">
+        <div class="left">
+          <label>Prénom</label>
+          <p><%= @person.first_name %></p>
+        </div>
+        <% unless @person.middle_name == "" %>
+          <div class="right">
+            <label>Autres prénoms</label>
+            <p><%= @person.middle_name %></p>
+          </div>
+        <% end %>
+      </div>
+      <% unless @aliases == [] %>
+        <hr>
+        <table class="admin_table">
+          <tr>
+            <th>Alias</th>
+            <th>Catégorie</th>
+          </tr>
+          <% @aliases.each do |a| %>
+            <tr>
+              <td><%= a.name%></td>
+              <td><%= a.category%></td>
+            </tr>
+          <% end %>
+        </table>
       <% end %>
-      <span class="date"><%= @person.birth_date&.year %> - <%= @person.death_date&.year %></span>
-      <div class="places">
-        <span class="place">Varsovie</span>
-        -
-        <span class="place">Paris</span>
-        -
-        <span class="place">Nice</span>
+      <div class="half">
+        <% unless @person.birth_date.nil? %>
+          <div class="left">
+            <label>Date de naissance</label>
+            <p><%= @person.birth_date %></p>
+          </div>
+        <% end %>
+        <% unless @person.birth_place == "" %>
+          <div class="right">
+            <label>Lieu de naissance</label>
+            <p><%= @person.birth_place %></p>
+          </div>
+        <% end %>
+      </div>
+      <div class="half">
+        <% unless @person.death_date.nil? %>
+          <div class="left">
+            <label>Date de décès</label>
+            <p><%= @person.death_date %></p>
+          </div>
+        <% end %>
+        <% unless @person.death_place == "" %>
+          <div class="right">
+            <label>Lieu de décès</label>
+            <p><%= @person.death_place %></p>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
-  <div class="biography">
-    <h2>Biographie</h2>
-    <p>Son père est l'informaticien et mathématicien franco-américain Bernard Chazelle, professeur à l'Université de Princeton, et sa mère, Celia Martin Chazelle, est historienne du Moyen Âge. Ses origines françaises font qu'il est parfaitement bilingue en français et en anglais. Il effectue ses études de cinéma à l'Université Harvard, où il rencontre son futur comparse, Justin Hurwitz, qui composera les musiques de ses films, et avec qui il partage sa passion pour le jazz et les comédies musicales françaises comme Les Parapluies de Cherbourg ou les Demoiselles de Rochefort.</p>
-  </div>
-  <div class="photos">
-    <h2>Photographies</h2>
-    <div class="slideshow">
-      <% @images.each do |doc| %>
-        <%= render "pages/result_card", doc: doc %>
-      <% end %>
-    </div>
-  </div>
-  <div class="photos">
-    <h2>Documents</h2>
-    <div class="slideshow">
-      <% @texts.each do |doc| %>
-        <%= render "pages/result_card", doc: doc %>
-      <% end %>
-    </div>
+  <div class="admin-show">
+
+    <% unless @person.biography == "" %>
+      <div class="show-section">
+        <h2>Biographie</h2>
+        <p><%= @person.biography %></p>
+      </div>
+    <% end %>
+
+    <% unless @images == [] %>
+      <div class="show-section">
+        <h2>Photographies</h2>
+        <div class="slideshow">
+          <% @images.each do |doc| %>
+            <%= render "pages/result_card", doc: doc %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @texts == [] %>
+      <div class="show-section">
+        <h2>Documents</h2>
+        <div class="slideshow">
+          <% @texts.each do |doc| %>
+            <%= render "pages/result_card", doc: doc %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @links == [] %>
+      <div class="show-section">
+        <h2>Personnes liées</h2>
+        <div class="slideshow">
+          <% @links.each do |link| %>
+            <%  if link.person_a_id == @person.id
+                  p = Person.find(link.person_b_id)
+                  fam_link = link.link_b_to_a
+                else
+                  p = Person.find(link.person_a_id)
+                  fam_link = link.link_a_to_b
+                end %>
+            <%= render "people/card", person: p %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @person.notes == "" %>
+      <div class="show-section">
+        <h3>Notes</h3>
+        <p><%= @person.notes %></p>
+      </div>
+    <% end %>
   </div>
 </div>

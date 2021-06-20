@@ -2,9 +2,9 @@
   <%= link_to document_path(doc) do %>
     <% file = doc.document_files.first %>
     <% if ["png", "jpg", "jpeg"].include?(file.original_format) %>
-      <%= cl_image_tag file.url.key, width: "300", height: "300", crop: "fill" %>
+      <%= cl_image_tag file.url.key, width: "600", height: "600", crop: "fill", class: "img-300" %>
     <% else %>
-      <%= cl_image_tag file.url.key, format: "png", width: "300", height: "300", crop: "fill" %>
+      <%= cl_image_tag file.url.key, format: "png", width: "600", height: "600", crop: "fill", class: "img-300" %>
     <% end %>
     <div class="result_card_info">
       <span class="name"><%= doc.name %></span>

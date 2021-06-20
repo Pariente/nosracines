@@ -27,7 +27,7 @@ class Admin::FundsController < ApplicationController
 
   def create
     @fund = Fund.create(fund_params)
-    redirect_to admin_fund_path(fund_id: @fund.id)
+    redirect_to admin_funds_path
   end
 
   def edit

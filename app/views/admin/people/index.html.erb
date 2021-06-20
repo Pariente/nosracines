@@ -18,6 +18,7 @@
     <th>NOM</th>
     <th>Prénom</th>
     <th>Proches</th>
+    <th>Documents</th>
     <th>Naissance</th>
     <th>Actions</th>
   </tr>
@@ -26,7 +27,7 @@
       <td class="center"><%= p.id %></td>
       <td class="pic_cell">
         <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
-        <%= cl_image_tag pic, format: "png", width: "80", height: "80", crop: "fill", gravity: "face" %></td>
+        <%= cl_image_tag pic, format: "png", width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %></td>
       <td>
         <%= link_to admin_person_path(p.id) do %>
           <%= p.last_name.upcase %>
@@ -39,6 +40,9 @@
       <td><%= p.first_name %></td>
       <td>
         <%= p.family_links.count %>
+      </td>
+      <td>
+        <%= p.documents.count %>
       </td>
       <td><%= p.birth_date %></td>
       <td>

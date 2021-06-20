@@ -1,0 +1,16 @@
+<div class="result_card">
+  <%= link_to person_path(person) do %>
+    <% pic = person.profile_pic.present? ? person.profile_pic.key : "default_profile_pic" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
+    <div class="result_card_info">
+      <span class="name"><%= person.first_name %> <%= person.middle_name %> <%= person.last_name %></span>
+      <% unless person.spouse_name == "" || person.spouse_name == nil %>
+        <span class="name">épouse <%= person.spouse_name %></span>
+      <% end %>
+      <div class="flex flex-column">
+        <span class="date"><%= person.birth_date&.year %> - <%= person.death_date&.year %></span>
+        <span class="location"></span>
+      </div>
+    </div>
+  <% end %>
+</div>

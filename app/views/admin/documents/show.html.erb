@@ -23,13 +23,9 @@
   <div class="mr10">
     <% file = @document.document_files.first %>
     <% if file.nil? %>
-      <%= cl_image_tag "default_document", width: "300", height: "300", crop: "fill" %>
+      <%= cl_image_tag "default_document", width: "600", height: "600", crop: "fill", class: "img-300" %>
     <% else %>
-      <% if ["png", "jpg", "jpeg"].include?(file.original_format) %>
-        <%= cl_image_tag file.url.key, width: "300", height: "300", crop: "fill" %>
-      <% else %>
-        <%= cl_image_tag file.url.key, format: "png", width: "300", height: "300", crop: "fill" %>
-      <% end %>
+      <%= cl_image_tag file.url.key, format: "png", width: "600", height: "600", crop: "fill", class: "img-300" %>
     <% end %>
   </div>
   <div class="person_header_info flex flex-column flex-grow-1">
@@ -91,9 +87,9 @@
           </td>
           <td class="pic_cell">
             <% if ["png", "jpg", "jpeg"].include?(f.original_format) %>
-              <%= cl_image_tag f.url.key, width: "80", height: "80", crop: "fill" %>
+              <%= cl_image_tag f.url.key, width: "160", height: "160", crop: "fill", class: "img-100" %>
             <% else %>
-              <%= cl_image_tag f.url.key, format: "png", width: "80", height: "80", crop: "fill" %>
+              <%= cl_image_tag f.url.key, format: "png", width: "160", height: "160", crop: "fill", class: "img-100" %>
             <% end %>
           </td>
           <td>
@@ -112,7 +108,7 @@
     <i class="material-icons">add</i> Ajouter un fichier
   <% end %>
 </div>
-<% unless @document.notes == "" %>
+<% unless @document.notes.nil? %>
   <div class="show-section">
     <h3>Notes</h3>
     <p><%= @document.notes %></p>
@@ -137,7 +133,7 @@
           </td>
           <td class="pic_cell">
             <% pic = person.profile_pic.present? ? person.profile_pic.key : "default_profile_pic" %>
-            <%= cl_image_tag pic, width: "80", height: "80", crop: "fill", gravity: "face" %>
+            <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
           </td>
           <td>
             <%= link_to admin_person_path(person.id) do %>

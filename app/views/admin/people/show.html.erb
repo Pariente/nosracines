@@ -22,7 +22,7 @@
 <div class="person_header admin-show flex flex-row">
   <div class="mr10">
     <% pic = @person.profile_pic.present? ? @person.profile_pic.key : "default_profile_pic" %>
-    <%= cl_image_tag pic, width: "300", height: "300", crop: "fill", gravity: "face" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
   </div>
   <div class="person_header_info flex flex-column flex-grow-1">
     <div>
@@ -145,7 +145,7 @@
               <%= p.id %>
             </td>
             <td class="pic_cell">
-              <%= cl_image_tag pic, width: "100", height: "100", crop: "fill", gravity: "face" %>
+              <%= cl_image_tag pic, width: "200", height: "200", crop: "fill", gravity: "face", class: "img-100" %>
             </td>
             <td>
               <%= link_to admin_person_path(p.id) do %>
@@ -194,13 +194,9 @@
             <td class="pic_cell">
               <% file = doc.document_files.first %>
               <% if file.nil? %>
-                <%= cl_image_tag "default_document", width: "80", height: "80", crop: "fill" %>
+                <%= cl_image_tag "default_document", width: "200", height: "200", crop: "fill", class: "img-100" %>
               <% else %>
-                <% if ["png", "jpg", "jpeg"].include?(file.original_format) %>
-                  <%= cl_image_tag file.url.key, width: "80", height: "80", crop: "fill" %>
-                <% else %>
-                  <%= cl_image_tag file.url.key, format: "png", width: "80", height: "80", crop: "fill" %>
-                <% end %>
+                <%= cl_image_tag file.url.key, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
               <% end %>
             </td>
             <td>
