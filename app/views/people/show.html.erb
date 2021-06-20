@@ -125,7 +125,7 @@
                   p = Person.find(link.person_a_id)
                   fam_link = link.link_a_to_b
                 end %>
-            <%= render "people/card", person: p %>
+            <%= render "people/card", person: p, link: fam_link %>
           <% end %>
         </div>
       </div>

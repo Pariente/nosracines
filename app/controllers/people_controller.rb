@@ -8,7 +8,7 @@ class PeopleController < ApplicationController
     @aliases = @person.aliases
 
     # Images
-    image_formats = ["png", "jpg", "jpeg", "tiff"]
+    image_formats = ["gif", "png", "jpg", "jpeg", "tiff"]
     @images = @documents.select {|d| image_formats.include?(d.format) }
 
     # Texts
