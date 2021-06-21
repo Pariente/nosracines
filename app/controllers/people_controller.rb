@@ -12,7 +12,7 @@ class PeopleController < ApplicationController
     @images = @documents.select {|d| image_formats.include?(d.format) }
 
     # Texts
-    @texts = @documents.select {|d| images_formats.exclude?(d.format) }
+    @texts = @documents.select {|d| image_formats.exclude?(d.format) }
   end
 
   def index
