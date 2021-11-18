@@ -46,6 +46,8 @@ Rails.application.routes.draw do
     resources :users do 
       get "make_admin"
       get "revoke_admin"
+      get "give_private_access"
+      get "revoke_private_access"
     end
   end
 

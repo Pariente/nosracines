@@ -20,20 +20,20 @@
         <% priv = u.has_private_access %>
         <% if priv %>
           Oui
-          <%= link_to "(retirer l'accès)", root_path %>
+          <%= link_to "(retirer l'accès)", admin_user_revoke_private_access_path(u), data: { confirm: "Vous allez retirer l'accès au contenu privé à #{u.email}. Voulez-vous continuer ?" } %>
         <% else %>
           Non
-          <%= link_to "(donner l'accès)", root_path %>
+          <%= link_to "(donner l'accès)", admin_user_give_private_access_path(u), data: { confirm: "Vous allez donner l'accès au contenu privé à #{u.email}. Voulez-vous continuer ?" } %>
         <% end %>
       </td>
       <td>
         <% admin = u.admin? %>
         <% if admin %>
           Oui
-          <%= link_to "(révoquer les droits)", admin_user_revoke_admin_path(u) %>
+          <%= link_to "(révoquer les droits)", admin_user_revoke_admin_path(u), data: { confirm: "Vous allez retirer les droits d'administrateur à #{u.email}. Voulez-vous continuer ?" } %>
         <% else %>
           Non
-          <%= link_to "(rendre administrateur)", admin_user_make_admin_path(u) %>
+          <%= link_to "(rendre administrateur)", admin_user_make_admin_path(u), data: { confirm: "Vous allez donner les droits d'administrateur à #{u.email}. Voulez-vous continuer ?" } %>
         <% end %>
       </td>
       <td><%= u.created_at.strftime("%F à %T") %></td>
