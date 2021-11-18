@@ -13,6 +13,10 @@
         <i class="material-icons">people</i>
         <span>Personnes</span>
     <% end %>
+    <%= link_to admin_users_path, class: "admin_nav_item" do %>
+        <i class="material-icons">account_circle</i>
+        <span>Utilisateurs</span>
+    <% end %>
   </div>
   <div>
     <%= link_to root_path, class: "admin_nav_item" do %>

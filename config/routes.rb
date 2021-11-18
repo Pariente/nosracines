@@ -43,6 +43,10 @@ Rails.application.routes.draw do
     end
 
     resources :funds
+    resources :users do 
+      get "make_admin"
+      get "revoke_admin"
+    end
   end
 
 end
