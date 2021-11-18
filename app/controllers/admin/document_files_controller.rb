@@ -1,4 +1,5 @@
 class Admin::DocumentFilesController < ApplicationController
+  before_action :authenticate_admin!
   def new
     @document_file = DocumentFile.new()
     @document = Document.find(params[:document_id])

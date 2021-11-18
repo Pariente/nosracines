@@ -1,4 +1,5 @@
 class Admin::FamilyLinksController < ApplicationController
+  before_action :authenticate_admin!
   def new
     @family_link = FamilyLink.new()
     @person = Person.find(params[:person_id])

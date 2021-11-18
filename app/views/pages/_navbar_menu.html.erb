@@ -1,11 +1,16 @@
 <div class="nav_menu">
   <div class="nav_menu_left">
     <%= link_to "Accueil", root_path %>
-    <%= link_to "Souvenir", root_path %>
-    <%= link_to "Carnet", root_path %>
-    <%= link_to "Bibliothèque", root_path %>
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to "Admin", admin_path %>
+    <% end %>
   </div>
   <div class="nav_menu_account">
-    <%= link_to "Se connecter", root_path %>
+    <% if user_signed_in? %>
+      <%= link_to "Déconnexion", destroy_user_session_path %>
+    <% else %>
+      <%= link_to "Connexion", new_user_session_path %>
+      <%= link_to "Inscription", new_user_registration_path %>
+    <% end %>
   </div>
 </div>

@@ -9,6 +9,7 @@
 
   a {
     color: $olive;
+    margin-right: 20px;
     text-decoration: underline;
 
     &:hover {
@@ -20,7 +21,7 @@
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-    justify-content: space-between;
+    justify-content: flex-start;
     max-width: 600px
   }
 

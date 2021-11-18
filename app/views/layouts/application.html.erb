@@ -18,6 +18,8 @@
   </head>
 
   <body>
+    <span class="notice"><%= notice %></span>
+    <span class="alert"><%= alert %></span>
     <% if content_for?(:navbar) %>
       <div class="main">
         <%= yield(:navbar) %>

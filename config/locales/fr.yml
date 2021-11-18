@@ -1,4 +1,13 @@
 fr:
+  log_in: "Se connecter"
+  sign_up: "S'inscrire"
+  activerecord:
+      attributes:
+        user:
+          email: "Adresse e-mail"
+          password: "Mot de passe"
+          password_confirmation: "Confirmer le mot de passe"
+          remember_me: "Se souvenir de moi"
   views:
     pagination:
       first: "&laquo; Première"

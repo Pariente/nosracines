@@ -1,4 +1,5 @@
 class Admin::PeopleController < ApplicationController
+  before_action :authenticate_admin!
   def search
     @params = params["search"]
     if @params.present?

@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "pages#home"
 
+  devise_for :users
+
+  get "admin", to: "admin/people#index"
+
   get "/search_results", to: "pages#search"
 
   resources :documents

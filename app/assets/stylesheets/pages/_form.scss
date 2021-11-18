@@ -33,6 +33,11 @@ form.simple_form {
     flex-direction: column;
     margin: 20px 0px;
 
+    &.boolean {
+      align-items: baseline;
+      flex-direction: row
+    }
+
     label {
       font-family: "Montserrat";
       font-size: 20px;
@@ -41,6 +46,8 @@ form.simple_form {
     }
 
     input[type="text"],
+    input[type="email"],
+    input[type="password"],
     textarea,
     select,
     input[type="date_picker"], {
