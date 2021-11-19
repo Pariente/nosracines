@@ -1,0 +1,65 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_events_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<div class="flex flex-row justify-between align-baseline">
+  <div class="flex flex-row align-baseline">
+    <h1><%= @event.name %></h1>
+    <%= link_to event_path(@event) do %>
+      (voir la fiche)
+    <% end %>
+  </div>
+  <div>
+    <%= link_to edit_admin_event_path(@event), class: "btn btn-mini" do %>
+      <i class="material-icons">edit_calendar</i>
+      <span>Modifier la fiche</span>
+    <% end %>
+  </div>
+</div>
+<div class="person_header admin-show flex flex-row">
+  <div class="mr10">
+    <% pic = @event.illustration.present? ? @event.illustration.key : "default_profile_pic" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
+  </div>
+  <div class="person_header_info flex flex-column flex-grow-1">
+    <div>
+      <% if @event.privacy %>
+        <span class="private-content mb10">
+          <i class="material-icons">security</i> Privé
+        </span>
+      <% end %>
+    </div>
+
+    <div class="half">
+      <% unless @event.date_start.nil? %>
+        <div class="left">
+          <label>Date de début</label>
+          <p><%= @event.date_start %></p>
+        </div>
+      <% end %>
+      <% unless @event.date_end == "" %>
+        <div class="left">
+          <label>Date de fin</label>
+          <p><%= @event.date_end %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="admin-show">
+  <% unless @event.story == "" %>
+    <div class="show-section">
+      <h3>Histoire de l'évènement</h3>
+      <p><%= @event.story %></p>
+    </div>
+  <% end %>
+  <% unless @event.comment == "" %>
+    <div class="show-section">
+      <h3>Commentaires</h3>
+      <p><%= @event.comment %></p>
+    </div>
+  <% end %>
+</div>

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :aliases do
     get "delete"
   end
+  resources :events
 
   namespace :admin do
     get "documents_search", to: "documents#search"

@@ -18,8 +18,10 @@
   </head>
 
   <body>
-    <span class="notice"><%= notice %></span>
-    <span class="alert"><%= alert %></span>
+    <div class="devise_notifications">
+      <span class="notice"><%= notice %></span>
+      <span class="alert"><%= alert %></span>
+    </div>
     <% if content_for?(:navbar) %>
       <div class="main">
         <%= yield(:navbar) %>
