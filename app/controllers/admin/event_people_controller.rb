@@ -7,20 +7,28 @@ class Admin::EventPeopleController < ApplicationController
 
   def create
     @person = Person.find(params[:person_id])
-    ep = params.as_json["event_person"]
+    ep      = params.as_json["event_person"]
     ep.each do |e|
       @person.event_people.create(
-        person_id:    e[1]["person_id"],
-        event_id:  @event_id)
+        person_id:  @person_id,
+        event_id:   e[1]["event_id"])
     end
     redirect_to admin_person_path(@person)
   end
 
   def delete
     @event_person = EventPerson.find(params[:event_person_id])
-    person = @event_person.person
+    person        = @event_person.person
+    event         = @event_person.event
+    
     @event_person.destroy
-    redirect_to admin_person_path(person)
+
+    case params[:redirection]
+    when "event"
+      redirect_to admin_event_path(event)
+    when "person"
+      redirect_to admin_person_path(person)
+    end
   end
 
   def document_person_params

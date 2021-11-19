@@ -22,8 +22,8 @@ class Admin::PeopleController < ApplicationController
 
   def show
     @person           = Person.find(params[:id])
-    @documents        = @person.documents
     @document_people  = @person.document_people
+    @event_people     = @person.event_people
     @a_links          = @person.a_links
     @b_links          = @person.b_links
     @links            = @a_links + @b_links

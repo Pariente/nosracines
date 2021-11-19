@@ -1,0 +1,63 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_person_path(@person), class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler</span>
+<% end %>
+<h1>Lier des évènements à <%= @person.name %></h1>
+  <%= simple_form_for [:admin, @event_person] do |ed| %>
+    <div class="event-person">
+      <%= ed.input  :event_id,
+                      label: "Évènement",
+                      collection: Event.order(:date_start), 
+                      prompt: "Liste des évènements",
+                      label_method: :name, 
+                      input_html: { name: 'event_person[0][event_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-event-person block hidden mr10">Enlever le dernier évènement</button>
+      <button class="btn btn-mini add-event-person block"><i class="material-icons">add</i> Ajouter un évènement</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "person_id", value: @person.id do %>
+      Valider
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  // Add Event Person
+  var i = $('.event-person').length;
+
+  $('.add-event-person').click(function(event){
+    event.preventDefault();
+    var eventPerson     = $('.event-person').length;
+    var lastEventPerson = $('.event-person').last();
+    var removeButton      = $('.remove-event-person').last();
+    removeButton.removeClass('hidden');
+
+    var newEventPerson  = lastEventPerson.clone();
+    var select            = newEventPerson.find('select');
+    select.attr('name', 'event_person['+i+'][event_id]');
+    select.removeAttr('id');
+    lastEventPerson.after(newEventPerson);
+    i++;
+  });
+
+  // Remove Event Person
+  $('.remove-event-person').click(function(event){
+    event.preventDefault();
+
+    var removeButton      = $('.remove-event-person').last();
+    var eventPerson     = $('.event-person').length;
+    var lastEventPerson = $('.event-person').last();
+
+    if (eventPerson == 2) {
+      removeButton.addClass('hidden');
+      lastEventPerson.remove();
+    } else {
+      lastEventPerson.remove();
+    }
+  });
+</script>

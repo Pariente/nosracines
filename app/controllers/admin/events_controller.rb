@@ -20,9 +20,8 @@ class Admin::EventsController < ApplicationController
 
   def show
     @event            = Event.find(params[:id])
-    @documents        = @event.documents
     @event_documents  = @event.event_documents
-    @people           = @event.people
+    @event_people     = @event.event_people
   end
 
   def index

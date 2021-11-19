@@ -116,7 +116,7 @@
     </div>
   <% end %>
   
-  <% unless @people == [] %>
+  <% unless @event_people == [] %>
     <div class="show-section">
       <h3>Personnes associées</h3>
         <table class="admin_table">
@@ -127,7 +127,8 @@
             <th>Prénom</th>
             <th>Action</th>
           </tr>
-          <% @people.each do |p| %>
+          <% @event_people.each do |ep| %>
+            <% p = ep.person %>
             <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
             <tr>
               <td class="center">
@@ -147,7 +148,7 @@
               </td>
               <td><%= p.first_name %></td>
               <td>
-                <%= link_to admin_event_person_delete_path(event_id: @event.id, person_id: @person.id) do %>
+                <%= link_to admin_event_person_delete_path(ep.id, redirection: "event") do %>
                   Supprimer le lien
                 <% end %>
               </td>
