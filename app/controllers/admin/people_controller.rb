@@ -21,12 +21,13 @@ class Admin::PeopleController < ApplicationController
   end
 
   def show
-    @person = Person.find(params[:id])
-    @documents = @person.documents
-    @a_links = @person.a_links
-    @b_links = @person.b_links
-    @links = @a_links + @b_links
-    @aliases = @person.aliases
+    @person           = Person.find(params[:id])
+    @documents        = @person.documents
+    @document_people  = @person.document_people
+    @a_links          = @person.a_links
+    @b_links          = @person.b_links
+    @links            = @a_links + @b_links
+    @aliases          = @person.aliases
   end
 
   def index

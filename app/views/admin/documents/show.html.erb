@@ -134,8 +134,8 @@
         <th>Prénom</th>
         <th>Action</th>
       </tr>
-      <% @document_people.each do |d| %>
-        <% person = d.person %>
+      <% @document_people.each do |dp| %>
+        <% person = dp.person %>
         <tr>
           <td class="center">
             <%= person.id %>
@@ -155,7 +155,7 @@
           </td>
           <td><%= person.first_name %></td>
           <td>
-            <%= link_to admin_document_person_delete_path(d) do %>
+            <%= link_to admin_document_person_delete_path(dp, redirection: "document") do %>
               Supprimer le lien
             <% end %>
           </td>

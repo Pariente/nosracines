@@ -17,10 +17,18 @@ class Admin::DocumentPeopleController < ApplicationController
   end
 
   def delete
-    @document_person = DocumentPerson.find(params[:document_person_id])
-    document = @document_person.document
+    @document_person  = DocumentPerson.find(params[:document_person_id])
+    document          = @document_person.document
+    person            = @document_person.person
+
     @document_person.destroy
-    redirect_to admin_document_path(document)
+
+    case params[:redirection]
+    when "document"
+      redirect_to admin_document_path(document)
+    when "person"
+      redirect_to admin_person_path(person)
+    end
   end
 
   def document_person_params

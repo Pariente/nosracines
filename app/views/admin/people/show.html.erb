@@ -188,7 +188,8 @@
           <th>Fonds</th>
           <th>Actions</th>
         </tr>
-        <% @documents.each do |doc| %>
+        <% @document_people.each do |dp| %>
+          <% doc = dp.document %>
           <tr>
             <td class="center">
               <%= doc.id %>
@@ -216,7 +217,7 @@
               <%= doc.fund.name %>
             </td>
             <td>
-              <%= link_to admin_document_person_delete_path(doc) do %>
+              <%= link_to admin_document_person_delete_path(dp.id, redirection: "person") do %>
                 Supprimer le lien
               <% end %>
             </td>
