@@ -29,25 +29,24 @@
     <% end %>
   </div>
   <div class="person_header_info flex flex-column flex-grow-1">
+    <% if @document.privacy %>
+      <div>
+        <span class="private-content mb10">
+          <i class="material-icons">security</i> Privé
+        </span>
+      </div>
+    <% end %>
     <div>
       <p class="flex flex-column">
         <label>Titre</label>
         <%= @document.name %>
       </p>
     </div>
-    <div class="half">
-      <div class="left">
-        <p class="flex flex-column">
-          <label>Fonds</label>
-          <%= @document.fund.name %>
-        </p>
-      </div>
-      <div class="left">
-        <p class="flex flex-column">
-          <label>Accès</label>
-          <%= @document.privacy ? "Privé" : "Public" %>
-        </p>
-      </div>
+    <div>
+      <p class="flex flex-column">
+        <label>Fonds</label>
+        <%= @document.fund.name %>
+      </p>
     </div>
     <div class="half">
       <% unless @document.date == "" %>
@@ -166,5 +165,48 @@
   <% end %>
   <%= link_to new_admin_document_person_path(document_id: @document.id), class: "btn btn-mini" do %>
     <i class="material-icons">add</i> Lier une personne au document
+  <% end %>
+</div>
+
+<div class="show-section">
+  <h3>Évènements liés à ce document</h3>
+  <% unless @event_documents == [] %>
+    <table class="admin_table">
+      <tr>
+        <th class="center">ID</th>
+        <th class="pic_cell">Aperçu</th>
+        <th>Nom</th>
+        <th class="center">Date de début</th>
+        <th class="center">Date de fin</th>
+        <th>Action</th>
+      </tr>
+      <% @event_documents.each do |ed| %>
+        <% event = ed.event %>
+        <tr>
+          <td class="center">
+            <%= event.id %>
+          </td>
+          <td class="pic_cell">
+            <% pic = event.illustration.present? ? event.illustration.key : "default_profile_pic" %>
+            <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+          </td>
+          <td>
+            <%= link_to admin_event_path(event.id) do %>
+              <%= event.name %>
+            <% end %>
+          </td>
+          <td class="center"><%= event.date_start %></td>
+          <td class="center"><%= event.date_end %></td>
+          <td>
+            <%= link_to admin_event_document_delete_path(ed) do %>
+              Supprimer le lien
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <%= link_to new_admin_event_document_path(document_id: @document.id), class: "btn btn-mini" do %>
+    <i class="material-icons">add</i> Lier un évènement au document
   <% end %>
 </div>

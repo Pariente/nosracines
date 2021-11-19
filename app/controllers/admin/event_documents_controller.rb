@@ -10,8 +10,8 @@ class Admin::EventDocumentsController < ApplicationController
     ed        = params.as_json["event_document"]
     ed.each do |e|
       @document.event_documents.create(
-        document_id:    e[1]["document_id"],
-        event_id:  @event_id)
+        document_id:  @document.id,
+        event_id:     e[1]["event_id"])
     end
     redirect_to admin_document_path(@document)
   end

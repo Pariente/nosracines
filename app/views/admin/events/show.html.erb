@@ -25,13 +25,13 @@
     <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
   </div>
   <div class="person_header_info flex flex-column flex-grow-1">
-    <div>
-      <% if @event.privacy %>
+    <% if @event.privacy %>
+      <div>
         <span class="private-content mb10">
           <i class="material-icons">security</i> Privé
         </span>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
 
     <div class="half">
       <% unless @event.date_start.nil? %>
@@ -56,10 +56,103 @@
       <p><%= @event.story %></p>
     </div>
   <% end %>
+
   <% unless @event.comment == "" %>
     <div class="show-section">
       <h3>Commentaires</h3>
       <p><%= @event.comment %></p>
     </div>
   <% end %>
+
+  <% unless @documents == [] %>
+    <div class="show-section">
+      <h3>Documents associés</h3>
+      <table class="admin_table">
+        <tr>
+          <th class="center">ID</th>
+          <th class="pic_cell">Aperçu</th>
+          <th>Nom</th>
+          <th>Date</th>
+          <th>Référence</th>
+          <th>Fonds</th>
+          <th>Actions</th>
+        </tr>
+        <% @documents.each do |doc| %>
+          <tr>
+            <td class="center">
+              <%= doc.id %>
+            </td>
+            <td class="pic_cell">
+              <% file = doc.document_files.first %>
+              <% if file.nil? %>
+                <%= cl_image_tag "default_document", width: "200", height: "200", crop: "fill", class: "img-100" %>
+              <% else %>
+                <%= cl_image_tag file.url.key, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to admin_document_path(doc.id) do %>
+                <%= doc.name %>
+              <% end %>
+            </td>
+            <td>
+              <%= doc.date %>
+            </td>
+            <td>
+              <%= doc.reference %>
+            </td>
+            <td>
+              <%= doc.fund.name %>
+            </td>
+            <td>
+              <%= link_to admin_event_person_delete_path(doc) do %>
+                Supprimer le lien
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+  
+  <% unless @people == [] %>
+    <div class="show-section">
+      <h3>Personnes associées</h3>
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Action</th>
+          </tr>
+          <% @people.each do |p| %>
+            <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
+            <tr>
+              <td class="center">
+                <%= p.id %>
+              </td>
+              <td class="pic_cell">
+                <%= cl_image_tag pic, width: "200", height: "200", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_person_path(p.id) do %>
+                  <%= p.last_name.upcase %>
+                <% end %>
+                <% if p.spouse_name.present? %>
+                  <br>
+                  <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
+                <% end %>
+              </td>
+              <td><%= p.first_name %></td>
+              <td>
+                <%= link_to admin_event_person_delete_path(event_id: @event.id, person_id: @person.id) do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
 </div>

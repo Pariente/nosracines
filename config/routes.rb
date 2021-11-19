@@ -50,6 +50,14 @@ Rails.application.routes.draw do
       get "delete"
     end
 
+    resources :event_people do
+      get "delete"
+    end
+
+    resources :event_documents do
+      get "delete"
+    end
+
     resources :funds
     resources :users do 
       get "make_admin"

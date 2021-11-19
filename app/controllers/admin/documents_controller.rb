@@ -21,6 +21,7 @@ class Admin::DocumentsController < ApplicationController
   def show
     @document = Document.find(params[:id])
     @document_people = @document.document_people
+    @event_documents = @document.event_documents
   end
 
   def new

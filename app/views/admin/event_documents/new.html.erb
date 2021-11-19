@@ -1,0 +1,63 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_document_path(@document), class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler</span>
+<% end %>
+<h1>Lier des évènements à <%= @document.name %></h1>
+  <%= simple_form_for [:admin, @event_document] do |ed| %>
+    <div class="event-document">
+      <%= ed.input  :event_id,
+                      label: "Évènement",
+                      collection: Event.order(:date_start), 
+                      prompt: "Liste des évènements",
+                      label_method: :name, 
+                      input_html: { name: 'event_document[0][event_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-event-document block hidden mr10">Enlever le dernier évènement</button>
+      <button class="btn btn-mini add-event-document block"><i class="material-icons">add</i> Ajouter un évènement</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "document_id", value: @document.id do %>
+      Valider
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  // Add Event Document
+  var i = $('.event-document').length;
+
+  $('.add-event-document').click(function(event){
+    event.preventDefault();
+    var eventDocument     = $('.event-document').length;
+    var lastEventDocument = $('.event-document').last();
+    var removeButton      = $('.remove-event-document').last();
+    removeButton.removeClass('hidden');
+
+    var newEventDocument  = lastEventDocument.clone();
+    var select            = newEventDocument.find('select');
+    select.attr('name', 'event_document['+i+'][event_id]');
+    select.removeAttr('id');
+    lastEventDocument.after(newEventDocument);
+    i++;
+  });
+
+  // Remove Event Document
+  $('.remove-event-document').click(function(event){
+    event.preventDefault();
+
+    var removeButton      = $('.remove-event-document').last();
+    var eventDocument     = $('.event-document').length;
+    var lastEventDocument = $('.event-document').last();
+
+    if (eventDocument == 2) {
+      removeButton.addClass('hidden');
+      lastEventDocument.remove();
+    } else {
+      lastEventDocument.remove();
+    }
+  });
+</script>
