@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get "/search_results", to: "pages#search"
 
+  get "private_content", to: "pages#private_content"
+
   resources :documents
   resources :document_files
   resources :people

@@ -15,3 +15,13 @@ fr:
       previous: "&lsaquo; Préc."
       next: "Suiv. &rsaquo;"
       truncate: "&hellip;"
+  devise:
+    sessions:
+      user:
+        signed_in: "Connexion réussie."
+        signed_out: "Déconnexion réussie."
+        already_signed_out: "Vous êtes déjà déconnecté."
+    failure:
+      user:
+        invalid: "Mot de passe invalide."
+        not_found_in_database: "Adresse e-mail invalide."

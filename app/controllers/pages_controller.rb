@@ -2,7 +2,13 @@ class PagesController < ApplicationController
   def home
   end
 
+  def private_content
+  end
+
   def search
+    # Does the user has access to private content?
+    private_access = user_signed_in? && current_user.has_private_access
+
     @params = params["search"]
     if @params.present?
       @keywords = @params[:keywords]
@@ -17,6 +23,10 @@ class PagesController < ApplicationController
                 Person.where(last_name.matches("%#{@keywords}%"))).or(
                 Person.where(spouse_name.matches("%#{@keywords}%"))
       )
+      # Filter if user should not access private content
+      unless private_access
+        @people = @people.select {|p| !p.privacy}
+      end
 
       # Documents
       name = Document.arel_table[:name]
@@ -28,6 +38,11 @@ class PagesController < ApplicationController
       end
       @documents += people_docs
       @documents = @documents.uniq
+
+      # Filter if user should access private content
+      unless private_access
+        @documents = @documents.select {|d| !d.privacy}
+      end
 
       # Images
       image_formats = ["gif", "png", "jpg", "jpeg", "tiff"]

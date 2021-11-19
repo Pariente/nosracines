@@ -1,6 +1,13 @@
 class PeopleController < ApplicationController
   def show
     @person = Person.find(params[:id])
+
+    # Filter if person is private and user should not have access
+    private_access = user_signed_in? && current_user.has_private_access
+    if @person.privacy && !private_access
+      redirect_to private_content_path
+    end
+
     @documents = @person.documents
     @a_links = @person.a_links
     @b_links = @person.b_links
