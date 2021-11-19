@@ -198,7 +198,7 @@
           <td class="center"><%= event.date_start %></td>
           <td class="center"><%= event.date_end %></td>
           <td>
-            <%= link_to admin_event_document_delete_path(ed) do %>
+            <%= link_to admin_event_document_delete_path(ed, redirection: "document") do %>
               Supprimer le lien
             <% end %>
           </td>

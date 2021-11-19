@@ -18,9 +18,17 @@ class Admin::EventDocumentsController < ApplicationController
 
   def delete
     @event_document = EventDocument.find(params[:event_document_id])
-    document = @event_document.document
+    document        = @event_document.document
+    event           = @event_document.event
+    
     @event_document.destroy
-    redirect_to admin_document_path(document)
+
+    case params[:redirection]
+    when "event"
+      redirect_to admin_event_path(event)
+    when "document"
+      redirect_to admin_document_path(document)
+    end
   end
 
   def event_document_params

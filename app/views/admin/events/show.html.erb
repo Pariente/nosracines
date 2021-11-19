@@ -64,7 +64,7 @@
     </div>
   <% end %>
 
-  <% unless @documents == [] %>
+  <% unless @event_documents == [] %>
     <div class="show-section">
       <h3>Documents associés</h3>
       <table class="admin_table">
@@ -77,7 +77,8 @@
           <th>Fonds</th>
           <th>Actions</th>
         </tr>
-        <% @documents.each do |doc| %>
+        <% @event_documents.each do |ed| %>
+          <% doc = ed.document %>
           <tr>
             <td class="center">
               <%= doc.id %>
@@ -105,7 +106,7 @@
               <%= doc.fund.name %>
             </td>
             <td>
-              <%= link_to admin_event_person_delete_path(doc) do %>
+              <%= link_to admin_event_document_delete_path(ed, redirection: "event") do %>
                 Supprimer le lien
               <% end %>
             </td>
