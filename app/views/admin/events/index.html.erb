@@ -1,0 +1,59 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+
+<h1>Évènements</h1>
+<div class="admin_top_bar">
+  <%= render "admin/events/search_input" %>
+  <%= link_to new_admin_event_path, class: "btn" do %>
+    <i class="material-icons">event</i>
+    Ajouter un évènement
+  <% end %>
+</div>
+
+<table class="admin_table">
+  <tr>
+    <th class="center">ID</th>
+    <th class="pic_cell">Aperçu</th>
+    <th>Nom</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+    <th>Personnes</th>
+    <th>Docs</th>
+    <th>Actions</th>
+  </tr>
+  <% @events.each do |e| %>
+    <tr>
+      <td class="center"><%= e.id %></td>
+      <td class="pic_cell">
+        <% pic = e.illustration.present? ? e.illustration.key : "default_event_pic" %>
+        <%= cl_image_tag pic, format: "png", width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %></td>
+      </td>
+      <td>
+        <%= link_to admin_event_path(e.id) do %>
+          <%= e.name %>
+        <% end %><br>
+        <% if e.privacy %>
+        <span class="private-content">
+          <i class="material-icons">security</i> Privé
+        </span>
+        <% end %>
+      </td>
+      <td><%= e.date_start.strftime("%F") %></td>
+      <td><%= e.date_end.strftime("%F") %></td>
+      <td class="center">
+        <%= e.people.count %>
+      </td>
+      <td class="center">
+        <%= e.documents.count %>
+      </td>
+      <td>
+        <%= link_to 'Modifier', edit_admin_event_path(e) %><br>
+        <%= link_to 'Voir', admin_event_path(e) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<div class="pagination_row">
+  <%= paginate @events %>
+</div>

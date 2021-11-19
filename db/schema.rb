@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_170244) do
+ActiveRecord::Schema.define(version: 2021_11_19_183707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,36 @@ ActiveRecord::Schema.define(version: 2021_11_18_170244) do
     t.index ["fund_id"], name: "index_documents_on_fund_id"
   end
 
+  create_table "event_documents", force: :cascade do |t|
+    t.bigint "event_id"
+    t.bigint "document_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["document_id"], name: "index_event_documents_on_document_id"
+    t.index ["event_id"], name: "index_event_documents_on_event_id"
+  end
+
+  create_table "event_people", force: :cascade do |t|
+    t.bigint "event_id"
+    t.bigint "person_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_event_people_on_event_id"
+    t.index ["person_id"], name: "index_event_people_on_person_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.date "date_start"
+    t.date "date_end"
+    t.text "story"
+    t.text "comment"
+    t.string "illustration"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "privacy", default: false
+  end
+
   create_table "family_links", force: :cascade do |t|
     t.integer "person_a_id"
     t.integer "person_b_id"
@@ -154,4 +184,8 @@ ActiveRecord::Schema.define(version: 2021_11_18_170244) do
   add_foreign_key "document_sources", "documents"
   add_foreign_key "document_sources", "sources"
   add_foreign_key "documents", "funds"
+  add_foreign_key "event_documents", "documents"
+  add_foreign_key "event_documents", "events"
+  add_foreign_key "event_people", "events"
+  add_foreign_key "event_people", "people"
 end

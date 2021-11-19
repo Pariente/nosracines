@@ -4,6 +4,7 @@ class Person < ApplicationRecord
   has_many :b_links, class_name: "FamilyLink", foreign_key: "person_b_id", dependent: :delete_all
 
   has_many :document_people
+  has_many :event_people
 
   has_many :aliases
 

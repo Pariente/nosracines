@@ -1,0 +1,59 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_events_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<h1>Créer un nouvel évènement</h1>
+<%= simple_form_for [:admin, @event] do |f| %>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :illustration, 
+                  label: "Photo d'illustration", 
+                  as: :file %>
+    </div>
+    <div class="right">
+      <%= f.input :name,
+                  label: "Nom",
+                  as: :string,
+                  input_html: { autocomplete: 'off' },
+                  required: true,
+                  placeholder: "ex : Mariage de Pierre et Louise (2020)" %>
+      <%= f.input :privacy,
+                  label: "Évènement privé ?",
+                  as: :boolean %>
+    </div>
+  </div>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :date_start, 
+                  input_html: { autocomplete: 'off' },
+                  label: "Date de début", 
+                  as: :date_picker %>
+    </div>
+    <div class="right">
+      <%= f.input :date_end, 
+                  input_html: { autocomplete: 'off' },
+                  label: "Date de fin", 
+                  as: :date_picker %>
+    </div>
+  </div>
+  <hr>
+  <%= f.input :story, 
+              label: "Histoire de l'évènement", 
+              as: :text,
+              placeholder: "Raconter ici l'histoire de l'évènement, son déroulé, les personnes impliquées et les conséquences qu'il a eues sur elles." %>
+  <%= f.input :comment, 
+              label: "Commentaires", 
+              as: :text,
+              placeholder: "Renseigner ici les commentaires historiographiques qui concernent cet évènement. Par exemple, comment les informations le concernant ont été obtenues, quelle institution les détient, etc." %>
+  <%= button_tag type: "submit", class: "btn" do %>
+    <i class="material-icons">add_circle</i> Créer l'évènement
+  <% end %>
+<% end %>
+
+<script>
+  // DatePicker
+  $("input.date_picker").datepicker({ format: 'yyyy-mm-dd' });
+</script>

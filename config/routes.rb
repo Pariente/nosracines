@@ -22,15 +22,20 @@ Rails.application.routes.draw do
     get "documents_search", to: "documents#search"
     get "funds_search",     to: "funds#search"
     get "people_search",    to: "people#search"
+    get "events_search",    to: "events#search"
 
     resources :people do
       resources :family_links
+      resources :event_people
     end
 
     resources :documents do
       resources :document_files
       resources :document_people
+      resources :event_documents
     end
+
+    resources :events
 
     resources :document_files do
       get "delete"
