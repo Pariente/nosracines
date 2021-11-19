@@ -17,8 +17,8 @@
     <th class="pic_cell">Aperçu</th>
     <th>NOM</th>
     <th>Prénom</th>
-    <th>Proches</th>
-    <th>Documents</th>
+    <th class="center">Proches</th>
+    <th class="center">Docs</th>
     <th>Naissance</th>
     <th>Actions</th>
   </tr>
@@ -36,12 +36,17 @@
           <br>
           <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
         <% end %>
+        <% if p.privacy %>
+          <span class="private-content">
+            <i class="material-icons">security</i> Privé
+          </span>
+        <% end %>
       </td>
       <td><%= p.first_name %></td>
-      <td>
+      <td class="center">
         <%= p.family_links.count %>
       </td>
-      <td>
+      <td class="center">
         <%= p.documents.count %>
       </td>
       <td><%= p.birth_date %></td>

@@ -16,6 +16,9 @@
               label: "Fonds",
               collection: Fund.order(:name), 
               prompt: "" %>
+  <%= f.input :privacy,
+              label: "Contenu privé ?",
+              as: :boolean %>
   <div class="form-half">
     <div class="left">
       <%= f.input :date, 

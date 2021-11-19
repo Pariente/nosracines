@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_130214) do
+ActiveRecord::Schema.define(version: 2021_11_18_170244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,12 +84,12 @@ ActiveRecord::Schema.define(version: 2021_11_18_130214) do
     t.date "date"
     t.string "reference"
     t.string "location"
-    t.integer "privacy", default: 0
     t.bigint "fund_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "box"
     t.text "notes"
+    t.boolean "privacy", default: false
     t.index ["fund_id"], name: "index_documents_on_fund_id"
   end
 
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_130214) do
     t.string "birth_place"
     t.string "death_place"
     t.text "notes"
+    t.boolean "privacy", default: false
   end
 
   create_table "sources", force: :cascade do |t|

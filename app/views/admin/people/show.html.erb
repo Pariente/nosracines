@@ -26,18 +26,20 @@
   </div>
   <div class="person_header_info flex flex-column flex-grow-1">
     <div>
-      <p>
-        <% if @person.gender == "0" %>
-          Mme
-        <% elsif @person.gender == "1" %>
-          M.
-        <% end %>
-      </p>
+      <% if @person.privacy %>
+        <span class="private-content mb10">
+          <i class="material-icons">security</i> Privé
+        </span>
+      <% end %>
     </div>
     <div class="half">
       <div class="left">
         <label>Nom de naissance</label>
-        <p><%= @person.last_name.upcase %></p>
+        <p><% if @person.gender == "0" %>
+          Mme
+        <% elsif @person.gender == "1" %>
+          M.
+        <% end %><%= @person.last_name.upcase %></p>
       </div>
       <% unless @person.spouse_name == "" %>
         <div class="right">

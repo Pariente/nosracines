@@ -68,7 +68,8 @@ class Admin::PeopleController < ApplicationController
       :gender,
       :birth_place,
       :death_place,
-      :notes)
+      :notes,
+      :privacy)
   end
 
   def reciprocal_link(link, gender_a)

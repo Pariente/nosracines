@@ -50,6 +50,7 @@ class Admin::DocumentsController < ApplicationController
       :reference,
       :box,
       :fund_id,
-      :notes)
+      :notes,
+      :privacy)
   end
 end

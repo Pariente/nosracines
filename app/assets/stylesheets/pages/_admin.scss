@@ -14,10 +14,14 @@ a.btn {
 }
 
 .admin_top_bar {
-  align-items: end;
+  align-items: flex-start;
   display: flex;
   flex-direction: row;
-  justify-content: space-between
+  justify-content: space-between;
+
+  .search_input {
+    margin-bottom: 0px
+  }
 }
 
 .admin_table {
@@ -60,6 +64,18 @@ a.btn {
 
   .font-small {
     font-size: 14px
+  }
+}
+
+.private-content {
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  margin-top: 3px;
+
+  i.material-icons {
+    font-size: 14px;
+    margin-right: 3px
   }
 }
 

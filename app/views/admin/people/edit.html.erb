@@ -16,6 +16,9 @@
                   label_method: :second, 
                   value_method: :first,
                   required: true %>
+      <%= f.input :privacy,
+                  label: "Profil privé ?",
+                  as: :boolean %>
     </div>
     <div class="right">
       <%= f.input :profile_pic, 

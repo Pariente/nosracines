@@ -34,19 +34,29 @@
         <label>Titre</label>
         <%= @document.name %>
       </p>
-      <p class="flex flex-column">
-        <label>Fonds</label>
-        <%= @document.fund.name %>
-      </p>
     </div>
     <div class="half">
-      <% unless @document.date.nil? %>
+      <div class="left">
+        <p class="flex flex-column">
+          <label>Fonds</label>
+          <%= @document.fund.name %>
+        </p>
+      </div>
+      <div class="left">
+        <p class="flex flex-column">
+          <label>Accès</label>
+          <%= @document.privacy ? "Privé" : "Public" %>
+        </p>
+      </div>
+    </div>
+    <div class="half">
+      <% unless @document.date == "" %>
         <div class="left">
           <label>Date</label>
           <p><%= @document.date %></p>
         </div>
       <% end %>
-      <% unless @document.location.nil? %>
+      <% unless @document.location == "" %>
         <div class="left">
           <label>Lieu</label>
           <p><%= @document.location %></p>
@@ -54,13 +64,13 @@
       <% end %>
     </div>
     <div class="half">
-      <% unless @document.reference.nil? %>
+      <% unless @document.reference == "" %>
         <div class="left">
           <label>Référence</label>
           <p><%= @document.reference %></p>
         </div>
       <% end %>
-      <% unless @document.box.nil? %>
+      <% unless @document.box == "" %>
         <div class="left">
           <label>Boîte</label>
           <p><%= @document.box %></p>
@@ -108,7 +118,7 @@
     <i class="material-icons">add</i> Ajouter un fichier
   <% end %>
 </div>
-<% unless @document.notes.nil? %>
+<% unless @document.notes == "" %>
   <div class="show-section">
     <h3>Notes</h3>
     <p><%= @document.notes %></p>
