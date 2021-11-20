@@ -10,6 +10,13 @@
       <div class="flex flex-column">
         <span class="date"><%= person.birth_date&.year %> <% unless person.death_date.nil? %>- <%= person.death_date&.year %><% end%></span>
         <span class="link"><%= link %></span>
+        <% if person.privacy? %>
+          <div>
+            <span class="private-content">
+              <i class="material-icons">security</i> Privé
+            </span>
+          </div>
+        <% end %>
       </div>
     </div>
   <% end %>

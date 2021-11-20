@@ -94,7 +94,7 @@
         <h2>Photographies</h2>
         <div class="slideshow">
           <% @images.each do |doc| %>
-            <%= render "pages/result_card", doc: doc %>
+            <%= render "documents/card", doc: doc %>
           <% end %>
         </div>
       </div>
@@ -105,7 +105,7 @@
         <h2>Documents</h2>
         <div class="slideshow">
           <% @texts.each do |doc| %>
-            <%= render "pages/result_card", doc: doc %>
+            <%= render "documents/card", doc: doc %>
           <% end %>
         </div>
       </div>

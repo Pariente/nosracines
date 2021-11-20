@@ -25,3 +25,4 @@ fr:
       user:
         invalid: "Mot de passe invalide."
         not_found_in_database: "Adresse e-mail invalide."
+        unauthenticated: "Vous devez être connecté pour accéder à cela."

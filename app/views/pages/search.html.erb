@@ -13,7 +13,7 @@
 <% end %>
 
 <% unless @images == [] %>
-  <%= render "pages/search_category_document", 
+  <%= render "pages/search_category_documents", 
         category: "Photographies",
         icon: "image",
         docs: @images
@@ -21,9 +21,38 @@
 <% end %>
 
 <% unless @texts == [] %>
-  <%= render "pages/search_category_document", 
+  <%= render "pages/search_category_documents", 
         category: "Documents",
         icon: "text_snippet",
         docs: @texts
   %>
+<% end %>
+
+<% unless @audios == [] %>
+  <%= render "pages/search_category_documents", 
+        category: "Audios",
+        icon: "audio",
+        docs: @audios
+  %>
+<% end %>
+
+<% unless @videos == [] %>
+  <%= render "pages/search_category_documents", 
+        category: "Vidéos",
+        icon: "video",
+        docs: @videos
+  %>
+<% end %>
+
+<% unless @others == [] %>
+  <%= render "pages/search_category_documents", 
+        category: "Autres documents",
+        icon: "miscellaneous",
+        docs: @others
+  %>
+<% end %>
+
+<% unless @events == [] %>
+  <%= render "pages/search_category_events",
+        events: @events %>
 <% end %>

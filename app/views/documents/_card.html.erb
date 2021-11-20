@@ -12,6 +12,13 @@
         <span class="date"><%= doc.date&.year %></span>
         <span class="location"><%= doc.location %></span>
       </div>
+      <% if doc.privacy? %>
+        <div>
+          <span class="private-content">
+            <i class="material-icons">security</i> Privé
+          </span>
+        </div>
+      <% end %>
     </div>
   <% end %>
 </div>

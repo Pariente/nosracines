@@ -1,0 +1,12 @@
+<!-- *** EVENEMENTS *** -->
+<div class="section search_category">
+  <div class="search_category_header">
+    <i class="material-icons">event</i>
+    <h2>Évènements</h2>
+  </div>
+  <div class="search_results">
+    <% events.each do |event| %>
+      <%= render "events/card", event: event %>
+    <% end %>
+  </div>
+</div>

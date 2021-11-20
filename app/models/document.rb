@@ -19,6 +19,16 @@ class Document < ApplicationRecord
     return people
   end
 
+  def events
+    event_documents = self.event_documents
+    events = []
+    event_documents.each do |ed|
+      events << ed.event
+    end
+
+    return events
+  end
+
   def self.fund
     fund = Fund.find(self.fund_id)
     return fund

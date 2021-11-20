@@ -18,10 +18,10 @@ class PagesController < ApplicationController
       middle_name = Person.arel_table[:middle_name]
       last_name   = Person.arel_table[:last_name]
       spouse_name = Person.arel_table[:spouse_name]
-      @people = Person.where(first_name.matches("%#{@keywords}%")).or(
-                Person.where(middle_name.matches("%#{@keywords}%"))).or(
-                Person.where(last_name.matches("%#{@keywords}%"))).or(
-                Person.where(spouse_name.matches("%#{@keywords}%"))
+      @people     = Person.where(first_name.matches("%#{@keywords}%")).or(
+                    Person.where(middle_name.matches("%#{@keywords}%"))).or(
+                    Person.where(last_name.matches("%#{@keywords}%"))).or(
+                    Person.where(spouse_name.matches("%#{@keywords}%"))
       )
       # Filter if user should not access private content
       unless private_access
@@ -29,8 +29,8 @@ class PagesController < ApplicationController
       end
 
       # Documents
-      name = Document.arel_table[:name]
-      @documents =  Document.where(name.matches("%#{@keywords}%"))
+      name        = Document.arel_table[:name]
+      @documents  = Document.where(name.matches("%#{@keywords}%"))
       
       people_docs = []
       @people.each do |p|
@@ -39,17 +39,35 @@ class PagesController < ApplicationController
       @documents += people_docs
       @documents = @documents.uniq
 
+      # Events
+      name    = Event.arel_table[:name]
+      @events = Event.where(name.matches("%#{@keywords}%"))
+
       # Filter if user should access private content
       unless private_access
-        @documents = @documents.select {|d| !d.privacy}
+        @documents  = @documents.select {|d| !d.privacy}
+        @events     = @events.select {|e| !e.privacy}
       end
 
       # Images
-      image_formats = ["gif", "png", "jpg", "jpeg", "tiff"]
-      @images = @documents.select {|d| image_formats.include?(d.format) }
+      image_formats = ["gif", "png", "jpg", "jpeg", "tiff", "heic", "svg"]
+      @images       = @documents.select {|d| image_formats.include?(d.format) }
 
+      # Videos
+      video_formats = ["avi", "mov", "mp4", "wav", "wma", "wmv"]
+      @videos       = @documents.select {|d| video_formats.include?(d.format) }
+
+      # Audios
+      audio_formats = ["mid", "mp3"]
+      @audios       = @documents.select {|d| audio_formats.include?(d.format) }
+      
       # Texts
-      @texts = @documents.select {|d| image_formats.exclude?(d.format) }
+      text_formats = ["doc", "docx", "pdf", "txt"]
+      @texts = @documents.select {|d| text_formats.include?(d.format) }
+
+      # Others
+      all_formats = image_formats + video_formats + audio_formats + text_formats
+      @others = @documents.select {|d| all_formats.exclude?(d.format) }
     end
   end
 end

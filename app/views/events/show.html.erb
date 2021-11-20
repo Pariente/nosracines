@@ -39,7 +39,7 @@
         <h2>Documents associés</h2>
         <div class="slideshow">
           <% @documents.each do |doc| %>
-            <%= render "pages/result_card", doc: doc %>
+            <%= render "documents/card", doc: doc %>
           <% end %>
         </div>
       </div>

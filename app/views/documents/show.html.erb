@@ -70,11 +70,19 @@
         </div>
       <% end %>
     </div>
-    <% unless @document.people == [] %>
+    <% unless @people == [] %>
       <div class="row">
-        <i class="material-icons">people_outline</i>
-        <% @document.people.each do |p| %>
+        <i class="material-icons">people</i>
+        <% @people.each do |p| %>
           <%= link_to p.full_name_index, person_path(p) %>
+        <% end %>
+      </div>
+    <% end %>
+    <% unless @events == [] %>
+      <div class="row">
+        <i class="material-icons">event</i>
+        <% @events.each do |e| %>
+          <%= link_to e.name, event_path(e) %>
         <% end %>
       </div>
     <% end %>
