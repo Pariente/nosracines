@@ -34,6 +34,16 @@ class Person < ApplicationRecord
     return docs
   end
 
+  def events
+    event_people = self.event_people
+    events = []
+    event_people.each do |ep|
+      events << ep.event
+    end
+
+    return events
+  end
+
   def family_links
     a_links = self.a_links
     b_links = self.b_links

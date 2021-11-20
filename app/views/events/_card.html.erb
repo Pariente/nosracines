@@ -1,0 +1,12 @@
+<div class="result_card">
+  <%= link_to event_path(event) do %>
+    <% pic = event.illustration.present? ? event.illustration.key : "default_event_pic" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
+    <div class="result_card_info">
+      <span class="name"><%= event.name %></span>
+      <div class="flex flex-column">
+        <span class="date"><%= event.date_start.strftime("%e %b %Y") %> <% unless event.date_end.nil? %>- <%= event.date_end.strftime("%e %b %Y") %><% end%></span>
+      </div>
+    </div>
+  <% end %>
+</div>

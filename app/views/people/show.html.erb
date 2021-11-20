@@ -3,16 +3,14 @@
     <% pic = @person.profile_pic.present? ? @person.profile_pic.key : "default_profile_pic" %>
     <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
     <div class="person_header_info">
+      <% if @person.privacy %>
+        <div>
+          <span class="private-content mb10">
+            <i class="material-icons">security</i> Privé
+          </span>
+        </div>
+      <% end %>
       <h1><%= @person.name %></h1>
-      <div>
-        <p>
-          <% if @person.gender == "0" %>
-            Mme
-          <% elsif @person.gender == "1" %>
-            M.
-          <% end %>
-        </p>
-      </div>
       <div class="half">
         <div class="left">
           <label>Nom de naissance</label>
@@ -126,6 +124,17 @@
                   fam_link = link.link_a_to_b
                 end %>
             <%= render "people/card", person: p, link: fam_link %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @events == [] %>
+      <div class="show-section">
+        <h2>Évènements associés</h2>
+        <div class="slideshow">
+          <% @events.each do |event| %>
+            <%= render "events/card", event: event %>
           <% end %>
         </div>
       </div>

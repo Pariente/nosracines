@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="person_header admin-show">
+    <% pic = @event.illustration.present? ? @event.illustration.key : "default_profile_pic" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
+    <div class="person_header_info">
+      <h1><%= @event.name %></h1>
+      <div class="half">
+        <div class="left">
+          <label>Date de début</label>
+          <p><%= @event.date_start %></p>
+        </div>
+        <% unless @event.date_end == "" %>
+          <div class="left">
+            <label>Date de fin</label>
+            <p><%= @event.date_end %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-show">
+    <% unless @event.story == "" %>
+      <div class="show-section">
+        <h2>Histoire de l'évènement</h2>
+        <p><%= @event.story %></p>
+      </div>
+    <% end %>
+
+    <% unless @event.comment == "" %>
+      <div class="show-section">
+        <h2>Commentaires</h2>
+        <p><%= @event.comment %></p>
+      </div>
+    <% end %>
+
+    <% unless @documents == [] %>
+      <div class="show-section">
+        <h2>Documents associés</h2>
+        <div class="slideshow">
+          <% @documents.each do |doc| %>
+            <%= render "pages/result_card", doc: doc %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @people == [] %>
+      <div class="show-section">
+        <h2>Personnes associées</h2>
+        <div class="slideshow">
+          <% @people.each do |p| %>
+            <%= render "people/card", person: p, link: "" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

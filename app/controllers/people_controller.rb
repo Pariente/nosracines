@@ -8,11 +8,12 @@ class PeopleController < ApplicationController
       redirect_to private_content_path
     end
 
-    @documents = @person.documents
-    @a_links = @person.a_links
-    @b_links = @person.b_links
-    @links = @a_links + @b_links
-    @aliases = @person.aliases
+    @documents  = @person.documents
+    @a_links    = @person.a_links
+    @b_links    = @person.b_links
+    @links      = @a_links + @b_links
+    @aliases    = @person.aliases
+    @events     = @person.events
 
     # Images
     image_formats = ["gif", "png", "jpg", "jpeg", "tiff"]
@@ -40,7 +41,8 @@ class PeopleController < ApplicationController
       :gender,
       :birth_place,
       :death_place,
-      :notes)
+      :notes,
+      :privacy)
   end
 
   def reciprocal_link(link, gender_a)
