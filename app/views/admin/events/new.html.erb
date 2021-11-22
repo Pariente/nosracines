@@ -30,7 +30,8 @@
       <%= f.input :date_start, 
                   input_html: { autocomplete: 'off' },
                   label: "Date de début", 
-                  as: :date_picker %>
+                  as: :date_picker,
+                  required: true %>
     </div>
     <div class="right">
       <%= f.input :date_end, 

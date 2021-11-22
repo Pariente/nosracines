@@ -9,7 +9,7 @@
           <label>Date de début</label>
           <p><%= @event.date_start %></p>
         </div>
-        <% unless @event.date_end == "" %>
+        <% unless @event.date_end.nil? %>
           <div class="left">
             <label>Date de fin</label>
             <p><%= @event.date_end %></p>

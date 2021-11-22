@@ -2,18 +2,35 @@ class Admin::EventDocumentsController < ApplicationController
   before_action :authenticate_admin!
   def new
     @event_document = EventDocument.new()
-    @document       = Document.find(params[:document_id])
+
+    case params[:from]
+    when "document"
+      @document = Document.find(params[:document_id])
+    when "event"
+      @event = Event.find(params[:event_id])
+    end
   end
 
   def create
-    @document = Document.find(params[:document_id])
-    ed        = params.as_json["event_document"]
-    ed.each do |e|
-      @document.event_documents.create(
-        document_id:  @document.id,
-        event_id:     e[1]["event_id"])
+    ed = params.as_json["event_document"]
+    case ed["from"]
+    when "document"
+      @document = Document.find(params[:document_id])
+      ed.each do |q|
+        @document.event_documents.create(
+          document_id:  @document.id,
+          event_id:     q[1]["event_id"])
+      end
+      redirect_to admin_document_path(@document)
+    when "event"
+      @event  = Event.find(params[:event_id])
+      ed.each do |q|
+        @event.event_documents.create(
+          document_id:  q[1]["document_id"],
+          event_id:     @event.id)
+      end
+      redirect_to admin_event_path(@event)
     end
-    redirect_to admin_document_path(@document)
   end
 
   def delete

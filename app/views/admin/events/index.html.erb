@@ -40,7 +40,7 @@
         <% end %>
       </td>
       <td><%= e.date_start.strftime("%F") %></td>
-      <td><%= e.date_end.strftime("%F") %></td>
+      <td><%= e.date_end.strftime("%F") unless e.date_end.nil? %></td>
       <td class="center">
         <%= e.people.count %>
       </td>

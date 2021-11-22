@@ -206,7 +206,7 @@
       <% end %>
     </table>
   <% end %>
-  <%= link_to new_admin_event_document_path(document_id: @document.id), class: "btn btn-mini" do %>
+  <%= link_to new_admin_event_document_path(from: "document", document_id: @document.id), class: "btn btn-mini" do %>
     <i class="material-icons">add</i> Lier un évènement au document
   <% end %>
 </div>

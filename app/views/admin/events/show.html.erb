@@ -40,7 +40,7 @@
           <p><%= @event.date_start %></p>
         </div>
       <% end %>
-      <% unless @event.date_end == "" %>
+      <% unless @event.date_end.nil? %>
         <div class="left">
           <label>Date de fin</label>
           <p><%= @event.date_end %></p>
@@ -64,9 +64,9 @@
     </div>
   <% end %>
 
-  <% unless @event_documents == [] %>
-    <div class="show-section">
-      <h3>Documents associés</h3>
+  <div class="show-section">
+    <h3>Documents associés</h3>
+    <% unless @event_documents == [] %>
       <table class="admin_table">
         <tr>
           <th class="center">ID</th>
@@ -113,8 +113,11 @@
           </tr>
         <% end %>
       </table>
-    </div>
-  <% end %>
+    <% end %>
+    <%= link_to new_admin_event_document_path(from: "event", event_id: @event.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add</i> Lier un document à l'évènement
+    <% end %>
+  </div>
   
   <% unless @event_people == [] %>
     <div class="show-section">
