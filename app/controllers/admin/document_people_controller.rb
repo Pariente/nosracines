@@ -2,18 +2,36 @@ class Admin::DocumentPeopleController < ApplicationController
   before_action :authenticate_admin!
   def new
     @document_person = DocumentPerson.new()
-    @document = Document.find(params[:document_id])
+
+    case params[:from]
+    when "document"
+      @document = Document.find(params[:document_id])
+    when "person"
+      @person = Person.find(params[:person_id])
+    end
   end
 
   def create
-    @document = Document.find(params[:document_id])
     dp = params.as_json["document_person"]
-    dp.each do |d|
-      @document.document_people.create(
-        person_id:    d[1]["person_id"],
-        document_id:  @document_id)
+
+    case dp["from"]
+    when "document"
+      @document = Document.find(params[:document_id])
+      dp.each do |q|
+        @document.document_people.create(
+          document_id:  @document.id,
+          person_id:    q[1]["person_id"])
+      end
+      redirect_to admin_document_path(@document)
+    when "person"
+      @person = Person.find(params[:person_id])
+      dp.each do |q|
+        @person.document_people.create(
+          document_id:  q[1]["document_id"],
+          person_id:    @person.id)
+      end
+      redirect_to admin_person_path(@person)
     end
-    redirect_to admin_document_path(@document)
   end
 
   def delete

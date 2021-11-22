@@ -35,11 +35,7 @@
     <div class="half">
       <div class="left">
         <label>Nom de naissance</label>
-        <p><% if @person.gender == "0" %>
-          Mme
-        <% elsif @person.gender == "1" %>
-          M.
-        <% end %><%= @person.last_name.upcase %></p>
+        <p><%= @person.last_name.upcase %></p>
       </div>
       <% unless @person.spouse_name == "" %>
         <div class="right">
@@ -176,9 +172,9 @@
     <% end %>
   </div>
 
-  <% unless @documents == [] %>
-    <div class="show-section">
-      <h3>Documents liés</h3>
+  <div class="show-section">
+    <h3>Documents liés</h3>
+    <% unless @documents == [] %>
       <table class="admin_table">
         <tr>
           <th class="center">ID</th>
@@ -225,8 +221,11 @@
           </tr>
         <% end %>
       </table>
-    </div>
-  <% end %>
+    <% end %>
+    <%= link_to new_admin_document_person_path(person_id: @person.id, from: "person"), class: "btn btn-mini" do %>
+      <i class="material-icons">add</i> Lier un document à la personne
+    <% end %>
+  </div>
 
   <% unless @person.notes.nil? %>
     <div class="show-section">

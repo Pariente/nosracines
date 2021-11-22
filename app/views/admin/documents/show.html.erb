@@ -78,6 +78,7 @@
     </div>
   </div>
 </div>
+
 <div class="show-section">
   <h3>Fichiers</h3>
   <% unless @document.document_files == [] %>
@@ -117,12 +118,14 @@
     <i class="material-icons">add</i> Ajouter un fichier
   <% end %>
 </div>
+
 <% unless @document.notes == "" %>
   <div class="show-section">
     <h3>Notes</h3>
     <p><%= @document.notes %></p>
   </div>
 <% end %>
+
 <div class="show-section">
   <h3>Personnes liées à ce document</h3>
   <% unless @document_people == [] %>
@@ -163,7 +166,7 @@
       <% end %>
     </table>
   <% end %>
-  <%= link_to new_admin_document_person_path(document_id: @document.id), class: "btn btn-mini" do %>
+  <%= link_to new_admin_document_person_path(document_id: @document.id, from: "document"), class: "btn btn-mini" do %>
     <i class="material-icons">add</i> Lier une personne au document
   <% end %>
 </div>

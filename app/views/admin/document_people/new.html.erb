@@ -1,13 +1,16 @@
 <% content_for :navbar do %>
   <%= render "pages/admin_navbar" %>
 <% end %>
-<%= link_to admin_document_path(@document), class: "back_link" do %>
-  <i class="material-icons">arrow_back_ios</i>
-  <span>Annuler</span>
-<% end %>
-<h1>Lier des personnes à <%= @document.name %></h1>
+<% @from = params[:from] %>
+<% if @from == "document" %>
+  <%= link_to admin_document_path(@document), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des personnes à <%= @document.name %></h1>
   <%= simple_form_for [:admin, @document_person] do |d| %>
     <div class="document-person">
+      <%= d.input :from, as: :hidden, input_html: { value: @from } %>
       <%= d.input  :person_id,
                       label: "Personne",
                       collection: Person.order(:last_name), 
@@ -24,7 +27,32 @@
       Valider
     <% end %>
   <% end %>
-</div>
+<% elsif @from == "person" %>
+  <%= link_to admin_person_path(@person), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des documents à <%= @person.name %></h1>
+  <%= simple_form_for [:admin, @document_person] do |d| %>
+    <div class="document-person">
+      <%= d.input :from, as: :hidden, input_html: { value: @from } %>
+      <%= d.input  :document_id,
+                      label: "Document",
+                      collection: Document.order(:name), 
+                      prompt: "Liste des documents",
+                      label_method: :name, 
+                      input_html: { name: 'document_person[0][document_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-document-person block hidden mr10">Enlever le dernier document</button>
+      <button class="btn btn-mini add-document-person block"><i class="material-icons">add</i> Ajouter un document</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "person_id", value: @person.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% end %>
 
 <script>
   // Add Document Person
@@ -32,14 +60,18 @@
 
   $('.add-document-person').click(function(event){
     event.preventDefault();
-    var documentPeople = $('.document-person').length;
-    var lastDocumentPerson = $('.document-person').last();
-    var removeButton = $('.remove-document-person').last();
+    var documentPeople      = $('.document-person').length;
+    var lastDocumentPerson  = $('.document-person').last();
+    var removeButton        = $('.remove-document-person').last();
     removeButton.removeClass('hidden');
 
     var newDocumentPerson = lastDocumentPerson.clone();
-    var select = newDocumentPerson.find('select');
-    select.attr('name', 'document_person['+i+'][person_id]');
+    var select            = newDocumentPerson.find('select');
+    if (select.attr('id') == "document_person_document_id") {
+      select.attr('name', 'document_person['+i+'][document_id]');
+    } else {
+      select.attr('name', 'document_person['+i+'][person_id]');
+    }
     select.removeAttr('id');
     lastDocumentPerson.after(newDocumentPerson);
     i++;
@@ -49,9 +81,9 @@
   $('.remove-document-person').click(function(event){
     event.preventDefault();
 
-    var removeButton = $('.remove-document-person').last();
-    var documentPeople = $('.document-person').length;
-    var lastDocumentPerson = $('.document-person').last();
+    var removeButton        = $('.remove-document-person').last();
+    var documentPeople      = $('.document-person').length;
+    var lastDocumentPerson  = $('.document-person').last();
 
     if (documentPeople == 2) {
       removeButton.addClass('hidden');
