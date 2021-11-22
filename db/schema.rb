@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_183707) do
+ActiveRecord::Schema.define(version: 2021_11_20_173655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,47 @@ ActiveRecord::Schema.define(version: 2021_11_19_183707) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "location_documents", force: :cascade do |t|
+    t.bigint "location_id"
+    t.bigint "document_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["document_id"], name: "index_location_documents_on_document_id"
+    t.index ["location_id"], name: "index_location_documents_on_location_id"
+  end
+
+  create_table "location_events", force: :cascade do |t|
+    t.bigint "location_id"
+    t.bigint "event_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_location_events_on_event_id"
+    t.index ["location_id"], name: "index_location_events_on_location_id"
+  end
+
+  create_table "location_people", force: :cascade do |t|
+    t.bigint "location_id"
+    t.bigint "person_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_location_people_on_location_id"
+    t.index ["person_id"], name: "index_location_people_on_person_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.string "illustration"
+    t.string "address"
+    t.string "city"
+    t.string "region"
+    t.string "country"
+    t.string "latitude"
+    t.string "longitude"
+    t.boolean "privacy", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "people", force: :cascade do |t|
     t.string "first_name"
     t.string "middle_name"
@@ -188,4 +229,10 @@ ActiveRecord::Schema.define(version: 2021_11_19_183707) do
   add_foreign_key "event_documents", "events"
   add_foreign_key "event_people", "events"
   add_foreign_key "event_people", "people"
+  add_foreign_key "location_documents", "documents"
+  add_foreign_key "location_documents", "locations"
+  add_foreign_key "location_events", "events"
+  add_foreign_key "location_events", "locations"
+  add_foreign_key "location_people", "locations"
+  add_foreign_key "location_people", "people"
 end
