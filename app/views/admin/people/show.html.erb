@@ -281,8 +281,8 @@
         </table>
       </div>
     <% end %>
-    <%= link_to new_admin_event_person_path(person_id: @person.id), class: "btn btn-mini" do %>
-      <i class="material-icons">add</i> Lier un évènement au document
+    <%= link_to new_admin_event_person_path(from: "person", person_id: @person.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add</i> Lier un évènement à la personne
     <% end %>
   </div>
 

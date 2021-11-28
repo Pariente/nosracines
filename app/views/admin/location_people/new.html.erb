@@ -61,7 +61,7 @@
 
   $('.add-location-person').click(function(event){
     event.preventDefault();
-    var LocationPerson     = $('.location-person').length;
+    var locationPerson     = $('.location-person').length;
     var lastLocationPerson = $('.location-person').last();
     var removeButton      = $('.remove-location-person').last();
     removeButton.removeClass('hidden');
@@ -83,10 +83,10 @@
     event.preventDefault();
 
     var removeButton       = $('.remove-location-person').last();
-    var LocationPerson     = $('.location-person').length;
+    var locationPerson     = $('.location-person').length;
     var lastLocationPerson = $('.location-person').last();
 
-    if (LocationPerson == 2) {
+    if (locationPerson == 2) {
       removeButton.addClass('hidden');
       lastLocationPerson.remove();
     } else {

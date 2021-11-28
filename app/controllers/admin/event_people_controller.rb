@@ -2,18 +2,35 @@ class Admin::EventPeopleController < ApplicationController
   before_action :authenticate_admin!
   def new
     @event_person = EventPerson.new()
-    @person = Person.find(params[:person_id])
+
+    case params[:from]
+    when "person"
+      @person = Person.find(params[:person_id])
+    when "event"
+      @event = Event.find(params[:event_id])
+    end
   end
 
   def create
-    @person = Person.find(params[:person_id])
-    ep      = params.as_json["event_person"]
-    ep.each do |e|
-      @person.event_people.create(
-        person_id:  @person_id,
-        event_id:   e[1]["event_id"])
+    ep = params.as_json["event_person"]
+    case ep["from"]
+    when "person"
+      @person = Person.find(params[:person_id])
+      ep.each do |q|
+        @person.event_people.create(
+          person_id:  @person.id,
+          event_id:   q[1]["event_id"])
+      end
+      redirect_to admin_person_path(@person)
+    when "event"
+      @event  = Event.find(params[:event_id])
+      ep.each do |q|
+        @event.event_people.create(
+          person_id:  q[1]["person_id"],
+          event_id:   @event.id)
+      end
+      redirect_to admin_event_path(@event)
     end
-    redirect_to admin_person_path(@person)
   end
 
   def delete
