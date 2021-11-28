@@ -58,24 +58,26 @@
     </div>
     <% unless @aliases == [] %>
       <hr>
-      <table class="admin_table">
-        <tr>
-          <th>Alias</th>
-          <th>Catégorie</th>
-          <th>Action</th>
-        </tr>
-        <% @aliases.each do |a| %>
+      <div class="admin_table_container">
+        <table class="admin_table">
           <tr>
-            <td><%= a.name%></td>
-            <td><%= a.category%></td>
-            <td>
-              <%= link_to alias_delete_path(a, person_id: @person.id) do %>
-                Supprimer
-              <% end %>
-            </td>
+            <th>Alias</th>
+            <th>Catégorie</th>
+            <th>Action</th>
           </tr>
-        <% end %>
-      </table>
+          <% @aliases.each do |a| %>
+            <tr>
+              <td><%= a.name%></td>
+              <td><%= a.category%></td>
+              <td>
+                <%= link_to alias_delete_path(a, person_id: @person.id) do %>
+                  Supprimer
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     <% end %>
     <%= link_to new_alias_path(person_id: @person.id), class: "btn btn-mini" do %>
       <i class="material-icons">add</i> Ajouter un alias
@@ -120,52 +122,54 @@
   <div class="show-section">
     <h3>Liens de parenté</h3>
     <% unless @links == [] %>
-      <table class="admin_table">
-        <tr>
-          <th class="center">ID</th>
-          <th class="pic_cell">Aperçu</th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Lien</th>
-          <th>Action</th>
-        </tr>
-        <% @links.each do |link| %>
-          <%  if link.person_a_id == @person.id
-                p = Person.find(link.person_b_id)
-                fam_link = link.link_b_to_a
-              else
-                p = Person.find(link.person_a_id)
-                fam_link = link.link_a_to_b
-              end %>
-          <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
+      <div class="admin_table_container">
+        <table class="admin_table">
           <tr>
-            <td class="center">
-              <%= p.id %>
-            </td>
-            <td class="pic_cell">
-              <%= cl_image_tag pic, width: "200", height: "200", crop: "fill", gravity: "face", class: "img-100" %>
-            </td>
-            <td>
-              <%= link_to admin_person_path(p.id) do %>
-                <%= p.last_name.upcase %>
-              <% end %>
-              <% if p.spouse_name.present? %>
-                <br>
-                <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
-              <% end %>
-            </td>
-            <td><%= p.first_name %></td>
-            <td>
-              <%= fam_link %>
-            </td>
-            <td>
-              <%= link_to admin_family_link_delete_path(link, person_id: @person.id) do %>
-                Supprimer le lien
-              <% end %>
-            </td>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Lien</th>
+            <th>Action</th>
           </tr>
-        <% end %>
-      </table>
+          <% @links.each do |link| %>
+            <%  if link.person_a_id == @person.id
+                  p = Person.find(link.person_b_id)
+                  fam_link = link.link_b_to_a
+                else
+                  p = Person.find(link.person_a_id)
+                  fam_link = link.link_a_to_b
+                end %>
+            <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
+            <tr>
+              <td class="center">
+                <%= p.id %>
+              </td>
+              <td class="pic_cell">
+                <%= cl_image_tag pic, width: "200", height: "200", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_person_path(p.id) do %>
+                  <%= p.last_name.upcase %>
+                <% end %>
+                <% if p.spouse_name.present? %>
+                  <br>
+                  <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
+                <% end %>
+              </td>
+              <td><%= p.first_name %></td>
+              <td>
+                <%= fam_link %>
+              </td>
+              <td>
+                <%= link_to admin_family_link_delete_path(link, person_id: @person.id) do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     <% end %>
     <%= link_to new_admin_family_link_path(person_id: @person.id), class: "btn btn-mini" do %>
       <i class="material-icons">add</i> Ajouter un lien de parenté
@@ -175,52 +179,54 @@
   <div class="show-section">
     <h3>Documents liés</h3>
     <% unless @documents == [] %>
-      <table class="admin_table">
-        <tr>
-          <th class="center">ID</th>
-          <th class="pic_cell">Aperçu</th>
-          <th>Nom</th>
-          <th>Date</th>
-          <th>Référence</th>
-          <th>Fonds</th>
-          <th>Actions</th>
-        </tr>
-        <% @document_people.each do |dp| %>
-          <% doc = dp.document %>
+      <div class="admin_table_container">
+        <table class="admin_table">
           <tr>
-            <td class="center">
-              <%= doc.id %>
-            </td>
-            <td class="pic_cell">
-              <% file = doc.document_files.first %>
-              <% if file.nil? %>
-                <%= cl_image_tag "default_document", width: "200", height: "200", crop: "fill", class: "img-100" %>
-              <% else %>
-                <%= cl_image_tag file.url.key, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to admin_document_path(doc.id) do %>
-                <%= doc.name %>
-              <% end %>
-            </td>
-            <td>
-              <%= doc.date %>
-            </td>
-            <td>
-              <%= doc.reference %>
-            </td>
-            <td>
-              <%= doc.fund.name %>
-            </td>
-            <td>
-              <%= link_to admin_document_person_delete_path(dp.id, redirection: "person") do %>
-                Supprimer le lien
-              <% end %>
-            </td>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>Référence</th>
+            <th>Fonds</th>
+            <th>Actions</th>
           </tr>
-        <% end %>
-      </table>
+          <% @document_people.each do |dp| %>
+            <% doc = dp.document %>
+            <tr>
+              <td class="center">
+                <%= doc.id %>
+              </td>
+              <td class="pic_cell">
+                <% file = doc.document_files.first %>
+                <% if file.nil? %>
+                  <%= cl_image_tag "default_document", width: "200", height: "200", crop: "fill", class: "img-100" %>
+                <% else %>
+                  <%= cl_image_tag file.url.key, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to admin_document_path(doc.id) do %>
+                  <%= doc.name %>
+                <% end %>
+              </td>
+              <td>
+                <%= doc.date %>
+              </td>
+              <td>
+                <%= doc.reference %>
+              </td>
+              <td>
+                <%= doc.fund.name %>
+              </td>
+              <td>
+                <%= link_to admin_document_person_delete_path(dp.id, redirection: "person") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     <% end %>
     <%= link_to new_admin_document_person_path(person_id: @person.id, from: "person"), class: "btn btn-mini" do %>
       <i class="material-icons">add</i> Lier un document à la personne
@@ -237,40 +243,42 @@
   <div class="show-section">
     <h3>Évènements associés</h3>
     <% unless @event_people == [] %>
-      <table class="admin_table">
-        <tr>
-          <th class="center">ID</th>
-          <th class="pic_cell">Aperçu</th>
-          <th>Nom</th>
-          <th class="center">Date de début</th>
-          <th class="center">Date de fin</th>
-          <th>Action</th>
-        </tr>
-        <% @event_people.each do |ep| %>
-          <% event = ep.event %>
+      <div class="admin_table_container">
+        <table class="admin_table">
           <tr>
-            <td class="center">
-              <%= event.id %>
-            </td>
-            <td class="pic_cell">
-              <% pic = event.illustration.present? ? event.illustration.key : "default_profile_pic" %>
-              <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
-            </td>
-            <td>
-              <%= link_to admin_event_path(event.id) do %>
-                <%= event.name %>
-              <% end %>
-            </td>
-            <td class="center"><%= event.date_start %></td>
-            <td class="center"><%= event.date_end %></td>
-            <td>
-              <%= link_to admin_event_person_delete_path(ep.id, redirection: "person") do %>
-                Supprimer le lien
-              <% end %>
-            </td>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th class="center">Date de début</th>
+            <th class="center">Date de fin</th>
+            <th>Action</th>
           </tr>
-        <% end %>
-      </table>
+          <% @event_people.each do |ep| %>
+            <% event = ep.event %>
+            <tr>
+              <td class="center">
+                <%= event.id %>
+              </td>
+              <td class="pic_cell">
+                <% pic = event.illustration.present? ? event.illustration.key : "default_profile_pic" %>
+                <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_event_path(event.id) do %>
+                  <%= event.name %>
+                <% end %>
+              </td>
+              <td class="center"><%= event.date_start %></td>
+              <td class="center"><%= event.date_end %></td>
+              <td>
+                <%= link_to admin_event_person_delete_path(ep.id, redirection: "person") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     <% end %>
     <%= link_to new_admin_event_person_path(person_id: @person.id), class: "btn btn-mini" do %>
       <i class="material-icons">add</i> Lier un évènement au document

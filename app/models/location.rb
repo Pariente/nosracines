@@ -1,7 +1,7 @@
-class Event < ApplicationRecord
+class Location < ApplicationRecord
 
-  has_many :event_people
-  has_many :event_documents
+  has_many :location_people
+  has_many :location_documents
   has_many :location_events
 
   has_one_attached :illustration
@@ -9,9 +9,9 @@ class Event < ApplicationRecord
   paginates_per 25
 
   def documents
-    event_documents = self.event_documents
+    location_documents = self.location_documents
     docs = []
-    event_documents.each do |q|
+    location_documents.each do |q|
       docs << q.document
     end
 
@@ -19,22 +19,22 @@ class Event < ApplicationRecord
   end
 
   def people
-    event_people = self.event_people
+    location_people = self.location_people
     people = []
-    event_people.each do |q|
+    location_people.each do |q|
       people << q.person
     end
 
     return people
   end
 
-  def locations
+  def events
     location_events = self.location_events
-    locations = []
+    events = []
     location_events.each do |q|
-      locations << q.location
+      events << q.event
     end
 
-    return locations
+    return events
   end
 end

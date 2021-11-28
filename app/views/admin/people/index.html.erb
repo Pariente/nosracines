@@ -10,53 +10,54 @@
     Créer une fiche personne
   <% end %>
 </div>
-
-<table class="admin_table">
-  <tr>
-    <th class="center">ID</th>
-    <th class="pic_cell">Aperçu</th>
-    <th>NOM</th>
-    <th>Prénom</th>
-    <th class="center">Proches</th>
-    <th class="center">Docs</th>
-    <th>Naissance</th>
-    <th>Actions</th>
-  </tr>
-  <% @people.each do |p| %>
+<div class="admin_table_container">
+  <table class="admin_table">
     <tr>
-      <td class="center"><%= p.id %></td>
-      <td class="pic_cell">
-        <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
-        <%= cl_image_tag pic, format: "png", width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %></td>
-      <td>
-        <%= link_to admin_person_path(p.id) do %>
-          <%= p.last_name.upcase %>
-        <% end %>
-        <% if p.spouse_name.present? %>
-          <br>
-          <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
-        <% end %>
-        <% if p.privacy %>
-          <span class="private-content">
-            <i class="material-icons">security</i> Privé
-          </span>
-        <% end %>
-      </td>
-      <td><%= p.first_name %></td>
-      <td class="center">
-        <%= p.family_links.count %>
-      </td>
-      <td class="center">
-        <%= p.documents.count %>
-      </td>
-      <td><%= p.birth_date %></td>
-      <td>
-        <%= link_to 'Modifier', edit_admin_person_path(p) %><br>
-        <%= link_to 'Voir', person_path(p) %>
-      </td>
+      <th class="center">ID</th>
+      <th class="pic_cell">Aperçu</th>
+      <th>NOM</th>
+      <th>Prénom</th>
+      <th class="center">Proches</th>
+      <th class="center">Docs</th>
+      <th>Naissance</th>
+      <th>Actions</th>
     </tr>
-  <% end %>
-</table>
+    <% @people.each do |p| %>
+      <tr>
+        <td class="center"><%= p.id %></td>
+        <td class="pic_cell">
+          <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
+          <%= cl_image_tag pic, format: "png", width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %></td>
+        <td>
+          <%= link_to admin_person_path(p.id) do %>
+            <%= p.last_name.upcase %>
+          <% end %>
+          <% if p.spouse_name.present? %>
+            <br>
+            <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
+          <% end %>
+          <% if p.privacy %>
+            <span class="private-content">
+              <i class="material-icons">security</i> Privé
+            </span>
+          <% end %>
+        </td>
+        <td><%= p.first_name %></td>
+        <td class="center">
+          <%= p.family_links.count %>
+        </td>
+        <td class="center">
+          <%= p.documents.count %>
+        </td>
+        <td><%= p.birth_date %></td>
+        <td>
+          <%= link_to 'Modifier', edit_admin_person_path(p) %><br>
+          <%= link_to 'Voir', person_path(p) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 <div class="pagination_row">
   <%= paginate @people %>
 </div>

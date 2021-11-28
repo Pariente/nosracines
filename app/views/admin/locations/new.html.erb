@@ -1,0 +1,76 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_locations_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<h1>Créer un nouveau lieu</h1>
+<%= simple_form_for [:admin, @location] do |f| %>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :illustration, 
+                  label: "Photo d'illustration", 
+                  as: :file %>
+    </div>
+    <div class="right">
+      <%= f.input :name,
+                  label: "Nom",
+                  as: :string,
+                  input_html: { autocomplete: 'off' },
+                  required: true,
+                  placeholder: "ex : Maison natale d'Albert" %>
+      <%= f.input :privacy,
+                  label: "Lieu privé ?",
+                  as: :boolean %>
+    </div>
+  </div>
+  <%= f.input :address,
+              label: "Adresse",
+              as: :string,
+              required: true %>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :city, 
+                  as: :string,
+                  label: "Ville" %>
+    </div>
+    <div class="right">
+      <%= f.input :zipcode, 
+                  as: :string,
+                  label: "Code postal" %>
+    </div>
+  </div>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :region, 
+                  as: :string,
+                  label: "Région" %>
+    </div>
+    <div class="right">
+      <%= f.input :country, 
+                  as: :string,
+                  label: "Pays" %>
+    </div>
+  </div>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :latitude, 
+                  as: :string,
+                  label: "Latitude" %>
+    </div>
+    <div class="right">
+      <%= f.input :longitude, 
+                  as: :string,
+                  label: "Longitude" %>
+    </div>
+  </div>
+  <hr>
+  <%= f.input :description, 
+              label: "Description et histoire", 
+              as: :text,
+              placeholder: "Décrire le lieu et en raconter ici l'histoire." %>
+  <%= button_tag type: "submit", class: "btn" do %>
+    <i class="material-icons">add_location</i> Créer le lieu
+  <% end %>
+<% end %>

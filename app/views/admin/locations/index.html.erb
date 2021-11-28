@@ -2,12 +2,12 @@
   <%= render "pages/admin_navbar" %>
 <% end %>
 
-<h1>Évènements</h1>
+<h1>Lieux</h1>
 <div class="admin_top_bar">
-  <%= render "admin/events/search_input" %>
-  <%= link_to new_admin_event_path, class: "btn" do %>
-    <i class="material-icons">event</i>
-    Ajouter un évènement
+  <%= render "admin/locations/search_input" %>
+  <%= link_to new_admin_location_path, class: "btn" do %>
+    <i class="material-icons">add_location</i>
+    Ajouter un lieu
   <% end %>
 </div>
 
@@ -17,45 +17,53 @@
       <th class="center">ID</th>
       <th class="pic_cell">Aperçu</th>
       <th>Nom</th>
-      <th>Date de début</th>
-      <th>Date de fin</th>
+      <th>Adresse</th>
+      <th>Ville</th>
+      <th>Pays</th>
       <th class="center">Personnes</th>
       <th class="center">Docs</th>
       <th>Actions</th>
     </tr>
-    <% @events.each do |e| %>
+    <% @locations.each do |l| %>
       <tr>
-        <td class="center"><%= e.id %></td>
+        <td class="center"><%= l.id %></td>
         <td class="pic_cell">
-          <% pic = e.illustration.present? ? e.illustration.key : "default_event_pic" %>
+          <% pic = l.illustration.present? ? l.illustration.key : "default_location_pic" %>
           <%= cl_image_tag pic, format: "png", width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %></td>
         </td>
         <td>
-          <%= link_to admin_event_path(e.id) do %>
-            <%= e.name %>
+          <%= link_to admin_location_path(l.id) do %>
+            <%= l.name %>
           <% end %><br>
-          <% if e.privacy %>
+          <% if l.privacy %>
           <span class="private-content">
             <i class="material-icons">security</i> Privé
           </span>
           <% end %>
         </td>
-        <td><%= e.date_start.strftime("%F") %></td>
-        <td><%= e.date_end.strftime("%F") unless e.date_end.nil? %></td>
-        <td class="center">
-          <%= e.people.count %>
-        </td>
-        <td class="center">
-          <%= e.documents.count %>
+        <td>
+          <%= l.address %>
         </td>
         <td>
-          <%= link_to 'Modifier', edit_admin_event_path(e) %><br>
-          <%= link_to 'Voir', admin_event_path(e) %>
+          <%= l.city %>
+        </td>
+        <td>
+          <%= l.country %>
+        </td>
+        <td class="center">
+          <%= l.people.count %>
+        </td>
+        <td class="center">
+          <%= l.documents.count %>
+        </td>
+        <td>
+          <%= link_to 'Modifier', edit_admin_location_path(l) %><br>
+          <%= link_to 'Voir', admin_location_path(l) %>
         </td>
       </tr>
     <% end %>
   </table>
 </div>
 <div class="pagination_row">
-  <%= paginate @events %>
+  <%= paginate @locations %>
 </div>

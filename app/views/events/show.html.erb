@@ -1,6 +1,6 @@
 <div class="container">
   <div class="person_header admin-show">
-    <% pic = @event.illustration.present? ? @event.illustration.key : "default_profile_pic" %>
+    <% pic = @event.illustration.present? ? @event.illustration.key : "default_event_pic" %>
     <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
     <div class="person_header_info">
       <h1><%= @event.name %></h1>

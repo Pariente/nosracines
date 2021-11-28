@@ -11,28 +11,30 @@
   <% end %>
 </div>
 
-<table class="admin_table">
-  <tr>
-    <th class="center">ID</th>
-    <th>Nom</th>
-    <th>Documents</th>
-    <th>Actions</th>
-  </tr>
-  <% @funds.each do |f| %>
+<div class="admin_table_container">
+  <table class="admin_table">
     <tr>
-      <td class="center"><%= f.id %></td>
-      <td>
-        <%= link_to admin_fund_path(f.id) do %>
-          <%= f.name %>
-        <% end %>
-      </td>
-      <td><%= f.documents.count %></td>
-      <td>
-        <%= link_to 'Modifier', edit_admin_fund_path(f) %>
-      </td>
+      <th class="center">ID</th>
+      <th>Nom</th>
+      <th>Documents</th>
+      <th>Actions</th>
     </tr>
-  <% end %>
-</table>
+    <% @funds.each do |f| %>
+      <tr>
+        <td class="center"><%= f.id %></td>
+        <td>
+          <%= link_to admin_fund_path(f.id) do %>
+            <%= f.name %>
+          <% end %>
+        </td>
+        <td><%= f.documents.count %></td>
+        <td>
+          <%= link_to 'Modifier', edit_admin_fund_path(f) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 <div class="pagination_row">
   <%= paginate @funds %>
 </div>

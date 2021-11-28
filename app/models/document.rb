@@ -3,6 +3,7 @@ class Document < ApplicationRecord
   has_many :document_people
   has_many :event_documents
   has_many :document_sources
+  has_many :location_documents
   belongs_to :fund
 
   def format
@@ -27,6 +28,16 @@ class Document < ApplicationRecord
     end
 
     return events
+  end
+
+  def locations
+    location_documents = self.location_documents
+    locations = []
+    location_documents.each do |q|
+      locations << q.location
+    end
+
+    return locations
   end
 
   def self.fund

@@ -82,37 +82,39 @@
 <div class="show-section">
   <h3>Fichiers</h3>
   <% unless @document.document_files == [] %>
-    <table class="admin_table">
-      <tr>
-        <th class="center">ID</th>
-        <th class="pic_cell">Aperçu</th>
-        <th>Titre</th>
-        <th>Format</th>
-        <th>Action</th>
-      </tr>
-      <% @document.document_files.each do |f| %>
+    <div class="admin_table_container">
+      <table class="admin_table">
         <tr>
-          <td class="center">
-            <%= f.id %>
-          </td>
-          <td class="pic_cell">
-            <% if ["png", "jpg", "jpeg"].include?(f.original_format) %>
-              <%= cl_image_tag f.url.key, width: "160", height: "160", crop: "fill", class: "img-100" %>
-            <% else %>
-              <%= cl_image_tag f.url.key, format: "png", width: "160", height: "160", crop: "fill", class: "img-100" %>
-            <% end %>
-          </td>
-          <td>
-            <%= f.name %>
-          </td>
-          <td><%= f.original_format %></td>
-          <td>
-            <%= link_to 'Supprimer', admin_document_file_delete_path(f) %><br>
-            <%= link_to 'Modifier', edit_admin_document_file_path(f) %>
-          </td>
+          <th class="center">ID</th>
+          <th class="pic_cell">Aperçu</th>
+          <th>Titre</th>
+          <th>Format</th>
+          <th>Action</th>
         </tr>
-      <% end %>
-    </table>
+        <% @document.document_files.each do |f| %>
+          <tr>
+            <td class="center">
+              <%= f.id %>
+            </td>
+            <td class="pic_cell">
+              <% if ["png", "jpg", "jpeg"].include?(f.original_format) %>
+                <%= cl_image_tag f.url.key, width: "160", height: "160", crop: "fill", class: "img-100" %>
+              <% else %>
+                <%= cl_image_tag f.url.key, format: "png", width: "160", height: "160", crop: "fill", class: "img-100" %>
+              <% end %>
+            </td>
+            <td>
+              <%= f.name %>
+            </td>
+            <td><%= f.original_format %></td>
+            <td>
+              <%= link_to 'Supprimer', admin_document_file_delete_path(f) %><br>
+              <%= link_to 'Modifier', edit_admin_document_file_path(f) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
   <% end %>
   <%= link_to new_admin_document_document_file_path(document_id: @document.id), class: "btn btn-mini" do %>
     <i class="material-icons">add</i> Ajouter un fichier
@@ -129,42 +131,44 @@
 <div class="show-section">
   <h3>Personnes liées à ce document</h3>
   <% unless @document_people == [] %>
-    <table class="admin_table">
-      <tr>
-        <th class="center">ID</th>
-        <th class="pic_cell">Aperçu</th>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Action</th>
-      </tr>
-      <% @document_people.each do |dp| %>
-        <% person = dp.person %>
+    <div class="admin_table_container">
+      <table class="admin_table">
         <tr>
-          <td class="center">
-            <%= person.id %>
-          </td>
-          <td class="pic_cell">
-            <% pic = person.profile_pic.present? ? person.profile_pic.key : "default_profile_pic" %>
-            <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
-          </td>
-          <td>
-            <%= link_to admin_person_path(person.id) do %>
-              <%= person.last_name.upcase %>
-            <% end %>
-            <% if person.spouse_name.present? %>
-              <br>
-              <span class="spouse_name">épouse <%= person.spouse_name.upcase %></span>
-            <% end %>
-          </td>
-          <td><%= person.first_name %></td>
-          <td>
-            <%= link_to admin_document_person_delete_path(dp, redirection: "document") do %>
-              Supprimer le lien
-            <% end %>
-          </td>
+          <th class="center">ID</th>
+          <th class="pic_cell">Aperçu</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Action</th>
         </tr>
-      <% end %>
-    </table>
+        <% @document_people.each do |dp| %>
+          <% person = dp.person %>
+          <tr>
+            <td class="center">
+              <%= person.id %>
+            </td>
+            <td class="pic_cell">
+              <% pic = person.profile_pic.present? ? person.profile_pic.key : "default_profile_pic" %>
+              <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+            </td>
+            <td>
+              <%= link_to admin_person_path(person.id) do %>
+                <%= person.last_name.upcase %>
+              <% end %>
+              <% if person.spouse_name.present? %>
+                <br>
+                <span class="spouse_name">épouse <%= person.spouse_name.upcase %></span>
+              <% end %>
+            </td>
+            <td><%= person.first_name %></td>
+            <td>
+              <%= link_to admin_document_person_delete_path(dp, redirection: "document") do %>
+                Supprimer le lien
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
   <% end %>
   <%= link_to new_admin_document_person_path(document_id: @document.id, from: "document"), class: "btn btn-mini" do %>
     <i class="material-icons">add</i> Lier une personne au document
@@ -174,40 +178,42 @@
 <div class="show-section">
   <h3>Évènements liés à ce document</h3>
   <% unless @event_documents == [] %>
-    <table class="admin_table">
-      <tr>
-        <th class="center">ID</th>
-        <th class="pic_cell">Aperçu</th>
-        <th>Nom</th>
-        <th class="center">Date de début</th>
-        <th class="center">Date de fin</th>
-        <th>Action</th>
-      </tr>
-      <% @event_documents.each do |ed| %>
-        <% event = ed.event %>
+    <div class="admin_table_container">
+      <table class="admin_table">
         <tr>
-          <td class="center">
-            <%= event.id %>
-          </td>
-          <td class="pic_cell">
-            <% pic = event.illustration.present? ? event.illustration.key : "default_profile_pic" %>
-            <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
-          </td>
-          <td>
-            <%= link_to admin_event_path(event.id) do %>
-              <%= event.name %>
-            <% end %>
-          </td>
-          <td class="center"><%= event.date_start %></td>
-          <td class="center"><%= event.date_end %></td>
-          <td>
-            <%= link_to admin_event_document_delete_path(ed, redirection: "document") do %>
-              Supprimer le lien
-            <% end %>
-          </td>
+          <th class="center">ID</th>
+          <th class="pic_cell">Aperçu</th>
+          <th>Nom</th>
+          <th class="center">Date de début</th>
+          <th class="center">Date de fin</th>
+          <th>Action</th>
         </tr>
-      <% end %>
-    </table>
+        <% @event_documents.each do |ed| %>
+          <% event = ed.event %>
+          <tr>
+            <td class="center">
+              <%= event.id %>
+            </td>
+            <td class="pic_cell">
+              <% pic = event.illustration.present? ? event.illustration.key : "default_event_pic" %>
+              <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+            </td>
+            <td>
+              <%= link_to admin_event_path(event.id) do %>
+                <%= event.name %>
+              <% end %>
+            </td>
+            <td class="center"><%= event.date_start %></td>
+            <td class="center"><%= event.date_end %></td>
+            <td>
+              <%= link_to admin_event_document_delete_path(ed, redirection: "document") do %>
+                Supprimer le lien
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
   <% end %>
   <%= link_to new_admin_event_document_path(from: "document", document_id: @document.id), class: "btn btn-mini" do %>
     <i class="material-icons">add</i> Lier un évènement au document

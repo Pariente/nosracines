@@ -36,12 +36,12 @@ class PeopleController < ApplicationController
     @videos       = @documents.select {|d| video_formats.include?(d.format) }
     
     # Texts
-    text_formats = ["doc", "docx", "pdf", "txt"]
-    @texts = @documents.select {|d| text_formats.include?(d.format) }
+    text_formats  = ["doc", "docx", "pdf", "txt"]
+    @texts        = @documents.select {|d| text_formats.include?(d.format) }
 
     # Others
     all_formats = image_formats + video_formats + audio_formats + text_formats
-    @other = @documents.select {|d| all_formats.exclude?(d.format) }
+    @other      = @documents.select {|d| all_formats.exclude?(d.format) }
   end
 
   def index

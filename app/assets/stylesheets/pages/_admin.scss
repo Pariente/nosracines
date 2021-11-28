@@ -24,12 +24,27 @@ a.btn {
   }
 }
 
-.admin_table {
+.admin_table_container {
   border: 1px solid $olive;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.admin_table {
+  border: 0px solid $olive;
   border-collapse: collapse;
   margin-top: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   width: 100%;
+
+  tr:first-of-type th {
+    border-top-width: 0px
+  }
+
+  tr:last-of-type td {
+    border-bottom-width: 0px 
+  }
 
   td, th {
     border: 1px solid $olive;
@@ -69,6 +84,12 @@ a.btn {
   .font-small {
     font-size: 14px
   }
+}
+
+.map {
+  border-radius: 8px;
+  flex-grow: 1;
+  margin-bottom: 15px
 }
 
 .private-content {

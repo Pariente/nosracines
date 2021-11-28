@@ -3,43 +3,44 @@
 <% end %>
 
 <h1>Utilisateurs</h1>
-
-<table class="admin_table">
-  <tr>
-    <th class="center">ID</th>
-    <th>Adresse e-mail</th>
-    <th>Accès au contenu privé ?</th>
-    <th>Admin ?</th>
-    <th>Date de création</th>
-  </tr>
-  <% @users.each do |u| %>
+<div class="admin_table_container">
+  <table class="admin_table">
     <tr>
-      <td class="center"><%= u.id %></td>
-      <td><%= u.email %></td>
-      <td>
-        <% priv = u.has_private_access %>
-        <% if priv %>
-          Oui
-          <%= link_to "(retirer l'accès)", admin_user_revoke_private_access_path(u), data: { confirm: "Vous allez retirer l'accès au contenu privé à #{u.email}. Voulez-vous continuer ?" } %>
-        <% else %>
-          Non
-          <%= link_to "(donner l'accès)", admin_user_give_private_access_path(u), data: { confirm: "Vous allez donner l'accès au contenu privé à #{u.email}. Voulez-vous continuer ?" } %>
-        <% end %>
-      </td>
-      <td>
-        <% admin = u.admin? %>
-        <% if admin %>
-          Oui
-          <%= link_to "(révoquer les droits)", admin_user_revoke_admin_path(u), data: { confirm: "Vous allez retirer les droits d'administrateur à #{u.email}. Voulez-vous continuer ?" } %>
-        <% else %>
-          Non
-          <%= link_to "(rendre administrateur)", admin_user_make_admin_path(u), data: { confirm: "Vous allez donner les droits d'administrateur à #{u.email}. Voulez-vous continuer ?" } %>
-        <% end %>
-      </td>
-      <td><%= u.created_at.strftime("%F à %T") %></td>
+      <th class="center">ID</th>
+      <th>Adresse e-mail</th>
+      <th>Accès au contenu privé ?</th>
+      <th>Admin ?</th>
+      <th>Date de création</th>
     </tr>
-  <% end %>
-</table>
+    <% @users.each do |u| %>
+      <tr>
+        <td class="center"><%= u.id %></td>
+        <td><%= u.email %></td>
+        <td>
+          <% priv = u.has_private_access %>
+          <% if priv %>
+            Oui
+            <%= link_to "(retirer l'accès)", admin_user_revoke_private_access_path(u), data: { confirm: "Vous allez retirer l'accès au contenu privé à #{u.email}. Voulez-vous continuer ?" } %>
+          <% else %>
+            Non
+            <%= link_to "(donner l'accès)", admin_user_give_private_access_path(u), data: { confirm: "Vous allez donner l'accès au contenu privé à #{u.email}. Voulez-vous continuer ?" } %>
+          <% end %>
+        </td>
+        <td>
+          <% admin = u.admin? %>
+          <% if admin %>
+            Oui
+            <%= link_to "(révoquer les droits)", admin_user_revoke_admin_path(u), data: { confirm: "Vous allez retirer les droits d'administrateur à #{u.email}. Voulez-vous continuer ?" } %>
+          <% else %>
+            Non
+            <%= link_to "(rendre administrateur)", admin_user_make_admin_path(u), data: { confirm: "Vous allez donner les droits d'administrateur à #{u.email}. Voulez-vous continuer ?" } %>
+          <% end %>
+        </td>
+        <td><%= u.created_at.strftime("%F à %T") %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 <div class="pagination_row">
   <%= paginate @users %>
 </div>

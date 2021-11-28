@@ -1,72 +1,89 @@
 <% content_for :navbar do %>
   <%= render "pages/admin_navbar" %>
 <% end %>
-<%= link_to admin_events_path, class: "back_link" do %>
+<%= link_to admin_locations_path, class: "back_link" do %>
   <i class="material-icons">arrow_back_ios</i>
   <span>Annuler et revenir à l'index</span>
 <% end %>
 <div class="flex flex-row justify-between align-baseline">
   <div class="flex flex-row align-baseline">
-    <h1><%= @event.name %></h1>
-    <%= link_to event_path(@event) do %>
+    <h1><%= @location.name %></h1>
+    <%= link_to location_path(@location) do %>
       (voir la fiche)
     <% end %>
   </div>
   <div>
-    <%= link_to edit_admin_event_path(@event), class: "btn btn-mini" do %>
-      <i class="material-icons">edit_calendar</i>
+    <%= link_to edit_admin_location_path(@location), class: "btn btn-mini" do %>
+      <i class="material-icons">edit_location</i>
       <span>Modifier la fiche</span>
     <% end %>
   </div>
 </div>
 <div class="person_header admin-show flex flex-row">
   <div class="mr10">
-    <% pic = @event.illustration.present? ? @event.illustration.key : "default_event_pic" %>
+    <% pic = @location.illustration.present? ? @location.illustration.key : "default_location_pic" %>
     <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
   </div>
   <div class="person_header_info flex flex-column flex-grow-1">
-    <% if @event.privacy %>
+    <% if @location.privacy %>
       <div>
         <span class="private-content mb10">
           <i class="material-icons">security</i> Privé
         </span>
       </div>
     <% end %>
-
-    <div class="half">
-      <% unless @event.date_start.nil? %>
-        <div class="left">
-          <label>Date de début</label>
-          <p><%= @event.date_start %></p>
-        </div>
-      <% end %>
-      <% unless @event.date_end.nil? %>
-        <div class="left">
-          <label>Date de fin</label>
-          <p><%= @event.date_end %></p>
-        </div>
-      <% end %>
+    <div>
+      <label>Adresse</label>
+      <p><%= @location.address %></p>
     </div>
+    <div class="half">
+      <div class="left">
+        <label>Ville</label>
+        <p><%= @location.city %></p>
+      </div>
+      <div class="left">
+        <label>Code postal</label>
+        <p><%= @location.zipcode %></p>
+      </div>
+    </div>
+    <div class="half">
+      <div class="left">
+        <label>Région</label>
+        <p><%= @location.region %></p>
+      </div>
+      <div class="left">
+        <label>Pays</label>
+        <p><%= @location.country %></p>
+      </div>
+    </div>
+    <div class="half">
+      <div class="left">
+        <label>Latitude</label>
+        <p><%= @location.latitude %></p>
+      </div>
+      <div class="left">
+        <label>Longitude</label>
+        <p><%= @location.longitude %></p>
+      </div>
+    </div>
+    <% unless @location.latitude.nil? || @location.longitude.nil? %>
+      <div class="flex justify-center">
+        <div class="map" id="map" style="width:425px; height:400px;"></div>
+      </div>
+    <% end %>
   </div>
 </div>
 <div class="admin-show">
-  <% unless @event.story == "" %>
+  <% unless @location.description == "" %>
     <div class="show-section">
-      <h3>Histoire de l'évènement</h3>
-      <p><%= @event.story %></p>
-    </div>
-  <% end %>
-
-  <% unless @event.comment == "" %>
-    <div class="show-section">
-      <h3>Commentaires</h3>
-      <p><%= @event.comment %></p>
+      <h3>Description et histoire</h3>
+      <p><%= @location.description %></p>
     </div>
   <% end %>
 
   <div class="show-section">
     <h3>Documents associés</h3>
-    <% unless @event_documents == [] %>
+    <% unless @location_documents == [] %>
       <div class="admin_table_container">
         <table class="admin_table">
           <tr>
@@ -78,8 +95,8 @@
             <th>Fonds</th>
             <th>Actions</th>
           </tr>
-          <% @event_documents.each do |ed| %>
-            <% doc = ed.document %>
+          <% @location_documents.each do |ld| %>
+            <% doc = ld.document %>
             <tr>
               <td class="center">
                 <%= doc.id %>
@@ -107,7 +124,7 @@
                 <%= doc.fund.name %>
               </td>
               <td>
-                <%= link_to admin_event_document_delete_path(ed, redirection: "event") do %>
+                <%= link_to admin_location_document_delete_path(ld, redirection: "location") do %>
                   Supprimer le lien
                 <% end %>
               </td>
@@ -116,12 +133,12 @@
         </table>
       </div>
     <% end %>
-    <%= link_to new_admin_event_document_path(from: "event", event_id: @event.id), class: "btn btn-mini" do %>
-      <i class="material-icons">add</i> Lier un document à l'évènement
+    <%= link_to new_admin_location_document_path(from: "location", location_id: @location.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add</i> Lier un document au lieu
     <% end %>
   </div>
   
-  <% unless @event_people == [] %>
+  <% unless @location_people == [] %>
     <div class="show-section">
       <h3>Personnes associées</h3>
       <div class="admin_table_container">
@@ -133,8 +150,8 @@
             <th>Prénom</th>
             <th>Action</th>
           </tr>
-          <% @event_people.each do |ep| %>
-            <% p = ep.person %>
+          <% @location_people.each do |lp| %>
+            <% p = lp.person %>
             <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
             <tr>
               <td class="center">
@@ -154,7 +171,7 @@
               </td>
               <td><%= p.first_name %></td>
               <td>
-                <%= link_to admin_event_person_delete_path(ep.id, redirection: "event") do %>
+                <%= link_to admin_location_person_delete_path(lp.id, redirection: "location") do %>
                   Supprimer le lien
                 <% end %>
               </td>
@@ -162,6 +179,20 @@
           <% end %>
         </table>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script>
+  var map = L.map('map').setView([<%= @location.latitude %>, <%= @location.longitude %>], 18);
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 20,
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+      accessToken: 'pk.eyJ1IjoidGhwYXJpZW50ZSIsImEiOiJja3dqZ2wyc2YwejB2Mm9vMG00N3hmZmZkIn0.fQCcO5vyh9hhG3PccTvTnQ'
+  }).addTo(map);
+  var marker = L.marker([<%= @location.latitude %>, <%= @location.longitude %>]).addTo(map);
+</script>

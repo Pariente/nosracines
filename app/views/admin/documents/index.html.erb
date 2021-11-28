@@ -11,58 +11,60 @@
   <% end %>
 </div>
 
-<table class="admin_table">
-  <tr>
-    <th class="center">ID</th>
-    <th class="pic_cell">Aperçu</th>
-    <th>Nom</th>
-    <th>Date</th>
-    <th>Lieu</th>
-    <th>Personnes</th>
-    <th>Actions</th>
-  </tr>
-  <% @documents.each do |d| %>
+<div class="admin_table_container">
+  <table class="admin_table">
     <tr>
-      <td class="center"><%= d.id %></td>
-      <td class="pic_cell">
-        <% file = d.document_files.first %>
-        <% if file.nil? %>
-          <%= cl_image_tag "default_document", width: "160", height: "160", crop: "fill", class: "img-100" %>
-        <% else %>
-          <%= cl_image_tag file.url.key, format: "png", width: "160", height: "160", crop: "fill", class: "img-100" %>
-        <% end %>
-      </td>
-      <td>
-        <%= link_to admin_document_path(d.id) do %>
-          <%= d.name %>
-        <% end %><br>
-        <% if d.privacy %>
-        <span class="private-content">
-          <i class="material-icons">security</i> Privé
-        </span>
-        <% end %>
-      </td>
-      <td><%= d.date&.year %></td>
-      <td><%= d.location %></td>
-      <td class="font-small">
-        <ul>
-          <% d.document_people.each do |dp| %>
-            <% person = dp.person%>
-            <li>
-              <%= link_to admin_person_path(person.id) do %>
-                <%= dp.person.full_name_index %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </td>
-      <td>
-        <%= link_to 'Modifier', edit_admin_document_path(d) %><br>
-        <%= link_to 'Voir', document_path(d) %>
-      </td>
+      <th class="center">ID</th>
+      <th class="pic_cell">Aperçu</th>
+      <th>Nom</th>
+      <th>Date</th>
+      <th>Lieu</th>
+      <th>Personnes</th>
+      <th>Actions</th>
     </tr>
-  <% end %>
-</table>
+    <% @documents.each do |d| %>
+      <tr>
+        <td class="center"><%= d.id %></td>
+        <td class="pic_cell">
+          <% file = d.document_files.first %>
+          <% if file.nil? %>
+            <%= cl_image_tag "default_document", width: "160", height: "160", crop: "fill", class: "img-100" %>
+          <% else %>
+            <%= cl_image_tag file.url.key, format: "png", width: "160", height: "160", crop: "fill", class: "img-100" %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to admin_document_path(d.id) do %>
+            <%= d.name %>
+          <% end %><br>
+          <% if d.privacy %>
+          <span class="private-content">
+            <i class="material-icons">security</i> Privé
+          </span>
+          <% end %>
+        </td>
+        <td><%= d.date&.year %></td>
+        <td><%= d.location %></td>
+        <td class="font-small">
+          <ul>
+            <% d.document_people.each do |dp| %>
+              <% person = dp.person%>
+              <li>
+                <%= link_to admin_person_path(person.id) do %>
+                  <%= dp.person.full_name_index %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+        <td>
+          <%= link_to 'Modifier', edit_admin_document_path(d) %><br>
+          <%= link_to 'Voir', document_path(d) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 <div class="pagination_row">
   <%= paginate @documents %>
 </div>

@@ -5,6 +5,7 @@ class Person < ApplicationRecord
 
   has_many :document_people
   has_many :event_people
+  has_many :location_people
 
   has_many :aliases
 
@@ -42,6 +43,16 @@ class Person < ApplicationRecord
     end
 
     return events
+  end
+
+  def locations
+    location_people = self.location_people
+    locations = []
+    location_people.each do |q|
+      locations << q.location
+    end
+
+    return locations
   end
 
   def family_links
