@@ -1,0 +1,96 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+
+<% @from = params[:from] %>
+<% if @from == "location" %>
+  <%= link_to admin_location_path(@location), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des documents à <%= @location.name %></h1>
+  <%= simple_form_for [:admin, @location_document] do |ld| %>
+    <div class="location-document">
+      <%= ld.input  :from, as: :hidden, input_html: { value: @from } %>
+      <%= ld.input  :document_id,
+                      label: "Document",
+                      collection: Document.order(:name), 
+                      prompt: "Liste des documents",
+                      label_method: :name,
+                      input_html: { name: 'location_document[0][document_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-location-document block hidden mr10">Enlever le dernier document</button>
+      <button class="btn btn-mini add-location-document block"><i class="material-icons">add</i> Ajouter un document</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "location_id", value: @location.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% elsif @from == "document" %>
+  <%= link_to admin_document_path(@document), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des lieux à <%= @document.name %></h1>
+  <%= simple_form_for [:admin, @location_document] do |ld| %>
+    <div class="location-document">
+      <%= ld.input  :from, as: :hidden, input_html: { value: @from } %>
+      <%= ld.input  :location_id,
+                      label: "Lieu",
+                      collection: Location.order(:name), 
+                      prompt: "Liste des lieux",
+                      label_method: :name,
+                      input_html: { name: 'location_document[0][location_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-location-document block hidden mr10">Enlever le dernier lieu</button>
+      <button class="btn btn-mini add-location-document block"><i class="material-icons">add</i> Ajouter un lieu</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "document_id", value: @document.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% end %>
+
+<script>
+  // Add LocationDocument
+  var i = $('.location-document').length;
+
+  $('.add-location-document').click(function(event){
+    event.preventDefault();
+    var locationDocument      = $('.location-document').length;
+    var lastLocationDocument  = $('.location-document').last();
+    var removeButton          = $('.remove-location-document').last();
+    removeButton.removeClass('hidden');
+
+    var newLocationDocument = lastLocationDocument.clone();
+    var select              = newLocationDocument.find('select');
+    if (select.attr('id') == "location_document_document_id") {
+      select.attr('name', 'location_document['+i+'][document_id]');
+    } else {
+      select.attr('name', 'location_document['+i+'][location_id]');
+    }
+    select.removeAttr('id');
+    lastLocationDocument.after(newLocationDocument);
+    i++;
+  });
+
+  // Remove LocationDocument
+  $('.remove-location-document').click(function(event){
+    event.preventDefault();
+
+    var removeButton          = $('.remove-location-document').last();
+    var locationDocument      = $('.location-document').length;
+    var lastLocationDocument  = $('.location-document').last();
+
+    if (locationDocument == 2) {
+      removeButton.addClass('hidden');
+      lastLocationDocument.remove();
+    } else {
+      lastLocationDocument.remove();
+    }
+  });
+</script>

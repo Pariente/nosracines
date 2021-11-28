@@ -219,3 +219,51 @@
     <i class="material-icons">add</i> Lier un évènement au document
   <% end %>
 </div>
+
+<div class="show-section">
+  <h3>Lieux liés à ce document</h3>
+  <% unless @location_documents == [] %>
+    <div class="admin_table_container">
+      <table class="admin_table">
+        <tr>
+          <th class="center">ID</th>
+          <th class="pic_cell">Aperçu</th>
+          <th>Nom</th>
+          <th>Adresse</th>
+          <th>Ville</th>
+          <th>Pays</th>
+          <th>Action</th>
+        </tr>
+        <% @location_documents.each do |ld| %>
+          <% location = ld.location %>
+          <tr>
+            <td class="center">
+              <%= location.id %>
+            </td>
+            <td class="pic_cell">
+              <% pic = location.illustration.present? ? location.illustration.key : "default_location_pic" %>
+              <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+            </td>
+            <td>
+              <%= link_to admin_location_path(location.id) do %>
+                <%= location.name %>
+              <% end %>
+            </td>
+            <td><%= location.name %></td>
+            <td><%= location.address %></td>
+            <td><%= location.city %></td>
+            <td><%= location.country %></td>
+            <td>
+              <%= link_to admin_location_document_delete_path(ld, redirection: "document") do %>
+                Supprimer le lien
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+  <%= link_to new_admin_location_document_path(from: "document", document_id: @document.id), class: "btn btn-mini" do %>
+    <i class="material-icons">add_location</i> Lier un lieu au document
+  <% end %>
+</div>
