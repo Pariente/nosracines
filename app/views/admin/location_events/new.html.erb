@@ -1,0 +1,96 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+
+<% @from = params[:from] %>
+<% if @from == "location" %>
+  <%= link_to admin_location_path(@location), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des évènements à <%= @location.name %></h1>
+  <%= simple_form_for [:admin, @location_event] do |le| %>
+    <div class="location-event">
+      <%= le.input  :from, as: :hidden, input_html: { value: @from } %>
+      <%= le.input  :event_id,
+                      label: "Évènement",
+                      collection: Event.order(:date_start), 
+                      prompt: "Liste des évènements",
+                      label_method: :name, 
+                      input_html: { name: 'location_event[0][event_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-location-event block hidden mr10">Enlever le dernier évènement</button>
+      <button class="btn btn-mini add-location-event block"><i class="material-icons">add</i> Ajouter un évènement</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "location_id", value: @location.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% elsif @from == "event" %>
+  <%= link_to admin_event_path(@event), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des lieux à <%= @event.name %></h1>
+  <%= simple_form_for [:admin, @location_event] do |lp| %>
+    <div class="location-event">
+      <%= lp.input  :from, as: :hidden, input_html: { value: @from } %>
+      <%= lp.input  :location_id,
+                      label: "Lieu",
+                      collection: Location.order(:name), 
+                      prompt: "Liste des lieux",
+                      label_method: :name,
+                      input_html: { name: 'location_event[0][location_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-location-event block hidden mr10">Enlever le dernier lieu</button>
+      <button class="btn btn-mini add-location-event block"><i class="material-icons">add</i> Ajouter un lieu</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "event_id", value: @event.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% end %>
+
+<script>
+  // Add LocationEvent
+  var i = $('.location-event').length;
+
+  $('.add-location-event').click(function(event){
+    event.preventDefault();
+    var locationEvent     = $('.location-event').length;
+    var lastLocationEvent = $('.location-event').last();
+    var removeButton      = $('.remove-location-event').last();
+    removeButton.removeClass('hidden');
+
+    var newLocationEvent  = lastLocationEvent.clone();
+    var select            = newLocationEvent.find('select');
+    if (select.attr('id') == "location_event_event_id") {
+      select.attr('name', 'location_event['+i+'][event_id]');
+    } else {
+      select.attr('name', 'location_event['+i+'][location_id]');
+    }
+    select.removeAttr('id');
+    lastLocationEvent.after(newLocationEvent);
+    i++;
+  });
+
+  // Remove LocationEvent
+  $('.remove-location-event').click(function(event){
+    event.preventDefault();
+
+    var removeButton       = $('.remove-location-event').last();
+    var locationEvent     = $('.location-event').length;
+    var lastLocationEvent = $('.location-event').last();
+
+    if (locationEvent == 2) {
+      removeButton.addClass('hidden');
+      lastLocationEvent.remove();
+    } else {
+      lastLocationEvent.remove();
+    }
+  });
+</script>

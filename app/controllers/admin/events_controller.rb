@@ -22,6 +22,7 @@ class Admin::EventsController < ApplicationController
     @event            = Event.find(params[:id])
     @event_documents  = @event.event_documents
     @event_people     = @event.event_people
+    @location_events  = @event.location_events
   end
 
   def index

@@ -65,7 +65,7 @@
   <% end %>
 
   <div class="show-section">
-    <h3>Documents associés</h3>
+    <h3><i class="material-icons">text_snippet</i>Documents associés</h3>
     <% unless @event_documents == [] %>
       <div class="admin_table_container">
         <table class="admin_table">
@@ -117,55 +117,103 @@
       </div>
     <% end %>
     <%= link_to new_admin_event_document_path(from: "event", event_id: @event.id), class: "btn btn-mini" do %>
-      <i class="material-icons">add</i> Lier un document à l'évènement
+      <i class="material-icons">note_add</i> Lier un document à l'évènement
     <% end %>
   </div>
   
   
-    <div class="show-section">
-      <h3>Personnes associées</h3>
-      <% unless @event_people == [] %>
-        <div class="admin_table_container">
-          <table class="admin_table">
+  <div class="show-section">
+    <h3><i class="material-icons">people</i>Personnes associées</h3>
+    <% unless @event_people == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Action</th>
+          </tr>
+          <% @event_people.each do |ep| %>
+            <% p = ep.person %>
+            <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
             <tr>
-              <th class="center">ID</th>
-              <th class="pic_cell">Aperçu</th>
-              <th>Nom</th>
-              <th>Prénom</th>
-              <th>Action</th>
+              <td class="center">
+                <%= p.id %>
+              </td>
+              <td class="pic_cell">
+                <%= cl_image_tag pic, width: "200", height: "200", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_person_path(p.id) do %>
+                  <%= p.last_name.upcase %>
+                <% end %>
+                <% if p.spouse_name.present? %>
+                  <br>
+                  <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
+                <% end %>
+              </td>
+              <td><%= p.first_name %></td>
+              <td>
+                <%= link_to admin_event_person_delete_path(ep.id, redirection: "event") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
             </tr>
-            <% @event_people.each do |ep| %>
-              <% p = ep.person %>
-              <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
-              <tr>
-                <td class="center">
-                  <%= p.id %>
-                </td>
-                <td class="pic_cell">
-                  <%= cl_image_tag pic, width: "200", height: "200", crop: "fill", gravity: "face", class: "img-100" %>
-                </td>
-                <td>
-                  <%= link_to admin_person_path(p.id) do %>
-                    <%= p.last_name.upcase %>
-                  <% end %>
-                  <% if p.spouse_name.present? %>
-                    <br>
-                    <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
-                  <% end %>
-                </td>
-                <td><%= p.first_name %></td>
-                <td>
-                  <%= link_to admin_event_person_delete_path(ep.id, redirection: "event") do %>
-                    Supprimer le lien
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </table>
-        </div>
-      <% end %>
-      <%= link_to new_admin_event_person_path(from: "event", event_id: @event.id), class: "btn btn-mini" do %>
-        <i class="material-icons">add</i> Lier une personne à l'évènement
-      <% end %>
-    </div>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_event_person_path(from: "event", event_id: @event.id), class: "btn btn-mini" do %>
+      <i class="material-icons">person_add</i> Lier une personne à l'évènement
+    <% end %>
+  </div>
+  
+  <div class="show-section">
+    <h3><i class="material-icons">place</i>Lieux associés</h3>
+    <% unless @location_events == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Pays</th>
+            <th>Action</th>
+          </tr>
+          <% @location_events.each do |le| %>
+            <% location = le.location %>
+            <tr>
+              <td class="center">
+                <%= location.id %>
+              </td>
+              <td class="pic_cell">
+                <% pic = location.illustration.present? ? location.illustration.key : "default_profile_pic" %>
+                <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_location_path(location.id) do %>
+                  <%= location.name %>
+                <% end %>
+              </td>
+              <td><%= location.address %></td>
+              <td><%= location.city %></td>
+              <td><%= location.country %></td>
+              <td>
+                <%= link_to admin_location_event_delete_path(le.id, redirection: "event") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_location_event_path(from: "event", event_id: @event.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add_location</i> Lier un lieu à l'évènement
+    <% end %>
+  </div>
+
 </div>
