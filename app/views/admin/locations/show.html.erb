@@ -138,9 +138,9 @@
     <% end %>
   </div>
   
-  <% unless @location_people == [] %>
-    <div class="show-section">
-      <h3>Personnes associées</h3>
+  <div class="show-section">
+    <h3>Personnes associées</h3>
+    <% unless @location_people == [] %>
       <div class="admin_table_container">
         <table class="admin_table">
           <tr>
@@ -179,6 +179,9 @@
           <% end %>
         </table>
       </div>
+    <% end %>
+    <%= link_to new_admin_location_person_path(from: "location", location_id: @location.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add</i> Lier une personne au lieu
     <% end %>
   </div>
 </div>

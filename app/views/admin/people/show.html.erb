@@ -119,6 +119,14 @@
       <p><%= @person.biography %></p>
     </div>
   <% end %>
+
+  <% unless @person.notes.nil? %>
+    <div class="show-section">
+      <h3>Notes</h3>
+      <p><%= @person.notes %></p>
+    </div>
+  <% end %>
+
   <div class="show-section">
     <h3>Liens de parenté</h3>
     <% unless @links == [] %>
@@ -178,7 +186,7 @@
 
   <div class="show-section">
     <h3>Documents liés</h3>
-    <% unless @documents == [] %>
+    <% unless @document_people == [] %>
       <div class="admin_table_container">
         <table class="admin_table">
           <tr>
@@ -233,13 +241,6 @@
     <% end %>
   </div>
 
-  <% unless @person.notes.nil? %>
-    <div class="show-section">
-      <h3>Notes</h3>
-      <p><%= @person.notes %></p>
-    </div>
-  <% end %>
-
   <div class="show-section">
     <h3>Évènements associés</h3>
     <% unless @event_people == [] %>
@@ -282,6 +283,53 @@
     <% end %>
     <%= link_to new_admin_event_person_path(person_id: @person.id), class: "btn btn-mini" do %>
       <i class="material-icons">add</i> Lier un évènement au document
+    <% end %>
+  </div>
+
+  <div class="show-section">
+    <h3>Lieux associés</h3>
+    <% unless @location_people == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Pays</th>
+            <th>Action</th>
+          </tr>
+          <% @location_people.each do |lp| %>
+            <% location = lp.location %>
+            <tr>
+              <td class="center">
+                <%= location.id %>
+              </td>
+              <td class="pic_cell">
+                <% pic = location.illustration.present? ? location.illustration.key : "default_profile_pic" %>
+                <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_location_path(location.id) do %>
+                  <%= location.name %>
+                <% end %>
+              </td>
+              <td><%= location.address %></td>
+              <td><%= location.city %></td>
+              <td><%= location.country %></td>
+              <td>
+                <%= link_to admin_location_person_delete_path(lp.id, redirection: "person") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_location_person_path(from: "person", person_id: @person.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add_location</i> Lier un lieu à la personne
     <% end %>
   </div>
 </div>

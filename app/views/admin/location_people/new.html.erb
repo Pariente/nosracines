@@ -1,0 +1,96 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+
+<% @from = params[:from] %>
+<% if @from == "location" %>
+  <%= link_to admin_location_path(@location), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des personnes à <%= @location.name %></h1>
+  <%= simple_form_for [:admin, @location_person] do |lp| %>
+    <div class="location-person">
+      <%= lp.input :from, as: :hidden, input_html: { value: @from } %>
+      <%= lp.input  :person_id,
+                      label: "Personne",
+                      collection: Person.order(:last_name), 
+                      prompt: "Liste des personnes",
+                      label_method: :full_name_index, 
+                      input_html: { name: 'location_person[0][person_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-location-person block hidden mr10">Enlever la dernière personne</button>
+      <button class="btn btn-mini add-location-person block"><i class="material-icons">add</i> Ajouter une personne</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "location_id", value: @location.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% elsif @from == "person" %>
+  <%= link_to admin_person_path(@person), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des lieux à <%= @person.name %></h1>
+  <%= simple_form_for [:admin, @location_person] do |lp| %>
+    <div class="location-person">
+      <%= lp.input  :from, as: :hidden, input_html: { value: @from } %>
+      <%= lp.input  :location_id,
+                      label: "Lieu",
+                      collection: Location.order(:name), 
+                      prompt: "Liste des lieux",
+                      label_method: :name,
+                      input_html: { name: 'location_person[0][location_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-location-person block hidden mr10">Enlever le dernier lieu</button>
+      <button class="btn btn-mini add-location-person block"><i class="material-icons">add</i> Ajouter un lieu</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "person_id", value: @person.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% end %>
+
+<script>
+  // Add LocationPerson
+  var i = $('.location-person').length;
+
+  $('.add-location-person').click(function(event){
+    event.preventDefault();
+    var LocationPerson     = $('.location-person').length;
+    var lastLocationPerson = $('.location-person').last();
+    var removeButton      = $('.remove-location-person').last();
+    removeButton.removeClass('hidden');
+
+    var newLocationPerson  = lastLocationPerson.clone();
+    var select            = newLocationPerson.find('select');
+    if (select.attr('id') == "location_person_person_id") {
+      select.attr('name', 'location_person['+i+'][person_id]');
+    } else {
+      select.attr('name', 'location_person['+i+'][location_id]');
+    }
+    select.removeAttr('id');
+    lastLocationPerson.after(newLocationPerson);
+    i++;
+  });
+
+  // Remove LocationPerson
+  $('.remove-location-person').click(function(event){
+    event.preventDefault();
+
+    var removeButton       = $('.remove-location-person').last();
+    var LocationPerson     = $('.location-person').length;
+    var lastLocationPerson = $('.location-person').last();
+
+    if (LocationPerson == 2) {
+      removeButton.addClass('hidden');
+      lastLocationPerson.remove();
+    } else {
+      lastLocationPerson.remove();
+    }
+  });
+</script>
