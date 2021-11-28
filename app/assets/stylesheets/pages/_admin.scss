@@ -184,14 +184,17 @@ a.back_link {
   }
 
   h3 {
-    align-items: center;
     color: $olive;
-    display: flex;
     font-family: "Trykker";
     font-size: 25px;
     font-weight: 100;
     margin-top: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 20px
+  }
+
+  h2, h3 {
+    align-items: center;
+    display: flex;
 
     i.material-icons {
       padding-right: 5px

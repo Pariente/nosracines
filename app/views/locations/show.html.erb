@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="person_header admin-show">
+    <% pic = @location.illustration.present? ? @location.illustration.key : "default_event_pic" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
+    <div class="person_header_info">
+      <% if @location.privacy %>
+        <div>
+          <span class="private-content mb10">
+            <i class="material-icons">security</i> Privé
+          </span>
+        </div>
+      <% end %>
+      <h1><%= @location.name %></h1>
+      <label>Adresse</label>
+      <p><%= @location.address %></p>
+      <div class="half">
+        <% unless @location.city.nil? %>
+          <div class="left">
+            <label>Ville</label>
+            <p><%= @location.city %></p>
+          </div>
+        <% end %>
+        <% unless @location.zipcode.nil? %>
+          <div class="left">
+            <label>Code postal</label>
+            <p><%= @location.zipcode %></p>
+          </div>
+        <% end %>
+      </div>
+      <div class="half">
+        <% unless @location.region.nil? %>
+          <div class="left">
+            <label>Région</label>
+            <p><%= @location.region %></p>
+          </div>
+        <% end %>
+        <% unless @location.country.nil? %>
+          <div class="left">
+            <label>Pays</label>
+            <p><%= @location.country %></p>
+          </div>
+        <% end %>
+      </div>
+      <div class="half">
+        <% unless @location.latitude.nil? %>
+          <div class="left">
+            <label>Latitude</label>
+            <p><%= @location.latitude %></p>
+          </div>
+        <% end %>
+        <% unless @location.longitude.nil? %>
+          <div class="left">
+            <label>Longitude</label>
+            <p><%= @location.longitude %></p>
+          </div>
+        <% end %>
+      </div>
+      <% unless @location.latitude.nil? || @location.longitude.nil? %>
+        <div class="flex justify-center">
+          <div class="map" id="map" style="width:425px; height:400px;"></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="admin-show">
+    <% unless @location.description == "" %>
+      <div class="show-section">
+        <h2>Description</h2>
+        <p><%= @location.description %></p>
+      </div>
+    <% end %>
+
+    <% unless @documents == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">text_snippet</i>Documents liés</h2>
+        <div class="slideshow">
+          <% @documents.each do |doc| %>
+            <%= render "documents/card", doc: doc %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @people == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">person</i>Personnes liées</h2>
+        <div class="slideshow">
+          <% @people.each do |p| %>
+            <%= render "people/card", person: p, link: "" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @events == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">event</i>Évènements liés</h2>
+        <div class="slideshow">
+          <% @events.each do |e| %>
+            <%= render "events/card", event: e, link: "" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script>
+  var map = L.map('map').setView([<%= @location.latitude %>, <%= @location.longitude %>], 18);
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 20,
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+      accessToken: 'pk.eyJ1IjoidGhwYXJpZW50ZSIsImEiOiJja3dqZ2wyc2YwejB2Mm9vMG00N3hmZmZkIn0.fQCcO5vyh9hhG3PccTvTnQ'
+  }).addTo(map);
+  var marker = L.marker([<%= @location.latitude %>, <%= @location.longitude %>]).addTo(map);
+</script>
