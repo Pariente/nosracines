@@ -116,7 +116,7 @@
       </table>
     </div>
   <% end %>
-  <%= link_to new_admin_document_document_file_path(document_id: @document.id), class: "btn btn-mini" do %>
+  <%= link_to new_admin_document_document_file_path(document_id: @document.id), class: "btn" do %>
     <i class="material-icons">add</i> Ajouter un fichier
   <% end %>
 </div>
@@ -129,7 +129,7 @@
 <% end %>
 
 <div class="show-section">
-  <h3>Personnes liées à ce document</h3>
+  <h3><i class="material-icons">person</i>Personnes liées</h3>
   <% unless @document_people == [] %>
     <div class="admin_table_container">
       <table class="admin_table">
@@ -171,12 +171,12 @@
     </div>
   <% end %>
   <%= link_to new_admin_document_person_path(document_id: @document.id, from: "document"), class: "btn btn-mini" do %>
-    <i class="material-icons">add</i> Lier une personne au document
+    <i class="material-icons">person_add</i> Lier une personne au document
   <% end %>
 </div>
 
 <div class="show-section">
-  <h3>Évènements liés à ce document</h3>
+  <h3><i class="material-icons">event</i>Évènements liés</h3>
   <% unless @event_documents == [] %>
     <div class="admin_table_container">
       <table class="admin_table">
@@ -216,12 +216,12 @@
     </div>
   <% end %>
   <%= link_to new_admin_event_document_path(from: "document", document_id: @document.id), class: "btn btn-mini" do %>
-    <i class="material-icons">add</i> Lier un évènement au document
+    <i class="material-icons">event</i> Lier un évènement au document
   <% end %>
 </div>
 
 <div class="show-section">
-  <h3>Lieux liés à ce document</h3>
+  <h3>Lieux liés</h3>
   <% unless @location_documents == [] %>
     <div class="admin_table_container">
       <table class="admin_table">

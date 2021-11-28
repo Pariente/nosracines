@@ -237,12 +237,12 @@
       </div>
     <% end %>
     <%= link_to new_admin_document_person_path(person_id: @person.id, from: "person"), class: "btn btn-mini" do %>
-      <i class="material-icons">add</i> Lier un document à la personne
+      <i class="material-icons">note_add</i> Lier un document à la personne
     <% end %>
   </div>
 
   <div class="show-section">
-    <h3><i class="material-icons">event</i>Évènements associés</h3>
+    <h3><i class="material-icons">event</i>Évènements liés</h3>
     <% unless @event_people == [] %>
       <div class="admin_table_container">
         <table class="admin_table">
@@ -287,7 +287,7 @@
   </div>
 
   <div class="show-section">
-    <h3><i class="material-icons">place</i>Lieux associés</h3>
+    <h3><i class="material-icons">place</i>Lieux liés</h3>
     <% unless @location_people == [] %>
       <div class="admin_table_container">
         <table class="admin_table">
