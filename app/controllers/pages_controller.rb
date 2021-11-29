@@ -72,7 +72,7 @@ class PagesController < ApplicationController
       end
 
       # Images
-      image_formats = ["gif", "png", "jpg", "jpeg", "tiff", "heic", "svg"]
+      image_formats = ["gif", "png", "jpg", "jpeg", "tif", "tiff", "heic", "svg"]
       @images       = @documents.select {|d| image_formats.include?(d.format) }
 
       # Videos

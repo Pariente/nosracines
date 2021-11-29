@@ -2,18 +2,22 @@ class DocumentFile < ApplicationRecord
   belongs_to :document
   has_one_attached :url
 
-  def icon
-    case original_format
-    when "png"
+  def type
+    image_formats = ["gif", "png", "jpg", "jpeg", "heic", "svg", "tif", "tiff"]
+    video_formats = ["avi", "mov", "mp4", "wav", "wma", "wmv"]
+    audio_formats = ["mid", "mp3"]
+    text_formats  = ["doc", "docx", "pdf", "txt"]
+
+    if image_formats.include?(self.original_format)
       return "image"
-    when "jpg"
-      return "image"
-    when "jpeg"
-      return "image"
-    when "tif"
-      return "image"
-    when "pdf"
-      return "text_snippet"
+    elsif video_formats.include?(self.original_format)
+      return "video"
+    elsif audio_formats.include?(self.original_format)
+      return "audio"
+    elsif text_formats.include?(self.original_format)
+      return "text"
+    else
+      return "other"
     end
   end
 end

@@ -23,7 +23,7 @@
 <% unless @texts == [] %>
   <%= render "pages/search_category_documents", 
         category: "Documents",
-        icon: "text_snippet",
+        icon: "folder_open",
         docs: @texts
   %>
 <% end %>
@@ -31,7 +31,7 @@
 <% unless @audios == [] %>
   <%= render "pages/search_category_documents", 
         category: "Audios",
-        icon: "audio",
+        icon: "audiotrack",
         docs: @audios
   %>
 <% end %>
@@ -39,7 +39,7 @@
 <% unless @videos == [] %>
   <%= render "pages/search_category_documents", 
         category: "Vidéos",
-        icon: "video",
+        icon: "video_library",
         docs: @videos
   %>
 <% end %>
@@ -47,7 +47,7 @@
 <% unless @others == [] %>
   <%= render "pages/search_category_documents", 
         category: "Autres documents",
-        icon: "miscellaneous",
+        icon: "grid_view",
         docs: @others
   %>
 <% end %>

@@ -84,7 +84,7 @@
 
     <% unless @people == [] %>
       <div class="show-section">
-        <h2><i class="material-icons">person</i>Personnes liées</h2>
+        <h2><i class="material-icons">people</i>Personnes liées</h2>
         <div class="slideshow">
           <% @people.each do |p| %>
             <%= render "people/card", person: p, link: "" %>

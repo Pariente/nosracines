@@ -6,7 +6,7 @@
 <div class="admin_top_bar">
   <%= render "admin/documents/search_input" %>
   <%= link_to new_admin_document_path, class: "btn" do %>
-    <i class="material-icons">note_add</i>
+    <i class="material-icons">create_new_folder</i>
     Ajouter un document
   <% end %>
 </div>
@@ -27,11 +27,7 @@
         <td class="center"><%= d.id %></td>
         <td class="pic_cell">
           <% file = d.document_files.first %>
-          <% if file.nil? %>
-            <%= cl_image_tag "default_document", width: "160", height: "160", crop: "fill", class: "img-100" %>
-          <% else %>
-            <%= cl_image_tag file.url.key, format: "png", width: "160", height: "160", crop: "fill", class: "img-100" %>
-          <% end %>
+          <%= render "documents/image_mini", file: file %>
         </td>
         <td>
           <%= link_to admin_document_path(d.id) do %>

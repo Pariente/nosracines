@@ -14,7 +14,7 @@
   </div>
   <div>
     <%= link_to edit_admin_document_path, class: "btn btn-mini" do %>
-      <i class="material-icons">edit</i>
+      <i class="material-icons">edit_note</i>
       <span>Modifier la fiche</span>
     <% end %>
   </div>
@@ -22,11 +22,7 @@
 <div class="person_header admin-show flex flex-row">
   <div class="mr10">
     <% file = @document.document_files.first %>
-    <% if file.nil? %>
-      <%= cl_image_tag "default_document", width: "600", height: "600", crop: "fill", class: "img-300" %>
-    <% else %>
-      <%= cl_image_tag file.url.key, format: "png", width: "600", height: "600", crop: "fill", class: "img-300" %>
-    <% end %>
+    <%= render "documents/image_card", file: file %>
   </div>
   <div class="person_header_info flex flex-column flex-grow-1">
     <% if @document.privacy %>
@@ -80,7 +76,7 @@
 </div>
 
 <div class="show-section">
-  <h3>Fichiers</h3>
+  <h3><i class="material-icons">file_present</i>Fichiers</h3>
   <% unless @document.document_files == [] %>
     <div class="admin_table_container">
       <table class="admin_table">
@@ -97,11 +93,7 @@
               <%= f.id %>
             </td>
             <td class="pic_cell">
-              <% if ["png", "jpg", "jpeg"].include?(f.original_format) %>
-                <%= cl_image_tag f.url.key, width: "160", height: "160", crop: "fill", class: "img-100" %>
-              <% else %>
-                <%= cl_image_tag f.url.key, format: "png", width: "160", height: "160", crop: "fill", class: "img-100" %>
-              <% end %>
+              <%= render "documents/image_mini", file: f %>
             </td>
             <td>
               <%= f.name %>
@@ -117,7 +109,7 @@
     </div>
   <% end %>
   <%= link_to new_admin_document_document_file_path(document_id: @document.id), class: "btn" do %>
-    <i class="material-icons">add</i> Ajouter un fichier
+    <i class="material-icons">note_add</i> Ajouter un fichier
   <% end %>
 </div>
 
@@ -129,7 +121,7 @@
 <% end %>
 
 <div class="show-section">
-  <h3><i class="material-icons">person</i>Personnes liées</h3>
+  <h3><i class="material-icons">people</i>Personnes liées</h3>
   <% unless @document_people == [] %>
     <div class="admin_table_container">
       <table class="admin_table">
@@ -221,7 +213,7 @@
 </div>
 
 <div class="show-section">
-  <h3>Lieux liés</h3>
+  <h3><i class="material-icons">place</i>Lieux liés</h3>
   <% unless @location_documents == [] %>
     <div class="admin_table_container">
       <table class="admin_table">

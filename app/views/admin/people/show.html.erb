@@ -206,11 +206,7 @@
               </td>
               <td class="pic_cell">
                 <% file = doc.document_files.first %>
-                <% if file.nil? %>
-                  <%= cl_image_tag "default_document", width: "200", height: "200", crop: "fill", class: "img-100" %>
-                <% else %>
-                  <%= cl_image_tag file.url.key, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
-                <% end %>
+                <%= render "documents/image_mini", file: file %>
               </td>
               <td>
                 <%= link_to admin_document_path(doc.id) do %>

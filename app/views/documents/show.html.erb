@@ -6,11 +6,13 @@
     <% else %>
       <% file = @document_file %>
     <% end %>
-    <%= link_to file.url, target: "_blank" do %>
-      <% if ["pdf"].include?(file.original_format) %>
-        <%= cl_image_tag file.url.key, format: "png" %>
+    <%= link_to cloudinary_url(file.url.key, resource_type: file.type), target: "_blank" do %>
+      <% if file.type == "audio" %>
+        <%= cl_image_tag file.url.key, flags: "waveform", resource_type: "video" %>
+      <% elsif file.type == "video" %>
+        <%= cl_video_tag(file.url.key, controls: true) %>
       <% else %>
-        <%= cl_image_tag file.url.key %>
+        <%= cl_image_tag file.url.key, format: "png" %>
       <% end %>
     <% end %>
     <div class="admin-show mt20">
@@ -46,11 +48,7 @@
                   @active = ""
                 end %>
             <div class="file-preview <%= @active %>">
-              <% if ["png", "jpg", "jpeg"].include?(f.original_format) %>
-                <%= cl_image_tag f.url.key, width: "200", height: "200", crop: "fill", class: "img-100" %>
-              <% else %>
-                <%= cl_image_tag f.url.key, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
-              <% end %>
+              <%= render "documents/image_mini", file: f %>
             </div>
           <% end %>
         <% end %>
