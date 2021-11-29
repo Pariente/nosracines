@@ -36,7 +36,7 @@
 
     <% unless @documents == [] %>
       <div class="show-section">
-        <h2>Documents liés</h2>
+        <h2><i class="material-icons">text_snippet</i>Documents liés</h2>
         <div class="slideshow">
           <% @documents.each do |doc| %>
             <%= render "documents/card", doc: doc %>
@@ -47,10 +47,21 @@
 
     <% unless @people == [] %>
       <div class="show-section">
-        <h2>Personnes liées</h2>
+        <h2><i class="material-icons">person</i>Personnes liées</h2>
         <div class="slideshow">
           <% @people.each do |p| %>
             <%= render "people/card", person: p, link: "" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @locations == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">place</i>Lieux liés</h2>
+        <div class="slideshow">
+          <% @locations.each do |l| %>
+            <%= render "locations/card", location: l %>
           <% end %>
         </div>
       </div>

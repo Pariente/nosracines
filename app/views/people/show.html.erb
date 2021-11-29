@@ -91,7 +91,7 @@
 
     <% unless @images == [] %>
       <div class="show-section">
-        <h2>Photographies</h2>
+        <h2><i class="material-icons">image</i>Photographies</h2>
         <div class="slideshow">
           <% @images.each do |doc| %>
             <%= render "documents/card", doc: doc %>
@@ -102,7 +102,7 @@
 
     <% unless @texts == [] %>
       <div class="show-section">
-        <h2>Documents</h2>
+        <h2><i class="material-icons">text_snippet</i>Documents</h2>
         <div class="slideshow">
           <% @texts.each do |doc| %>
             <%= render "documents/card", doc: doc %>
@@ -113,7 +113,7 @@
 
     <% unless @links == [] %>
       <div class="show-section">
-        <h2>Personnes liées</h2>
+        <h2><i class="material-icons">person</i>Personnes liées</h2>
         <div class="slideshow">
           <% @links.each do |link| %>
             <%  if link.person_a_id == @person.id
@@ -131,10 +131,21 @@
 
     <% unless @events == [] %>
       <div class="show-section">
-        <h2>Évènements liés</h2>
+        <h2><i class="material-icons">event</i>Évènements liés</h2>
         <div class="slideshow">
           <% @events.each do |event| %>
             <%= render "events/card", event: event %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @locations == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">place</i>Lieux liés</h2>
+        <div class="slideshow">
+          <% @locations.each do |location| %>
+            <%= render "locations/card", location: location %>
           <% end %>
         </div>
       </div>

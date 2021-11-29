@@ -98,7 +98,7 @@
         <h2><i class="material-icons">event</i>Évènements liés</h2>
         <div class="slideshow">
           <% @events.each do |e| %>
-            <%= render "events/card", event: e, link: "" %>
+            <%= render "events/card", event: e %>
           <% end %>
         </div>
       </div>

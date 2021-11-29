@@ -1,0 +1,12 @@
+<!-- *** LIEUX *** -->
+<div class="section search_category">
+  <div class="search_category_header">
+    <i class="material-icons">place</i>
+    <h2>Lieux</h2>
+  </div>
+  <div class="search_results">
+    <% locations.each do |location| %>
+      <%= render "locations/card", location: location %>
+    <% end %>
+  </div>
+</div>

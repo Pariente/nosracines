@@ -56,3 +56,8 @@
   <%= render "pages/search_category_events",
         events: @events %>
 <% end %>
+
+<% unless @locations == [] %>
+  <%= render "pages/search_category_locations",
+        locations: @locations %>
+<% end %>

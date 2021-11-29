@@ -86,6 +86,14 @@
         <% end %>
       </div>
     <% end %>
+    <% unless @locations == [] %>
+      <div class="row">
+        <i class="material-icons">place</i>
+        <% @locations.each do |l| %>
+          <%= link_to l.name, location_path(l) %>
+        <% end %>
+      </div>
+    <% end %>
     <% unless @document.notes == "" || @document.notes.nil? %>
       <div class="row">
         <i class="material-icons">short_text</i>

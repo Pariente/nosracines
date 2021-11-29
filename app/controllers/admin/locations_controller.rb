@@ -5,7 +5,7 @@ class Admin::LocationsController < ApplicationController
     if @params.present?
       @keywords = @params[:keywords]
 
-      # Events
+      # Locations
       name        = Location.arel_table[:name]
       address     = Location.arel_table[:address]
       city        = Location.arel_table[:city]

@@ -8,13 +8,15 @@ class DocumentsController < ApplicationController
       redirect_to private_content_path
     end
 
-    @people = @document.people
-    @events = @document.events
+    @people     = @document.people
+    @events     = @document.events
+    @locations  = @document.locations
 
     # Filter access-restricted contents if the user should not have access to them
     unless private_access
-      @people = @people.select {|p| !p.privacy?}
-      @events = @events.select {|e| !e.privacy?}
+      @people     = @people.select {|p| !p.privacy?}
+      @events     = @events.select {|e| !e.privacy?}
+      @locations  = @locations.select {|l| !l.privacy?}
     end
 
     @document_files = @document.document_files

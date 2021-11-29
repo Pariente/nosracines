@@ -1,0 +1,24 @@
+<div class="result_card">
+  <%= link_to location_path(location) do %>
+    <% pic = location.illustration.present? ? location.illustration.key : "default_location_pic" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
+    <div class="result_card_info">
+      <span class="name"><%= location.name %></span>
+      <div class="flex flex-column">
+        <span class="location">
+          <% unless location.city.nil? %>
+            <%= location.city %>,
+          <% end %>
+          <%= location.country %>
+        </span>
+      </div>
+      <% if location.privacy? %>
+        <div>
+          <span class="private-content">
+            <i class="material-icons">security</i> Privé
+          </span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
