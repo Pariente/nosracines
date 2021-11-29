@@ -3,6 +3,7 @@ class PagesController < ApplicationController
   end
 
   def private_content
+    @search_bar = true
   end
 
   def search

@@ -5,9 +5,6 @@
       <%= link_to "Admin", admin_path %>
     <% end %>
   </div>
-  <% if search %>
-    <%= render "pages/search_input" %>
-  <% end %>
   <div class="nav_menu_account">
     <% if user_signed_in? %>
       <%= link_to "Déconnexion", destroy_user_session_path %>

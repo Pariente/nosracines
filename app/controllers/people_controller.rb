@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
   def show
+    @search_bar = true
     @person = Person.find(params[:id])
 
     # Assess if the user has access to private content

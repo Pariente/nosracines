@@ -1,3 +1,4 @@
+<% content_for :meta_title, "À tous les miens — " + @document.name %>
 <div class="container">
   <div class="document_viewer">
     <h1><%= @document.name %></h1>
@@ -7,10 +8,8 @@
       <% file = @document_file %>
     <% end %>
     <%= link_to cloudinary_url(file.url.key, resource_type: file.type), target: "_blank" do %>
-      <% if file.type == "audio" %>
-        <%= cl_image_tag file.url.key, flags: "waveform", resource_type: "video" %>
-      <% elsif file.type == "video" %>
-        <%= cl_video_tag(file.url.key, controls: true) %>
+      <% if file.type == "audio" || file.type == "video" %>
+        <%= cl_video_tag file.url.key, controls: true %>
       <% else %>
         <%= cl_image_tag file.url.key, format: "png" %>
       <% end %>

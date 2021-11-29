@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   def show
+    @search_bar = true
     @event = Event.find(params[:id])
 
     # Filter if person is private and user should not have access

@@ -5,6 +5,7 @@ class LocationsController < ApplicationController
   end
 
   def show
+    @search_bar = true
     @location = Location.find(params[:id])
 
     # Assess if the user has access to private content

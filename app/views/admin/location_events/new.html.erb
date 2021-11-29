@@ -4,6 +4,7 @@
 
 <% @from = params[:from] %>
 <% if @from == "location" %>
+  <% content_for :meta_title, "Admin — Lier des évènements à " + @location.name %>
   <%= link_to admin_location_path(@location), class: "back_link" do %>
     <i class="material-icons">arrow_back_ios</i>
     <span>Annuler</span>
@@ -29,6 +30,7 @@
     <% end %>
   <% end %>
 <% elsif @from == "event" %>
+  <% content_for :meta_title, "Admin — Lier des lieux à " + @event.name %>
   <%= link_to admin_event_path(@event), class: "back_link" do %>
     <i class="material-icons">arrow_back_ios</i>
     <span>Annuler</span>

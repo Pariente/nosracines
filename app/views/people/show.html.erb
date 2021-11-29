@@ -1,3 +1,4 @@
+<% content_for :meta_title, "À tous les miens — " + @person.name %>
 <div class="container">
   <div class="person_header admin-show">
     <% pic = @person.profile_pic.present? ? @person.profile_pic.key : "default_profile_pic" %>

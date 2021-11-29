@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Nosracines</title>
+    <title><%= meta_title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -29,8 +29,9 @@
         <%= yield %>
       </div>
     <% else %>
-       <%= render "pages/navbar_menu" %>
-       <%= yield %>
+      <% search_bar = @search_bar.nil? ? false : @search_bar %>
+      <%= render "pages/navbar_menu", search: search_bar %>
+      <%= yield %>
     <% end %>
   </body>
 </html>

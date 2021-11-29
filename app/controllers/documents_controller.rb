@@ -1,5 +1,6 @@
 class DocumentsController < ApplicationController
   def show
+    @search_bar = true
     @document = Document.find(params[:id])
 
     # Filter if doc is private and user should not have access

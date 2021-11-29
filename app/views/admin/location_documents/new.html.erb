@@ -4,6 +4,7 @@
 
 <% @from = params[:from] %>
 <% if @from == "location" %>
+  <% content_for :meta_title, "Admin — Lier des documents à " + @location.name %>
   <%= link_to admin_location_path(@location), class: "back_link" do %>
     <i class="material-icons">arrow_back_ios</i>
     <span>Annuler</span>
@@ -29,6 +30,7 @@
     <% end %>
   <% end %>
 <% elsif @from == "document" %>
+  <% content_for :meta_title, "Admin — Lier des lieux à " + @document.name %>
   <%= link_to admin_document_path(@document), class: "back_link" do %>
     <i class="material-icons">arrow_back_ios</i>
     <span>Annuler</span>

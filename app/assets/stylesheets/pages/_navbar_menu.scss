@@ -18,7 +18,9 @@
   }
 
   .nav_menu_left {
+    align-items: center;
     display: flex;
+    flex-basis: 100px;
     flex-direction: row;
     flex-grow: 1;
     justify-content: flex-start;
@@ -26,10 +28,25 @@
   }
 
   .nav_menu_account {
+    align-items: center;
     display: flex;
+    flex-basis: 100px;
     flex-direction: row;
     flex-grow: 1;
     justify-content: flex-end
+  }
+
+  .search_input {
+    height: 50px;
+
+    form.simple_form {
+      height: 50px;
+      
+      div.input input[type="text"] {
+        height: 50px;
+        padding: 0px 0px 0px 20px
+      }
+    }
   }
 }
 

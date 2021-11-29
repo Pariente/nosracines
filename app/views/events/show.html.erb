@@ -1,3 +1,4 @@
+<% content_for :meta_title, "À tous les miens — " + @event.name %>
 <div class="container">
   <div class="person_header admin-show">
     <% pic = @event.illustration.present? ? @event.illustration.key : "default_event_pic" %>

@@ -3,6 +3,7 @@
 <% end %>
 <% @from = params[:from] %>
 <% if @from == "document" %>
+  <% content_for :meta_title, "Admin — Lier des personnes à " + @document.name %>
   <%= link_to admin_document_path(@document), class: "back_link" do %>
     <i class="material-icons">arrow_back_ios</i>
     <span>Annuler</span>
@@ -28,6 +29,7 @@
     <% end %>
   <% end %>
 <% elsif @from == "person" %>
+  <% content_for :meta_title, "Admin — Lier des documents à " + @person.name %>
   <%= link_to admin_person_path(@person), class: "back_link" do %>
     <i class="material-icons">arrow_back_ios</i>
     <span>Annuler</span>
