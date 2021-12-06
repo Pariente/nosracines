@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   get "admin", to: "admin/people#index"
 
-  get "/search_results", to: "pages#search"
+  get "/search_results",    to: "pages#search"
 
   get "private_content", to: "pages#private_content"
 

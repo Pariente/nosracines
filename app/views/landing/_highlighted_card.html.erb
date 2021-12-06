@@ -1,13 +1,13 @@
 <div class="highlighted_card <%= mirrored %>">
   <div class="card_info">
     <div class="card_info_header">
-      <span class="title"><%= header_title %></span>
-      <span class="date"><%= date %></span>
+      <% date_display = Date.today.year - date.year %>
+      <span class="title">Il y a <span class=""><%= date_display %> ans</span>, <%= header_title %></span>
     </div>
     <div class="card_info_body">
       <span class="title"><%= title %></span>
-      <p><%= description %></p>
-      <%= link_to yield(btn_path) do %>
+      <p><%= description.truncate(350) %></p>
+      <%= link_to btn_path do %>
         <div class="btn">En apprendre plus</div>
       <% end %>
     </div>
@@ -26,5 +26,5 @@
       </div>
     </div>
   </div>
-  <%= image_tag(pic, class: "card_pic") %>
+  <%= cl_image_tag pic, width: "600", aspect_ratio: "4:3", crop: "fill", gravity: "face", class: "card_pic" %>
 </div>

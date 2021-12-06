@@ -1,5 +1,16 @@
 class PagesController < ApplicationController
   def home
+    @events = Event.where(
+      "to_char(date_start, 'MM') || to_char(date_start, 'DD') between ? and ?",
+      '%2.2d%2.2d' % [Date.today.month, Date.today.day],
+      '%2.2d%2.2d' % [Date.today.month, Date.today.day]
+    )
+
+    @people = Person.where(
+      "to_char(birth_date, 'MM') || to_char(birth_date, 'DD') between ? and ?",
+      '%2.2d%2.2d' % [Date.today.month, Date.today.day],
+      '%2.2d%2.2d' % [Date.today.month, Date.today.day]
+    )
   end
 
   def private_content
@@ -11,9 +22,20 @@ class PagesController < ApplicationController
     private_access = user_signed_in? && current_user.has_private_access
 
     @params = params["search"]
+
+    @documents  = []
+    @images     = []
+    @audios     = []
+    @videos     = []
+    @texts      = []
+    @others     = []
+    @events     = []
+    @locations  = []
+    @people     = []
+
     if @params.present?
       @keywords = @params[:keywords]
-
+      
       # People
       first_name  = Person.arel_table[:first_name]
       middle_name = Person.arel_table[:middle_name]
@@ -29,6 +51,18 @@ class PagesController < ApplicationController
         @people = @people.select {|p| !p.privacy}
       end
 
+      # Alias
+      alias_name    = Alias.arel_table[:name]
+      @aliases      = Alias.where(alias_name.matches("%#{@keywords}%"))
+      alias_people  = []
+      @aliases.each do |q|
+        alias_people << q.person
+      end
+
+      @people += alias_people
+      @people = @people.uniq
+      @people = Kaminari.paginate_array(@people).page(params[:page]).per(5)
+
       # Documents
       name        = Document.arel_table[:name]
       @documents  = Document.where(name.matches("%#{@keywords}%"))
@@ -39,31 +73,44 @@ class PagesController < ApplicationController
       end
       @documents += people_docs
       @documents = @documents.uniq
+      @documents = Kaminari.paginate_array(@documents).page(params[:page])
 
-      # Events
-      name    = Event.arel_table[:name]
-      @events = Event.where(name.matches("%#{@keywords}%"))
+      if params["filter"] == "people"
+        @documents = []
+      end
 
-      # Locations
-      name        = Location.arel_table[:name]
-      address     = Location.arel_table[:address]
-      city        = Location.arel_table[:city]
-      zipcode     = Location.arel_table[:zipcode]
-      region      = Location.arel_table[:region]
-      country     = Location.arel_table[:country]
-      description = Location.arel_table[:description]
-      latitude    = Location.arel_table[:latitude]
-      longitude   = Location.arel_table[:longitude]
-      @locations  = Location.where(name.matches("%#{@keywords}%")).or(
-                    Location.where(address.matches("%#{@keywords}%"))).or(
-                    Location.where(city.matches("%#{@keywords}%"))).or(
-                    Location.where(zipcode.matches("%#{@keywords}%"))).or(
-                    Location.where(region.matches("%#{@keywords}%"))).or(
-                    Location.where(country.matches("%#{@keywords}%"))).or(
-                    Location.where(description.matches("%#{@keywords}%"))).or(
-                    Location.where(latitude.matches("%#{@keywords}%"))).or(
-                    Location.where(longitude.matches("%#{@keywords}%"))
-      )
+      if params["filter"] == "documents"
+        @people = []
+      end
+
+      if params["filter"].nil? || params["filter"] == "events"
+        # Events
+        name    = Event.arel_table[:name]
+        @events = Event.where(name.matches("%#{@keywords}%"))
+      end
+
+      if params["filter"].nil? || params["filter"] == "locations"
+        # Locations
+        name        = Location.arel_table[:name]
+        address     = Location.arel_table[:address]
+        city        = Location.arel_table[:city]
+        zipcode     = Location.arel_table[:zipcode]
+        region      = Location.arel_table[:region]
+        country     = Location.arel_table[:country]
+        description = Location.arel_table[:description]
+        latitude    = Location.arel_table[:latitude]
+        longitude   = Location.arel_table[:longitude]
+        @locations  = Location.where(name.matches("%#{@keywords}%")).or(
+                      Location.where(address.matches("%#{@keywords}%"))).or(
+                      Location.where(city.matches("%#{@keywords}%"))).or(
+                      Location.where(zipcode.matches("%#{@keywords}%"))).or(
+                      Location.where(region.matches("%#{@keywords}%"))).or(
+                      Location.where(country.matches("%#{@keywords}%"))).or(
+                      Location.where(description.matches("%#{@keywords}%"))).or(
+                      Location.where(latitude.matches("%#{@keywords}%"))).or(
+                      Location.where(longitude.matches("%#{@keywords}%"))
+        )
+      end
 
       # Filter if user should access private content
       unless private_access

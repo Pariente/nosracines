@@ -6,6 +6,8 @@ class Document < ApplicationRecord
   has_many :location_documents
   belongs_to :fund
 
+  paginates_per 25
+
   def format
     return self.document_files.first.original_format
   end

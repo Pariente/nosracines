@@ -110,6 +110,11 @@ div.section {
   width: 100%
 }
 
+div.section.landing_today,
+div.section.landing_souvenir {
+  max-width: 1440px
+}
+
 div.section.user_form {
   display: flex;
   flex-direction: column;
@@ -117,10 +122,12 @@ div.section.user_form {
   max-width: 800px
 }
 
-.landing_today {
+div.section.landing_today {
   background-color: $bg_color;
   display: flex;
   flex-direction: column;
+  margin-bottom: -60px;
+  padding-bottom: 0px;
 
   h2 {
     color: $olive;
@@ -141,6 +148,7 @@ div.section.user_form {
     background-color: $white;
     box-shadow: 0px 2px 4px 0px $bison;
     box-sizing: border-box;
+    height: 100%;
 
     margin-top: 80px;
     max-width: 100%;
@@ -159,7 +167,11 @@ div.section.user_form {
         font-family: "Montserrat";
         font-size: 20px;
         font-weight: 700;
-        margin-right: 20px
+        margin-right: 20px;
+
+        .green {
+          color: $olive
+        }
       }
 
       .date {
@@ -256,9 +268,10 @@ div.section.user_form {
   }
 }
 
-.landing_souvenir {
-  background-color: $linen;
+div.section.landing_souvenir {
+  background-color: $bg_color;
   color: $olive;
+  margin-top: 180px;
 
   .souvenir_card {
     align-items: center;

@@ -4,78 +4,97 @@
   <p>25 ans de collection d’histoires, de documents, de photographies, d’enregistrements sur l’histoire croisée de deux familles.</p>
   <%= render "pages/search_input" %>
 </div>
-<div class="section landing_today">
-  <h2>Aujourd'hui</h2>
-  <%= render 'landing/highlighted_card',
-    mirrored: "",
-    header_title: "Aujourd'hui",
-    date: "9 novembre",
-    title: "La nuit de cristal",
-    description: "La nuit de Cristal est le pogrom contre les Juifs du Troisième Reich qui se déroula dans la nuit du 9 au 10 novembre 1938 et dans la journée qui suivit.",
-    btn_path: "root_path",
-    footer_text: "Cet évènement est relié à des éléments et des personnes :",
-    pic: "kristallnacht.png",
-    stats: [
-      {
-        icon: "people_outline",
-        value: "7",
-        unit: "personne"
-      },
-      {
-        icon: "photo",
-        value: "53",
-        unit: "photo"
-      },
-      {
-        icon: "movie",
-        value: "8",
-        unit: "film"
-      },
-      {
-        icon: "folder_open",
-        value: "4",
-        unit: "document"
-      }
-    ]
-   %>
-
-   <%= render 'landing/highlighted_card',
-    mirrored: "mirrored",
-    header_title: "Portrait du jour",
-    date: "",
-    title: "Gilta Sankowicz",
-    description: "Gitele (et sa sœur Rojza à droite) est née en Pologne le 12 décembre 1924 et vivait en France dans le 3e arrondissement de Paris au 31-33 rue du Temple.\n\nLe 31 juillet 1942, elle est déportée par le 13e convoi pour Auschwitz où elle meurt le 4 août 1942.",
-    btn_path: "root_path",
-    footer_text: "Cette personne est reliée à des éléments et d’autres personnes :",
-    pic: "gilta.png",
-    stats: [
-      {
-        icon: "people_outline",
-        value: "7",
-        unit: "personne"
-      },
-      {
-        icon: "photo",
-        value: "53",
-        unit: "photo"
-      },
-      {
-        icon: "movie",
-        value: "8",
-        unit: "film"
-      },
-      {
-        icon: "folder_open",
-        value: "4",
-        unit: "document"
-      }
-    ]
-   %>
-</div>
+<% @i = 0 %>
+<% @card_position = "" %>
+<% unless @events == [] && @people == [] %>
+  <div class="section landing_today">
+    <h2>Aujourd'hui</h2>
+    <% @events.each do |event| %>
+      <% if @i.even? %>
+        <% @card_position = "" %>
+      <% else %>
+        <% @card_position = "mirrored" %>
+      <% end %>
+      <%= render 'landing/highlighted_card',
+        mirrored: @card_position,
+        header_title: "aujourd'hui",
+        date: event.date_start,
+        title: event.name,
+        description: event.story,
+        btn_path: event_path(event),
+        footer_text: "Cet évènement est relié à des éléments et des personnes :",
+        pic: event.illustration.key,
+        stats: [
+          {
+            icon: "people_outline",
+            value: event.people.count,
+            unit: "personne"
+          },
+          {
+            icon: "photo",
+            value: event.images.count,
+            unit: "photo"
+          },
+          {
+            icon: "movie",
+            value: event.videos.count,
+            unit: "film"
+          },
+          {
+            icon: "folder_open",
+            value: event.documents.count,
+            unit: "document"
+          }
+        ]
+       %>
+       <% @i += 1 %>
+    <% end %>
+    <% @people.each do |person| %>
+      <% if @i.even? %>
+        <% @card_position = "" %>
+      <% else %>
+        <% @card_position = "mirrored" %>
+      <% end %>
+      <%= render 'landing/highlighted_card',
+        mirrored: @card_position,
+        header_title: "naissait",
+        date: person.birth_date,
+        title: person.name,
+        description: person.biography,
+        btn_path: person_path(person),
+        footer_text: "Cette personne est reliée à des éléments et d’autres personnes :",
+        pic: person.profile_pic.key,
+        stats: [
+          {
+            icon: "people_outline",
+            value: person.family_links.count,
+            unit: "personne"
+          },
+          {
+            icon: "photo",
+            value: person.documents.count,
+            unit: "photo"
+          },
+          {
+            icon: "movie",
+            value: "8",
+            unit: "film"
+          },
+          {
+            icon: "folder_open",
+            value: "4",
+            unit: "document"
+          }
+        ]
+       %>
+      <% @i += 1 %>
+    <% end %>
+  </div>
+<% end %>
 <div class="section landing_souvenir">
   <div class="souvenir_card">
     <h2>Souvenir</h2>
-    <p>Retrouvez ici toutes les traces du quotidien ordinaire comme exceptionnel de nos parents. </p>
+    <p>Retrouvez ici toutes les traces du quotidien ordinaire comme exceptionnel de nos parents.</p>
   </div>
   <div class="flex flex-row flex-wrap justify-evenly">
     <%= render "landing/category",
