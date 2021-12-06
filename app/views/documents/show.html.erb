@@ -7,9 +7,11 @@
     <% else %>
       <% file = @document_file %>
     <% end %>
-    <%= link_to cloudinary_url(file.url.key, resource_type: file.type), target: "_blank" do %>
+    <%= link_to Cloudinary::Utils.cloudinary_url(file.url.key), target: "_blank" do %>
       <% if file.type == "audio" || file.type == "video" %>
         <%= cl_video_tag file.url.key, controls: true %>
+      <% elsif file.type == "image" %>
+        <%= cl_image_tag file.url.key, crop: "fill" %>
       <% else %>
         <%= cl_image_tag file.url.key, format: "png" %>
       <% end %>

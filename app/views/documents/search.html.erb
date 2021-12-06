@@ -1,0 +1,20 @@
+<% content_for :meta_title, "À tous les miens — Résultats de la recherche (documents)" %>
+<div class="section search_header">
+  <h1>Résultats de la recherche</h1>
+  <%= render "pages/search_input", value: @keywords %>
+</div>
+<!-- *** DOCUMENTS *** -->
+<div class="section search_category">
+  <div class="search_category_header">
+    <i class="material-icons"><%= params[:icon] %></i>
+    <h2><%= params[:category] %></h2>
+  </div>
+  <div class="search_results">
+    <% @documents.each do |doc| %>
+      <%= render "documents/card", doc: doc %>
+    <% end %>
+  </div>
+</div>
+<div class="pagination_row">
+  <%= paginate @documents %>
+</div>

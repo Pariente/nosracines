@@ -26,6 +26,29 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def search
+    private_access = user_signed_in? && current_user.has_private_access
+
+    case params[:category]
+    when "Photographies"
+      category = :images
+    when "Documents"
+      category = :texts
+    when "Vidéos"
+      category = :videos
+    when "Audios"
+      category = :audios
+    when "Autres documents"
+      category = :others
+    end
+
+    @documents = helpers.search_documents({ 
+      keywords: params[:keywords], 
+      private_access: private_access
+    })[category]
+    @documents = Kaminari.paginate_array(@documents).page(params[:page]).per(25)
+  end
+
   def index
   end
 end

@@ -51,6 +51,14 @@ class PeopleController < ApplicationController
     @people = @people.order(created_at: :desc).page params[:page]
   end
 
+  def search
+    private_access = user_signed_in? && current_user.has_private_access
+    @people = helpers.search_people({ keywords: params[:keywords], 
+                                      private_access: private_access}
+                                    )[:people]
+    @people = Kaminari.paginate_array(@people).page(params[:page]).per(25)
+  end
+
   def person_params
     params.require(:person).permit(
       :first_name,

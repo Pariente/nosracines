@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  get "admin", to: "admin/people#index"
-
-  get "/search_results",    to: "pages#search"
-
-  get "private_content", to: "pages#private_content"
+  get "admin",            to: "admin/people#index"
+  get "/search_results",  to: "pages#search"
+  get "private_content",  to: "pages#private_content"
+  get "search_people",    to: "people#search"
+  get "search_documents", to: "documents#search"
 
   resources :documents
   resources :document_files
