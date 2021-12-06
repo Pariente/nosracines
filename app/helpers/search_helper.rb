@@ -111,4 +111,26 @@ module SearchHelper
       others_count: others_count
     }
   end
+
+  def search_events(params)
+    keywords        = params[:keywords]
+    private_access  = params[:private_access]
+    limit           = params[:limit]
+
+    name    = Event.arel_table[:name]
+    events  = Event.where(name.matches("%#{keywords}%"))
+
+    # Filter if user should not access private content
+    unless private_access
+      events = events.select {|e| !e.privacy}
+    end
+
+    events_count = events.count
+
+    unless limit.nil?
+      events = events.first(limit)
+    end
+
+    return {events: events, count: events_count}
+  end
 end

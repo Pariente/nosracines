@@ -19,6 +19,14 @@ class EventsController < ApplicationController
     @events = @events.order(created_at: :desc).page params[:page]
   end
 
+  def search
+    private_access = user_signed_in? && current_user.has_private_access
+    @events = helpers.search_events({ keywords: params[:keywords], 
+                                      private_access: private_access}
+                                    )[:events]
+    @events = Kaminari.paginate_array(@events).page(params[:page]).per(25)
+  end
+
   def event_params
     params.require(:person).permit(
       :name,

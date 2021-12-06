@@ -64,8 +64,13 @@ class PagesController < ApplicationController
       @others_count = search_documents[:others_count]
 
       # Events
-      name    = Event.arel_table[:name]
-      @events = Event.where(name.matches("%#{@keywords}%"))
+      search_events = helpers.search_events({
+                        keywords: @keywords, 
+                        private_access: private_access,
+                        limit: 12
+                      })
+      @events       = search_events[:events]
+      @events_count = search_events[:count]
 
       # Locations
       name        = Location.arel_table[:name]
@@ -90,7 +95,6 @@ class PagesController < ApplicationController
 
       # Filter if user should access private content
       unless private_access
-        @events     = @events.select {|e| !e.privacy}
         @locations  = @locations.select {|l| !l.privacy}
       end
     end

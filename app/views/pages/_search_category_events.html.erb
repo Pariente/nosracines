@@ -9,4 +9,9 @@
       <%= render "events/card", event: event %>
     <% end %>
   </div>
+  <% if count > 1 %>
+    <%= link_to search_events_path(keywords: @keywords) do %>
+      Voir les <%= count %> résultats
+    <% end %>
+  <% end %>
 </div>

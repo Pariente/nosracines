@@ -57,7 +57,9 @@
 
 <% unless @events == [] %>
   <%= render "pages/search_category_events",
-        events: @events %>
+        events: @events,
+        count: @events_count
+  %>
 <% end %>
 
 <% unless @locations == [] %>

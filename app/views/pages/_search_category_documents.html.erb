@@ -9,7 +9,7 @@
       <%= render "documents/card", doc: doc %>
     <% end %>
   </div>
-  <% if count > 1 %>
+  <% if count > 12 %>
     <%= link_to search_documents_path(keywords: @keywords, people: @people_all, icon: icon, category: category) do %>
       Voir les <%= count %> résultats
     <% end %>

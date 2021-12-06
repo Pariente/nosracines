@@ -9,7 +9,7 @@
       <%= render "people/card", person: person, link: "" %>
     <% end %>
   </div>
-  <% if count > 15 %>
+  <% if count > 12 %>
     <%= link_to search_people_path(keywords: @keywords) do %>
       Voir les <%= count %> résultats
     <% end %>

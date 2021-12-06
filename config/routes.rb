@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "private_content",  to: "pages#private_content"
   get "search_people",    to: "people#search"
   get "search_documents", to: "documents#search"
+  get "search_events",    to: "events#search"
 
   resources :documents
   resources :document_files
