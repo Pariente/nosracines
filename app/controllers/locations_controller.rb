@@ -4,6 +4,15 @@ class LocationsController < ApplicationController
     @locations = @locations.order(created_at: :desc).page params[:page]
   end
 
+  def search
+    private_access = user_signed_in? && current_user.has_private_access
+    @locations = helpers.search_locations({ 
+      keywords: params[:keywords], 
+      private_access: private_access}
+      )[:locations]
+    @locations = Kaminari.paginate_array(@locations).page(params[:page]).per(25)
+  end
+
   def show
     @search_bar = true
     @location = Location.find(params[:id])

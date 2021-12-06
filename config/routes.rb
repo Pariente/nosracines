@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get "search_people",    to: "people#search"
   get "search_documents", to: "documents#search"
   get "search_events",    to: "events#search"
+  get "search_locations", to: "locations#search"
 
   resources :documents
   resources :document_files

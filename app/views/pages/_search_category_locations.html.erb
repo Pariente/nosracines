@@ -9,4 +9,9 @@
       <%= render "locations/card", location: location %>
     <% end %>
   </div>
+  <% if count > 12 %>
+    <%= link_to search_locations_path(keywords: @keywords) do %>
+      Voir les <%= count %> résultats
+    <% end %>
+  <% end %>
 </div>

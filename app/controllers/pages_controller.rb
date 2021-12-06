@@ -23,25 +23,15 @@ class PagesController < ApplicationController
 
     @params = params["search"]
 
-    @documents  = []
-    @images     = []
-    @audios     = []
-    @videos     = []
-    @texts      = []
-    @others     = []
-    @events     = []
-    @locations  = []
-    @people     = []
-
     if @params.present?
       @keywords = @params[:keywords]
       
       # People
       search_people = helpers.search_people({
-                        keywords: @keywords, 
-                        private_access: private_access,
-                        limit: 12
-                      })
+        keywords: @keywords, 
+        private_access: private_access,
+        limit: 12
+      })
       @people       = search_people[:people]
       @people_count = search_people[:count]
 
@@ -65,38 +55,21 @@ class PagesController < ApplicationController
 
       # Events
       search_events = helpers.search_events({
-                        keywords: @keywords, 
-                        private_access: private_access,
-                        limit: 12
-                      })
+        keywords: @keywords, 
+        private_access: private_access,
+        limit: 12
+      })
       @events       = search_events[:events]
       @events_count = search_events[:count]
 
       # Locations
-      name        = Location.arel_table[:name]
-      address     = Location.arel_table[:address]
-      city        = Location.arel_table[:city]
-      zipcode     = Location.arel_table[:zipcode]
-      region      = Location.arel_table[:region]
-      country     = Location.arel_table[:country]
-      description = Location.arel_table[:description]
-      latitude    = Location.arel_table[:latitude]
-      longitude   = Location.arel_table[:longitude]
-      @locations  = Location.where(name.matches("%#{@keywords}%")).or(
-                    Location.where(address.matches("%#{@keywords}%"))).or(
-                    Location.where(city.matches("%#{@keywords}%"))).or(
-                    Location.where(zipcode.matches("%#{@keywords}%"))).or(
-                    Location.where(region.matches("%#{@keywords}%"))).or(
-                    Location.where(country.matches("%#{@keywords}%"))).or(
-                    Location.where(description.matches("%#{@keywords}%"))).or(
-                    Location.where(latitude.matches("%#{@keywords}%"))).or(
-                    Location.where(longitude.matches("%#{@keywords}%"))
-      )
-
-      # Filter if user should access private content
-      unless private_access
-        @locations  = @locations.select {|l| !l.privacy}
-      end
+      search_locations = helpers.search_locations({
+        keywords: @keywords, 
+        private_access: private_access,
+        limit: 12
+      })
+      @locations       = search_locations[:locations]
+      @locations_count = search_locations[:count]
     end
   end
 end

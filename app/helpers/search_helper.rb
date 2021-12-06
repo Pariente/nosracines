@@ -133,4 +133,43 @@ module SearchHelper
 
     return {events: events, count: events_count}
   end
+
+  def search_locations(params)
+    keywords        = params[:keywords]
+    private_access  = params[:private_access]
+    limit           = params[:limit]
+
+    name        = Location.arel_table[:name]
+    address     = Location.arel_table[:address]
+    city        = Location.arel_table[:city]
+    zipcode     = Location.arel_table[:zipcode]
+    region      = Location.arel_table[:region]
+    country     = Location.arel_table[:country]
+    description = Location.arel_table[:description]
+    latitude    = Location.arel_table[:latitude]
+    longitude   = Location.arel_table[:longitude]
+    locations   = Location.where(name.matches("%#{keywords}%")).or(
+                  Location.where(address.matches("%#{keywords}%"))).or(
+                  Location.where(city.matches("%#{keywords}%"))).or(
+                  Location.where(zipcode.matches("%#{keywords}%"))).or(
+                  Location.where(region.matches("%#{keywords}%"))).or(
+                  Location.where(country.matches("%#{keywords}%"))).or(
+                  Location.where(description.matches("%#{keywords}%"))).or(
+                  Location.where(latitude.matches("%#{keywords}%"))).or(
+                  Location.where(longitude.matches("%#{keywords}%"))
+    )
+
+    # Filter if user should access private content
+    unless private_access
+      locations  = locations.select {|l| !l.privacy}
+    end
+
+    locations_count = locations.count
+
+    unless limit.nil?
+      locations = locations.first(limit)
+    end
+
+    return {locations: locations, count: locations_count}
+  end
 end

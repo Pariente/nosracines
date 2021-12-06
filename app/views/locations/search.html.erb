@@ -1,0 +1,20 @@
+<% content_for :meta_title, "À tous les miens — Résultats de la recherche (lieux)" %>
+<div class="section search_header">
+  <h1>Résultats de la recherche</h1>
+  <%= render "pages/search_input", value: @keywords %>
+</div>
+<!-- *** EVENEMENTS *** -->
+<div class="section search_category">
+  <div class="search_category_header">
+    <i class="material-icons">place</i>
+    <h2>Lieux</h2>
+  </div>
+  <div class="search_results">
+    <% @locations.each do |location| %>
+      <%= render "locations/card", location: location %>
+    <% end %>
+  </div>
+</div>
+<div class="pagination_row">
+  <%= paginate @locations %>
+</div>

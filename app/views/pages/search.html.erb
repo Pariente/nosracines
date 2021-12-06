@@ -7,62 +7,63 @@
 <% unless @people == [] %>
   <%= render "pages/search_category_people",
         people: @people,
-        count: @people_count %>
+        count:  @people_count %>
 <% end %>
 
 <% unless @images == [] %>
   <%= render "pages/search_category_documents", 
         category: "Photographies",
-        icon: "image",
-        docs: @images,
-        count: @images_count
+        icon:     "image",
+        docs:     @images,
+        count:    @images_count
   %>
 <% end %>
 
 <% unless @texts == [] %>
   <%= render "pages/search_category_documents", 
         category: "Documents",
-        icon: "folder_open",
-        docs: @texts,
-        count: @texts_count
+        icon:     "folder_open",
+        docs:     @texts,
+        count:    @texts_count
   %>
 <% end %>
 
 <% unless @audios == [] %>
   <%= render "pages/search_category_documents", 
         category: "Audios",
-        icon: "audiotrack",
-        docs: @audios,
-        count: @audios_count
+        icon:     "audiotrack",
+        docs:     @audios,
+        count:    @audios_count
   %>
 <% end %>
 
 <% unless @videos == [] %>
   <%= render "pages/search_category_documents", 
         category: "Vidéos",
-        icon: "video_library",
-        docs: @videos,
-        count: @videos_count
+        icon:     "video_library",
+        docs:     @videos,
+        count:    @videos_count
   %>
 <% end %>
 
 <% unless @others == [] %>
   <%= render "pages/search_category_documents", 
         category: "Autres documents",
-        icon: "grid_view",
-        docs: @others,
-        count: @others_count
+        icon:     "grid_view",
+        docs:     @others,
+        count:    @others_count
   %>
 <% end %>
 
 <% unless @events == [] %>
   <%= render "pages/search_category_events",
         events: @events,
-        count: @events_count
+        count:  @events_count
   %>
 <% end %>
 
 <% unless @locations == [] %>
   <%= render "pages/search_category_locations",
-        locations: @locations %>
+        locations:  @locations,
+        count:      @locations_count %>
 <% end %>
