@@ -29,6 +29,7 @@ module SearchHelper
 
     people  += alias_people
     people  = people.uniq
+    people  = people.sort_by {|p| p.full_name_index}
     count   = people.count
 
     unless limit.nil?
@@ -49,7 +50,7 @@ module SearchHelper
               })[:people]
 
     name      = Document.arel_table[:name]
-    documents = Document.where(name.matches("%#{keywords}%"))
+    documents = Document.where(name.matches("%#{keywords}%")).order(created_at: :desc)
     
     people_docs = []
     people.each do |p|
@@ -99,6 +100,7 @@ module SearchHelper
     end
 
     return {
+      documents:    documents,
       images:       images,
       audios:       audios,
       videos:       videos,
@@ -118,7 +120,7 @@ module SearchHelper
     limit           = params[:limit]
 
     name    = Event.arel_table[:name]
-    events  = Event.where(name.matches("%#{keywords}%"))
+    events  = Event.where(name.matches("%#{keywords}%")).order(date_start: :asc)
 
     # Filter if user should not access private content
     unless private_access
@@ -157,7 +159,7 @@ module SearchHelper
                   Location.where(description.matches("%#{keywords}%"))).or(
                   Location.where(latitude.matches("%#{keywords}%"))).or(
                   Location.where(longitude.matches("%#{keywords}%"))
-    )
+    ).order(name: :asc)
 
     # Filter if user should access private content
     unless private_access

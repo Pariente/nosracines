@@ -1,19 +1,19 @@
-<% content_for :meta_title, "À tous les miens — Personnes" %>
+<% content_for :meta_title, "À tous les miens — Lieux" %>
 <div class="section search_header">
-  <h1>Personnes</h1>
+  <h1>Lieux</h1>
   <%= render "pages/search_input", value: @keywords %>
 </div>
-<!-- *** PERSONNES *** -->
+<!-- *** Lieux *** -->
 <div class="pagination_row">
-  <%= paginate @people %>
+  <%= paginate @locations %>
 </div>
 <div class="section search_category">
   <div class="search_results">
-    <% @people.each do |person| %>
-      <%= render "people/card", person: person, link: "" %>
+    <% @locations.each do |location| %>
+      <%= render "locations/card", location: location, link: "" %>
     <% end %>
   </div>
 </div>
 <div class="pagination_row">
-  <%= paginate @people %>
+  <%= paginate @locations %>
 </div>

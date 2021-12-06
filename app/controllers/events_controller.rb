@@ -15,8 +15,15 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all
-    @events = @events.order(created_at: :desc).page params[:page]
+    private_access = user_signed_in? && current_user.has_private_access
+    @events = Event.all.sort_by {|p| p.date_start}
+
+    # Filter access-restricted contents if the user should not have access to them
+    unless private_access
+      @events = @events.select {|e| !e.privacy?}
+    end
+
+    @events = Kaminari.paginate_array(@events).page(params[:page]).per(24)
   end
 
   def search
@@ -24,7 +31,7 @@ class EventsController < ApplicationController
     @events = helpers.search_events({ keywords: params[:keywords], 
                                       private_access: private_access}
                                     )[:events]
-    @events = Kaminari.paginate_array(@events).page(params[:page]).per(25)
+    @events = Kaminari.paginate_array(@events).page(params[:page]).per(24)
   end
 
   def event_params

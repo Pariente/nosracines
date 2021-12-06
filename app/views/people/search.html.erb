@@ -4,6 +4,9 @@
   <%= render "pages/search_input", value: @keywords %>
 </div>
 <!-- *** PERSONNES *** -->
+<div class="pagination_row">
+  <%= paginate @people %>
+</div>
 <div class="section search_category">
   <div class="search_category_header">
     <i class="material-icons">people</i>

@@ -26,7 +26,7 @@
         pic: event.illustration.key,
         stats: [
           {
-            icon: "people_outline",
+            icon: "people",
             value: event.people.count,
             unit: "personne"
           },
@@ -66,7 +66,7 @@
         pic: person.profile_pic.key,
         stats: [
           {
-            icon: "people_outline",
+            icon: "people",
             value: person.family_links.count,
             unit: "personne"
           },
@@ -97,35 +97,52 @@
     <p>Retrouvez ici toutes les traces du quotidien ordinaire comme exceptionnel de nos parents.</p>
   </div>
   <div class="flex flex-row flex-wrap justify-evenly">
-    <%= render "landing/category",
-      title: "Personnes",
-      icon: "people_outline",
-      description: "Membres de la famille Milgrom-Sankowicz, amis et personnes auxquels leurs destins sont liés."
-    %>
-    <%= render "landing/category",
-      title: "Lieux",
-      icon: "location_on",
-      description: "En Pologne, en France ou ailleurs, ces lieux ont été le théâtre de nos vies."
-    %>
-    <%= render "landing/category",
-      title: "Évènements",
-      icon: "calendar_today",
-      description: "Chronologiquement, ou pour chaque personne, retrouvez le fil de leurs vies : naissances, mariages, évènements historiques."
-    %>
-    <%= render "landing/category",
-      title: "Photographies",
-      icon: "photo",
-      description: "Portraits, photographies historiques, phtographies personnelles."
-    %>
-    <%= render "landing/category",
-      title: "Films",
-      icon: "movie",
-      description: "Entretiens, témoignages, enregistrements lors d’évènements importants."
-    %>
-    <%= render "landing/category",
-      title: "Documents",
-      icon: "folder_open",
-      description: "État civil, papiers d’archive, faux papiers, fiches de déportés."
-    %>
+    <%= link_to people_path, class: "category-link" do %>
+      <%= render "landing/category",
+        title: "Personnes",
+        icon: "people",
+        description: "Membres de la famille Milgrom-Sankowicz, amis et personnes auxquels leurs destins sont liés."
+      %>
+    <% end %>
+
+    <%= link_to locations_path, class: "category-link" do %>
+      <%= render "landing/category",
+        title: "Lieux",
+        icon: "location_on",
+        description: "En Pologne, en France ou ailleurs, ces lieux ont été le théâtre de nos vies."
+      %>
+    <% end %>
+
+    <%= link_to events_path, class: "category-link" do %>
+      <%= render "landing/category",
+        title: "Évènements",
+        icon: "calendar_today",
+        description: "Chronologiquement, ou pour chaque personne, retrouvez le fil de leurs vies : naissances, mariages, évènements historiques."
+      %>
+    <% end %>
+
+    <%= link_to documents_path(category: "Photographies"), class: "category-link" do %>
+      <%= render "landing/category",
+        title: "Photographies",
+        icon: "photo",
+        description: "Portraits, photographies historiques, phtographies personnelles."
+      %>
+    <% end %>
+
+    <%= link_to documents_path(category: "Films"), class: "category-link" do %>
+      <%= render "landing/category",
+        title: "Films",
+        icon: "movie",
+        description: "Entretiens, témoignages, enregistrements lors d’évènements importants."
+      %>
+    <% end %>
+
+    <%= link_to documents_path(category: "Documents"), class: "category-link" do %>
+      <%= render "landing/category",
+        title: "Documents",
+        icon: "folder_open",
+        description: "État civil, papiers d’archive, faux papiers, fiches de déportés."
+      %>
+    <% end %>
   </div>
 </div>

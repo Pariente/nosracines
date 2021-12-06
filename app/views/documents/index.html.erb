@@ -1,0 +1,19 @@
+<% content_for :meta_title, "À tous les miens — Documents" %>
+<div class="section search_header">
+  <h1><%= @category %></h1>
+  <%= render "pages/search_input", value: @keywords %>
+</div>
+<!-- *** Documents *** -->
+<div class="pagination_row">
+  <%= paginate @documents %>
+</div>
+<div class="section search_category">
+  <div class="search_results">
+    <% @documents.each do |document| %>
+      <%= render "documents/card", doc: document, link: "" %>
+    <% end %>
+  </div>
+</div>
+<div class="pagination_row">
+  <%= paginate @documents %>
+</div>

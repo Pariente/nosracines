@@ -47,16 +47,24 @@ class PeopleController < ApplicationController
   end
 
   def index
-    @people = Person.all
-    @people = @people.order(created_at: :desc).page params[:page]
+    private_access = user_signed_in? && current_user.has_private_access
+    @people = Person.all.sort_by {|p| p.full_name_index}
+
+    # Filter access-restricted contents if the user should not have access to them
+    unless private_access
+      @people = @people.select {|p| !p.privacy?}
+    end
+
+    @people = Kaminari.paginate_array(@people).page(params[:page]).per(24)
   end
 
   def search
     private_access = user_signed_in? && current_user.has_private_access
-    @people = helpers.search_people({ keywords: params[:keywords], 
-                                      private_access: private_access}
-                                    )[:people]
-    @people = Kaminari.paginate_array(@people).page(params[:page]).per(25)
+    @people = helpers.search_people({ 
+      keywords: params[:keywords], 
+      private_access: private_access}
+    )[:people]
+    @people = Kaminari.paginate_array(@people).page(params[:page]).per(24)
   end
 
   def person_params

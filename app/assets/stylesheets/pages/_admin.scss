@@ -107,7 +107,12 @@ a.btn {
   }
 }
 
+.main .pagination_row {
+  background-color: $bg_color
+}
+
 .pagination_row {
+  background-color: $white;
   display: flex;
   font-weight: 600;
   justify-content: center;

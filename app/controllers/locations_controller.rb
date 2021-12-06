@@ -1,7 +1,14 @@
 class LocationsController < ApplicationController
   def index
-    @locations = Location.all
-    @locations = @locations.order(created_at: :desc).page params[:page]
+    private_access = user_signed_in? && current_user.has_private_access
+    @locations = Location.all.sort_by {|p| p.name}
+
+    # Filter access-restricted contents if the user should not have access to them
+    unless private_access
+      @locations = @locations.select {|l| !l.privacy?}
+    end
+
+    @locations = Kaminari.paginate_array(@locations).page(params[:page]).per(24)
   end
 
   def search
@@ -10,7 +17,7 @@ class LocationsController < ApplicationController
       keywords: params[:keywords], 
       private_access: private_access}
       )[:locations]
-    @locations = Kaminari.paginate_array(@locations).page(params[:page]).per(25)
+    @locations = Kaminari.paginate_array(@locations).page(params[:page]).per(24)
   end
 
   def show

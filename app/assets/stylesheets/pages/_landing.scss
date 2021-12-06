@@ -298,14 +298,25 @@ div.section.landing_souvenir {
   }
 }
 
+a.category-link {
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 $bison;
+  display: flex;
+  margin-top: 30px;
+  text-decoration: none !important;
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 4px 6px 0 rgba(0,0,0,0.50);
+  }
+}
+
 .category {
   align-items: center;
   background-color: $white;
   border-radius: 10px;
-  box-shadow: 0 2px 4px 0 $bison;
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
   padding: 60px 20px 40px 20px;
   text-align: center;
   width: 300px;

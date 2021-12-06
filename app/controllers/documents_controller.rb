@@ -46,9 +46,31 @@ class DocumentsController < ApplicationController
       keywords: params[:keywords], 
       private_access: private_access
     })[category]
-    @documents = Kaminari.paginate_array(@documents).page(params[:page]).per(25)
+    @documents = Kaminari.paginate_array(@documents).page(params[:page]).per(24)
   end
 
   def index
+    private_access = user_signed_in? && current_user.has_private_access
+
+    @category = params[:category]
+
+    case @category
+    when "Photographies"
+      category = :images
+    when "Textes"
+      category = :texts
+    when "Films"
+      category = :videos
+    when "Audios"
+      category = :audios
+    when "Documents"
+      category = :documents
+    end
+
+    @documents = helpers.search_documents({ 
+      keywords: params[:keywords], 
+      private_access: private_access
+    })[category]
+    @documents = Kaminari.paginate_array(@documents).page(params[:page]).per(24)
   end
 end

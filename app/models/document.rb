@@ -9,7 +9,11 @@ class Document < ApplicationRecord
   paginates_per 25
 
   def format
-    return self.document_files.first.original_format
+    if self.document_files.first.nil?
+      return nil
+    else
+      return self.document_files.first.original_format
+    end
   end
 
   def people
