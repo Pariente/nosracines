@@ -7,6 +7,20 @@
     <% else %>
       <% file = @document_file %>
     <% end %>
+    <div class="flex flex-row">
+      <% @document_files.each do |f| %>
+        <%= link_to document_path(document_file: f) do %>
+          <%  if f.id == file.id
+                @active = "active"
+              else
+                @active = ""
+              end %>
+          <div class="file-preview <%= @active %>">
+            <%= render "documents/image_mini", file: f %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
     <%= link_to Cloudinary::Utils.cloudinary_url(file.url.key), target: "_blank" do %>
       <% if file.type == "audio" || file.type == "video" %>
         <%= cl_video_tag file.url.key, controls: true %>
@@ -39,21 +53,6 @@
         <label>Position des personnes</label>
         <p><%= file.persons_position %></p>
       <% end %>
-      <label>Fichiers</label>
-      <div class="flex flex-row">
-        <% @document.document_files.each do |f| %>
-          <%= link_to document_path(document_file: f) do %>
-            <%  if f.id == file.id
-                  @active = "active"
-                else
-                  @active = ""
-                end %>
-            <div class="file-preview <%= @active %>">
-              <%= render "documents/image_mini", file: f %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
     </div>
   </div>
   <div class="document_info">

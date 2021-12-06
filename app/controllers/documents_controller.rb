@@ -20,7 +20,7 @@ class DocumentsController < ApplicationController
       @locations  = @locations.select {|l| !l.privacy?}
     end
 
-    @document_files = @document.document_files
+    @document_files = @document.document_files.order(created_at: :asc)
     unless params[:document_file].nil?
       @document_file = DocumentFile.find(params[:document_file])
     end
