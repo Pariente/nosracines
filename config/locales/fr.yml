@@ -40,6 +40,7 @@ fr:
   devise:
     sessions:
       user:
+        signed_up: "Inscription réussie."
         signed_in: "Connexion réussie."
         signed_out: "Déconnexion réussie."
         already_signed_out: "Vous êtes déjà déconnecté."
