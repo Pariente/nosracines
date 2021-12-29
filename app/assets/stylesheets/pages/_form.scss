@@ -48,6 +48,7 @@ form.simple_form {
     input[type="text"],
     input[type="email"],
     input[type="password"],
+    // input[type="file"],
     textarea,
     select,
     input[type="date_picker"], {
@@ -70,6 +71,24 @@ form.simple_form {
       }
     }
 
+    input[type="file"] {
+      color: $text_color;
+      font-family: "Montserrat";
+      font-size: 18px;
+    }
+
+    input[type="file"]::-webkit-file-upload-button {
+      background: $white;
+      border: 1px solid $olive;
+      border-radius: 8px;
+      color: $text_color;
+      cursor: pointer;
+      font-family: "Montserrat";
+      font-size: 18px;
+      min-width: 200px;
+      padding: 15px 20px 15px 20px;
+    }
+
     textarea {
       min-height: 200px;
       resize: vertical
@@ -81,6 +100,20 @@ form.simple_form {
     
     span.radio {
       margin-right: 15px
+    }
+  }
+
+  .previews {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+
+    .preview_image {
+      border-radius: 8px;
+      margin-right: 10px;
+      width: 80px;
+      height: 80px;
+      object-fit: cover
     }
   }
 }

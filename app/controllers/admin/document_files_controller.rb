@@ -25,6 +25,7 @@ class Admin::DocumentFilesController < ApplicationController
   def delete
     @document_file = DocumentFile.find(params[:document_file_id])
     document = @document_file.document
+    @document_file.url.file.delete
     @document_file.destroy
     redirect_to admin_document_path(document)
   end
