@@ -8,6 +8,12 @@
 <% end %>
 <h1>Créer un nouveau document</h1>
 <%= simple_form_for [:admin, @document] do |f| %>
+  <%= f.fields_for :document_files do |p| %>
+    <div class="field">
+      <%= p.label :url %><br>
+      <%= p.file_field :url, :multiple => true, name: "document_files[url][]" %>
+    </div>
+  <% end %>
   <%= f.input :name,
               label: "Titre",
               as: :string,
@@ -51,11 +57,12 @@
               as: :text,
               placeholder: "Renseigner ici les commentaires historiographiques qui concernent ce document. Par exemple, comment il a été obtenu, quelle institution le détient, etc." %>
   <%= button_tag type: "submit", class: "btn" do %>
-    Suivant
+    <i class="material-icons">create_new_folder</i>
+    Valider
   <% end %>
 <% end %>
 
 <script>
   // DatePicker
-  $("input.date_picker").datepicker({ format: 'yyyy-mm-dd' });
+  $("input.date_picker").datepicker({ format: 'dd-mm-yyyy' });
 </script>

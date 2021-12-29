@@ -1,6 +1,7 @@
 class DocumentFile < ApplicationRecord
   belongs_to :document
-  has_one_attached :url
+  # has_one_attached :url
+  mount_uploader :url, UrlUploader
 
   def type
     image_formats = ["gif", "png", "jpg", "jpeg", "heic", "svg", "tif", "tiff"]

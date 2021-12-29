@@ -39,6 +39,9 @@ Rails.application.routes.draw do
       resources :document_files
       resources :document_people
       resources :event_documents
+      get "delete"
+      get "multiple_new"
+      get "multiple_create"
     end
 
     resources :events

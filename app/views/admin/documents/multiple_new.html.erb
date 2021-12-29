@@ -1,0 +1,21 @@
+<% content_for :meta_title, "Admin — Ajouter plusieurs fichiers à #{@document.name}" %>
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_document_path(@document), class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir au document</span>
+<% end %>
+<h1>Ajouter plusieurs fichiers à <%= @document.name %></h1>
+<%= simple_form_for [:admin, @document] do |f| %>
+  <%= f.fields_for :document_files do |p| %>
+    <div class="field">
+      <%= p.label :url %><br>
+      <%= p.file_field :url, :multiple => true, name: "document_files[url][]" %>
+    </div>
+  <% end %>
+  <%= button_tag type: "submit", class: "btn" do %>
+    <i class="material-icons">create_new_folder</i>
+    Valider
+  <% end %>
+<% end %>

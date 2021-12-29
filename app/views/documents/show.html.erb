@@ -21,35 +21,37 @@
         <% end %>
       <% end %>
     </div>
-    <%= link_to Cloudinary::Utils.cloudinary_url(file.url.key), target: "_blank" do %>
+    <%= link_to Cloudinary::Utils.cloudinary_url(file.url), target: "_blank" do %>
       <% if file.type == "audio" || file.type == "video" %>
-        <%= cl_video_tag file.url.key, controls: true %>
+        <%= cl_video_tag file.url, controls: true %>
       <% elsif file.type == "image" %>
-        <%= cl_image_tag file.url.key, crop: "fill" %>
+        <%= cl_image_tag file.url, crop: "fill" %>
       <% else %>
-        <%= cl_image_tag file.url.key, format: "png" %>
+        <%= cl_image_tag file.url, format: "jpg" %>
       <% end %>
     <% end %>
     <div class="admin-show mt20">
-      <label>Titre</label>
-      <p><%= file.name %></p>
+      <% unless file.name == "" || file.name.nil? %>
+        <label>Titre</label>
+        <p><%= file.name %></p>
+      <% end %>
 
-      <% unless file.transcript == "" %>
+      <% unless file.transcript == "" || file.transcript.nil? %>
         <label>Transcript</label>
         <p><%= file.transcript %></p>
       <% end %>
 
-      <% unless file.translation_fr == "" %>
+      <% unless file.translation_fr == "" || file.translation_fr.nil? %>
         <label>Traduction en français</label>
         <p><%= file.translation_fr %></p>
       <% end %>
       
-      <% unless file.comment == "" %>
+      <% unless file.comment == "" || file.comment.nil? %>
         <label>Commentaires</label>
         <p><%= file.comment %></p>
       <% end %>
 
-      <% unless file.persons_position == "" %>
+      <% unless file.persons_position == "" || file.persons_position.nil? %>
         <label>Position des personnes</label>
         <p><%= file.persons_position %></p>
       <% end %>

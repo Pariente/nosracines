@@ -1,9 +1,9 @@
 class Document < ApplicationRecord
-  has_many :document_files
-  has_many :document_people
-  has_many :event_documents
-  has_many :document_sources
-  has_many :location_documents
+  has_many :document_files, dependent: :destroy
+  has_many :document_people, dependent: :destroy
+  has_many :event_documents, dependent: :destroy
+  has_many :document_sources, dependent: :destroy
+  has_many :location_documents, dependent: :destroy
   belongs_to :fund
 
   paginates_per 25

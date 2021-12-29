@@ -1,8 +1,7 @@
 class Event < ApplicationRecord
-
-  has_many :event_people
-  has_many :event_documents
-  has_many :location_events
+  has_many :event_people, dependent: :destroy
+  has_many :event_documents, dependent: :destroy
+  has_many :location_events, dependent: :destroy
 
   has_one_attached :illustration
 

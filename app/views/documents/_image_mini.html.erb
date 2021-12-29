@@ -2,11 +2,10 @@
   <%= cl_image_tag "default_document_pic", width: "200", height: "200", crop: "fill", class: "img-100" %>
 <% else %>
   <% if file.type == "audio" %>
-    <%= cl_image_tag file.url.key, height: 200, width: 200, flags: "waveform", resource_type: "video", class: "img-100" %>
+    <%= cl_image_tag file.url, height: 200, width: 200, flags: "waveform", resource_type: "video", class: "img-100" %>
   <% elsif file.type == "video" %>
-    <% key = file.url.key + ".png" %>
-    <%= cl_image_tag key, resource_type: "video", crop: "fill", height: 200, width: 200, class: "img-100" %>
+    <%= cl_image_tag file.url, resource_type: "video", crop: "fill", height: 200, width: 200, class: "img-100" %>
   <% else %>
-    <%= cl_image_tag file.url.key, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
+    <%= cl_image_tag file.url, format: "png", width: "200", height: "200", crop: "fill", class: "img-100" %>
   <% end %>
 <% end %>

@@ -1,8 +1,7 @@
 class Location < ApplicationRecord
-
-  has_many :location_people
-  has_many :location_documents
-  has_many :location_events
+  has_many :location_people, dependent: :destroy
+  has_many :location_documents, dependent: :destroy
+  has_many :location_events, dependent: :destroy
 
   has_one_attached :illustration
 

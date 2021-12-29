@@ -46,7 +46,7 @@ class DocumentsController < ApplicationController
       keywords: params[:keywords], 
       private_access: private_access
     })[category]
-    @documents = Kaminari.paginate_array(@documents).page(params[:page]).per(24)
+    @documents = Kaminari.paginate_array(@documents).page(params[:page]).per(25)
   end
 
   def index

@@ -46,13 +46,13 @@
       </p>
     </div>
     <div class="half">
-      <% unless @document.date == "" %>
+      <% unless @document.date == "" || @document.date.nil? %>
         <div class="left">
           <label>Date</label>
           <p><%= @document.date %></p>
         </div>
       <% end %>
-      <% unless @document.location == "" %>
+      <% unless @document.location == "" || @document.location.nil? %>
         <div class="left">
           <label>Lieu</label>
           <p><%= @document.location %></p>
@@ -60,13 +60,13 @@
       <% end %>
     </div>
     <div class="half">
-      <% unless @document.reference == "" %>
+      <% unless @document.reference == "" || @document.reference.nil? %>
         <div class="left">
           <label>Référence</label>
           <p><%= @document.reference %></p>
         </div>
       <% end %>
-      <% unless @document.box == "" %>
+      <% unless @document.box == "" || @document.box.nil? %>
         <div class="left">
           <label>Identifiant de stockage</label>
           <p><%= @document.box %></p>
@@ -101,17 +101,22 @@
             </td>
             <td><%= f.original_format %></td>
             <td>
-              <%= link_to 'Supprimer', admin_document_file_delete_path(f) %><br>
-              <%= link_to 'Modifier', edit_admin_document_file_path(f) %>
+              <%= link_to 'Modifier', edit_admin_document_file_path(f) %><br>
+              <%= link_to 'Supprimer', admin_document_file_delete_path(f) %>
             </td>
           </tr>
         <% end %>
       </table>
     </div>
   <% end %>
-  <%= link_to new_admin_document_document_file_path(document_id: @document.id), class: "btn" do %>
+  <div class="flex flex-row">
+    <%= link_to new_admin_document_document_file_path(document_id: @document.id), class: "btn mr10" do %>
     <i class="material-icons">note_add</i> Ajouter un fichier
   <% end %>
+  <%= link_to admin_document_multiple_new_path(document_id: @document.id), class: "btn" do %>
+    <i class="material-icons">note_add</i> Ajout groupé
+  <% end %>
+  </div>
 </div>
 
 <% unless @document.notes == "" %>
