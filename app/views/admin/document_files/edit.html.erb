@@ -10,9 +10,18 @@
   <%= simple_form_for [:admin, @document_file] do |d| %>
     <div class="form-half">
       <div class="left">
-        <%= d.input :url, 
-                    as: :file,
-                    label: "Fichier" %>
+        <div class="input">
+          <label>Fichier</label>
+          <div class="previews">
+            <div>
+              <%= render "documents/image_preview", file: @document_file %>
+            </div>
+          </div>
+          <%= d.file_field :url, 
+                required: true,
+                class: "file_uploader",
+                on: {:change => "readURL(this);"} %>
+        </div>
       </div>
       <div class="right">
         <%= d.input :original_format,
@@ -52,3 +61,5 @@
     <% end %>
   <% end %>
 </div>
+
+<%= javascript_pack_tag 'file_upload_previews' %>

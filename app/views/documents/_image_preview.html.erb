@@ -1,0 +1,11 @@
+<% if file.nil? %>
+  <%= cl_image_tag "default_document_pic", width: "200", height: "200", crop: "fill", class: "img-100" %>
+<% else %>
+  <% if file.type == "audio" %>
+    <%= cl_image_tag file.url, height: 200, width: 200, flags: "waveform", resource_type: "video", class: "preview_image" %>
+  <% elsif file.type == "video" %>
+    <%= cl_image_tag file.url, resource_type: "video", crop: "fill", height: 200, width: 200, class: "preview_image" %>
+  <% else %>
+    <%= cl_image_tag file.url, format: "png", width: "200", height: "200", crop: "fill", class: "preview_image" %>
+  <% end %>
+<% end %>

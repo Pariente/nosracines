@@ -12,7 +12,11 @@
     <div class="left">
       <div class="input">
         <label>Photo d'illustration</label>
-        <div class="previews"></div>
+        <div class="previews">
+          <div>
+            <%= cl_image_tag @location.illustration.key, class: "preview_image" %>
+          </div>
+        </div>
         <%= f.file_field :illustration,
               class: "file_uploader",
               on: {:change => "readURL(this);"} %>
