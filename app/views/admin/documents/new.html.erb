@@ -9,18 +9,26 @@
 <h1>Créer un nouveau document</h1>
 <%= simple_form_for [:admin, @document] do |f| %>
   <%= f.fields_for :document_files do |p| %>
-    <div class="field">
-      <%= p.label :url %><br>
-      <%= p.file_field :url, :multiple => true, name: "document_files[url][]" %>
+    <div class="input">
+      <div class="previews"></div>
+      <%= p.file_field :url, 
+            multiple: true, 
+            required: true,
+            name: "document_files[url][]",
+            class: "file_uploader",
+            input_html: { buttonText: "Your label here." },
+            on: {:change => "readURL(this);"} %>
     </div>
   <% end %>
   <%= f.input :name,
               label: "Titre",
               as: :string,
               input_html: { autocomplete: 'off' },
+              required: true,
               placeholder: "ex : Passeport suisse de M. Stern" %>
   <%= f.input :fund_id,
               label: "Fonds",
+              required: true,
               collection: Fund.order(:name), 
               prompt: "" %>
   <%= f.input :privacy,
@@ -61,6 +69,8 @@
     Valider
   <% end %>
 <% end %>
+
+<%= javascript_pack_tag 'file_upload_previews' %>
 
 <script>
   // DatePicker

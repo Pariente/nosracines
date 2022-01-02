@@ -45,18 +45,10 @@ class Admin::DocumentsController < ApplicationController
 
   def create
     @document = Document.create(document_params)
-    respond_to do |format|
-      if @document.save
-        params[:document_files]['url'].each do |a|
-          @document_file = @document.document_files.create!(:url => a, :document_id => @document.id)
-        end
-        format.html { redirect_to admin_document_path(@document), notice: 'Document créé avec succès.' }
-      else
-        format.html { render action: 'new' }
-      end
+    params[:document_files]['url'].each do |a|
+      @document_file = @document.document_files.create!(:url => a, :document_id => @document.id)
     end
-
-    # redirect_to new_admin_document_document_file_path(document_id: @document.id)
+    redirect_to admin_document_path(@document)
   end
 
   def edit
@@ -81,7 +73,7 @@ class Admin::DocumentsController < ApplicationController
   end
 
   def document_params
-    params.permit(
+    params.require(:document).permit(
       :name,
       :date,
       :location,
@@ -90,6 +82,6 @@ class Admin::DocumentsController < ApplicationController
       :fund_id,
       :notes,
       :privacy,
-      document_files_attributes: [:id, :document_id, :url])
+      {document_files_attributes: [:id, :document_id, :url]})
   end
 end

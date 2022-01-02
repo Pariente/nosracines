@@ -57,7 +57,7 @@
         <td>
           <%= link_to 'Modifier', edit_admin_document_path(d) %><br>
           <%= link_to 'Voir', document_path(d) %><br>
-          <%= link_to 'Supprimer', admin_document_delete_path(d), data: { confirm: "Vous allez supprimer de façon permanente ce document, ainsi que tous les siens avec les autres ressources. Voulez-vous continuer ?" } %>
+          <%= link_to 'Supprimer', admin_document_delete_path(d), data: { confirm: "Vous allez supprimer de façon permanente ce document, ainsi que tous ses liens avec les autres ressources. Voulez-vous continuer ?" } %>
         </td>
       </tr>
     <% end %>
