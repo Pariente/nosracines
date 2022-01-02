@@ -10,9 +10,17 @@
 <%= simple_form_for [:admin, @event] do |f| %>
   <div class="form-half">
     <div class="left">
-      <%= f.input :illustration, 
-                  label: "Photo d'illustration", 
-                  as: :file %>
+      <div class="input">
+        <label>Photo d'illustration</label>
+        <div class="previews">
+          <div>
+            <%= cl_image_tag @event.illustration.key, class: "preview_image" %>
+          </div>
+        </div>
+        <%= f.file_field :illustration, 
+              class: "file_uploader",
+              on: {:change => "readURL(this);"} %>
+      </div>
     </div>
     <div class="right">
       <%= f.input :name,
@@ -54,7 +62,9 @@
   <% end %>
 <% end %>
 
+<%= javascript_pack_tag 'file_upload_previews' %>
+
 <script>
   // DatePicker
-  $("input.date_picker").datepicker({ format: 'yyyy-mm-dd' });
+  $("input.date_picker").datepicker({ format: 'dd-mm-yyyy' });
 </script>
