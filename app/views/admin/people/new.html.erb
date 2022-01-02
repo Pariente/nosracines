@@ -23,9 +23,14 @@
                   as: :boolean %>
     </div>
     <div class="right">
-      <%= f.input :profile_pic, 
-                  label: "Photo de profil", 
-                  as: :file %>
+      <div class="input">
+        <label>Photo de profil</label>
+        <div class="previews"></div>
+        <%= f.file_field :profile_pic, 
+              required: true,
+              class: "file_uploader",
+              on: {:change => "readURL(this);"} %>
+      </div>
     </div>
   </div>
   <div class="form-half">
@@ -100,6 +105,8 @@
     <i class="material-icons">person_add</i> Créer la fiche
   <% end %>
 <% end %>
+
+<%= javascript_pack_tag 'file_upload_previews' %>
 
 <script>
   // DatePicker

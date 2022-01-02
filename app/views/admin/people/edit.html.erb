@@ -22,9 +22,17 @@
                   as: :boolean %>
     </div>
     <div class="right">
-      <%= f.input :profile_pic, 
-                  label: "Photo de profil", 
-                  as: :file %>
+      <div class="input">
+        <label>Photo de profil</label>
+        <div class="previews">
+          <div>
+            <%= cl_image_tag @person.profile_pic.key, class: "preview_image" %>
+          </div>
+        </div>
+        <%= f.file_field :profile_pic, 
+              class: "file_uploader",
+              on: {:change => "readURL(this);"} %>
+      </div>
     </div>
   </div>
   <div class="form-half">
@@ -99,6 +107,8 @@
     <i class="material-icons">person_outline</i> Modifier la fiche
   <% end %>
 <% end %>
+
+<%= javascript_pack_tag 'file_upload_previews' %>
 
 <script>
   // DatePicker
