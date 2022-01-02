@@ -24,7 +24,7 @@ function isFileImage(file) {
   return acceptedImageTypes.includes(file['type'])
 }
 
-$("#document_document_files_url").change(function(){
+$(".file_uploader").change(function(){
   // Clear all previews
   $(".previews div").remove();
   // Renew previews

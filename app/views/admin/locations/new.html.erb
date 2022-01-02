@@ -10,9 +10,14 @@
 <%= simple_form_for [:admin, @location] do |f| %>
   <div class="form-half">
     <div class="left">
-      <%= f.input :illustration, 
-                  label: "Photo d'illustration", 
-                  as: :file %>
+      <div class="input">
+        <label>Photo d'illustration</label>
+        <div class="previews"></div>
+        <%= f.file_field :illustration, 
+              required: true,
+              class: "file_uploader",
+              on: {:change => "readURL(this);"} %>
+      </div>
     </div>
     <div class="right">
       <%= f.input :name,
@@ -75,3 +80,5 @@
     <i class="material-icons">add_location</i> Créer le lieu
   <% end %>
 <% end %>
+
+<%= javascript_pack_tag 'file_upload_previews' %>
