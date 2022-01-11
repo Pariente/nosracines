@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "search_events",    to: "events#search"
   get "search_locations", to: "locations#search"
 
+  resources :books
   resources :documents
   resources :document_files
   resources :people
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
     get "people_search",    to: "people#search"
     get "events_search",    to: "events#search"
     get "locations_search", to: "locations#search"
+    get "books_search",     to: "books#search"
 
     resources :people do
       resources :family_links
@@ -45,6 +47,14 @@ Rails.application.routes.draw do
     end
 
     resources :events
+
+    resources :books do
+      resources :book_documents
+      resources :book_events
+      resources :book_locations
+      resources :book_people
+      get "delete"
+    end
 
     resources :locations do
       resources :location_documents
@@ -81,6 +91,22 @@ Rails.application.routes.draw do
     end
 
     resources :location_people do
+      get "delete"
+    end
+
+    resources :book_documents do
+      get "delete"
+    end
+
+    resources :book_events do
+      get "delete"
+    end
+
+    resources :book_locations do
+      get "delete"
+    end
+
+    resources :book_people do
       get "delete"
     end
 

@@ -1,0 +1,61 @@
+<% content_for :meta_title, "Admin — Livres" %>
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+
+<h1>Livres</h1>
+<div class="admin_top_bar">
+  <%= render "admin/books/search_input" %>
+  <%= link_to new_admin_book_path, class: "btn" do %>
+    <i class="material-icons">bookmark_add</i>
+    Ajouter un livre
+  <% end %>
+</div>
+
+<div class="admin_table_container">
+  <table class="admin_table">
+    <tr>
+      <th class="center">ID</th>
+      <th class="pic_cell">Aperçu</th>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Publication</th>
+      <th>Éditeur</th>
+      <th>Actions</th>
+    </tr>
+    <% @books.each do |b| %>
+      <tr>
+        <td class="center"><%= b.id %></td>
+        <td class="pic_cell">
+          <% pic = b.cover.present? ? b.cover : "default_book_pic" %>
+          <%= cl_image_tag pic, format: "png", width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %></td>
+        </td>
+        <td>
+          <%= link_to admin_book_path(b.id) do %>
+            <%= b.title %>
+          <% end %><br>
+          <% if b.privacy %>
+          <span class="private-content">
+            <i class="material-icons">security</i> Privé
+          </span>
+          <% end %>
+        </td>
+        <td>
+          <%= b.author %>
+        </td>
+        <td><%= b.date_publication.strftime("%F") unless b.date_publication.nil? %></td>
+        <td class="center">
+          <%= b.publisher %>
+        </td>
+        <td>
+          <%= link_to 'Modifier', edit_admin_book_path(b) %><br>
+          <%= link_to 'Voir', admin_book_path(b) %><br>
+          <%= link_to 'Supprimer', admin_book_delete_path(b), data: { confirm: "Vous allez supprimer de façon permanente ce livre, ainsi que tous ses liens avec les autres ressources. Voulez-vous continuer ?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<div class="pagination_row">
+  <%= paginate @books %>
+</div>

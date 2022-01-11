@@ -1,0 +1,235 @@
+<% content_for :meta_title, "Admin — " + @book.title %>
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_books_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<div class="flex flex-row justify-between align-baseline">
+  <div class="flex flex-row align-baseline">
+    <h1><%= @book.title %></h1>
+    <%= link_to book_path(@book) do %>
+      (voir la fiche)
+    <% end %>
+  </div>
+  <div>
+    <%= link_to edit_admin_book_path(@book), class: "btn btn-mini" do %>
+      <i class="material-icons">edit</i>
+      <span>Modifier la fiche</span>
+    <% end %>
+  </div>
+</div>
+<div class="person_header admin-show flex flex-row">
+  <div class="mr10">
+    <% pic = @book.cover.present? ? @book.cover : "default_book_pic" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
+  </div>
+  <div class="person_header_info flex flex-column flex-grow-1">
+    <% if @book.privacy %>
+      <div>
+        <span class="private-content mb10">
+          <i class="material-icons">security</i> Privé
+        </span>
+      </div>
+    <% end %>
+    <% unless @book.title.nil? %>
+      <div class="left">
+        <label>Titre</label>
+        <p><%= @book.title %></p>
+      </div>
+    <% end %>
+    <div class="half">
+      <% unless @book.author.nil? %>
+        <div class="left">
+          <label>Auteur</label>
+          <p><%= @book.author %></p>
+        </div>
+      <% end %>
+      <% unless @book.publisher.nil? %>
+        <div class="left">
+          <label>Éditeur</label>
+          <p><%= @book.publisher %></p>
+        </div>
+      <% end %>
+    </div>
+    <div class="half">
+      <% unless @book.date_publication.nil? %>
+        <div class="left">
+          <label>Date de publication</label>
+          <p><%= @book.date_publication %></p>
+        </div>
+      <% end %>
+      <% unless @book.isbn.nil? %>
+        <div class="left">
+          <label>Numéro ISBN</label>
+          <p><%= @book.isbn %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="admin-show">
+  <% unless @book.summary == "" %>
+    <div class="show-section">
+      <h3>Résumé</h3>
+      <p><%= @book.summary %></p>
+    </div>
+  <% end %>
+
+  <% unless @book.notes == "" %>
+    <div class="show-section">
+      <h3>Notes</h3>
+      <p><%= @book.notes %></p>
+    </div>
+  <% end %>
+
+  <div class="show-section">
+    <h3><i class="material-icons">text_snippet</i>Documents liés</h3>
+    <% unless @book_documents == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>Référence</th>
+            <th>Fonds</th>
+            <th>Actions</th>
+          </tr>
+          <% @book_documents.each do |bd| %>
+            <% doc = bd.document %>
+            <tr>
+              <td class="center">
+                <%= doc.id %>
+              </td>
+              <td class="pic_cell">
+                <% file = doc.document_files.first %>
+                <%= render "documents/image_mini", file: file %>
+              </td>
+              <td>
+                <%= link_to admin_document_path(doc.id) do %>
+                  <%= doc.name %>
+                <% end %>
+              </td>
+              <td>
+                <%= doc.date %>
+              </td>
+              <td>
+                <%= doc.reference %>
+              </td>
+              <td>
+                <%= doc.fund.name %>
+              </td>
+              <td>
+                <%= link_to admin_book_document_delete_path(bd, redirection: "event") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_book_document_path(from: "book", book_id: @book.id), class: "btn btn-mini" do %>
+      <i class="material-icons">note_add</i> Lier un document au livre
+    <% end %>
+  </div>
+  
+  
+  <div class="show-section">
+    <h3><i class="material-icons">people</i>Personnes liées</h3>
+    <% unless @book_people == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Action</th>
+          </tr>
+          <% @book_people.each do |bp| %>
+            <% p = bp.person %>
+            <% pic = p.profile_pic.present? ? p.profile_pic.key : "default_profile_pic" %>
+            <tr>
+              <td class="center">
+                <%= p.id %>
+              </td>
+              <td class="pic_cell">
+                <%= cl_image_tag pic, width: "200", height: "200", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_person_path(p.id) do %>
+                  <%= p.last_name.upcase %>
+                <% end %>
+                <% if p.spouse_name.present? %>
+                  <br>
+                  <span class="spouse_name">épouse <%= p.spouse_name.upcase %></span>
+                <% end %>
+              </td>
+              <td><%= p.first_name %></td>
+              <td>
+                <%= link_to admin_book_person_delete_path(bp.id, redirection: "event") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_book_person_path(from: "book", book_id: @book.id), class: "btn btn-mini" do %>
+      <i class="material-icons">person_add</i> Lier une personne au livre
+    <% end %>
+  </div>
+  
+  <div class="show-section">
+    <h3><i class="material-icons">place</i>Lieux liés</h3>
+    <% unless @book_locations == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Pays</th>
+            <th>Action</th>
+          </tr>
+          <% @book_locations.each do |bl| %>
+            <% location = bl.location %>
+            <tr>
+              <td class="center">
+                <%= location.id %>
+              </td>
+              <td class="pic_cell">
+                <% pic = location.illustration.present? ? location.illustration.key : "default_profile_pic" %>
+                <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_location_path(location.id) do %>
+                  <%= location.name %>
+                <% end %>
+              </td>
+              <td><%= location.address %></td>
+              <td><%= location.city %></td>
+              <td><%= location.country %></td>
+              <td>
+                <%= link_to admin_book_location_delete_path(bl.id, redirection: "book") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_book_location_path(from: "book", book_id: @book.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add_location</i> Lier un lieu au livre
+    <% end %>
+  </div>
+
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_28_151736) do
+ActiveRecord::Schema.define(version: 2022_01_11_161151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,56 @@ ActiveRecord::Schema.define(version: 2021_11_28_151736) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "category"
     t.index ["person_id"], name: "index_aliases_on_person_id"
+  end
+
+  create_table "book_documents", force: :cascade do |t|
+    t.bigint "book_id"
+    t.bigint "document_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_documents_on_book_id"
+    t.index ["document_id"], name: "index_book_documents_on_document_id"
+  end
+
+  create_table "book_events", force: :cascade do |t|
+    t.bigint "book_id"
+    t.bigint "event_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_events_on_book_id"
+    t.index ["event_id"], name: "index_book_events_on_event_id"
+  end
+
+  create_table "book_locations", force: :cascade do |t|
+    t.bigint "book_id"
+    t.bigint "location_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_locations_on_book_id"
+    t.index ["location_id"], name: "index_book_locations_on_location_id"
+  end
+
+  create_table "book_people", force: :cascade do |t|
+    t.bigint "book_id"
+    t.bigint "person_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_people_on_book_id"
+    t.index ["person_id"], name: "index_book_people_on_person_id"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.string "cover"
+    t.string "author"
+    t.string "publisher"
+    t.string "isbn"
+    t.boolean "privacy", default: false
+    t.date "date_publication"
+    t.text "summary"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "document_files", force: :cascade do |t|
@@ -221,6 +271,14 @@ ActiveRecord::Schema.define(version: 2021_11_28_151736) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "aliases", "people"
+  add_foreign_key "book_documents", "books"
+  add_foreign_key "book_documents", "documents"
+  add_foreign_key "book_events", "books"
+  add_foreign_key "book_events", "events"
+  add_foreign_key "book_locations", "books"
+  add_foreign_key "book_locations", "locations"
+  add_foreign_key "book_people", "books"
+  add_foreign_key "book_people", "people"
   add_foreign_key "document_files", "documents"
   add_foreign_key "document_people", "documents"
   add_foreign_key "document_people", "people"

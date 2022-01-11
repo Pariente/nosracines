@@ -2,12 +2,11 @@ class Person < ApplicationRecord
 
   has_many :a_links, class_name: "FamilyLink", foreign_key: "person_a_id", dependent: :delete_all
   has_many :b_links, class_name: "FamilyLink", foreign_key: "person_b_id", dependent: :delete_all
-
-  has_many :document_people, dependent: :destroy
-  has_many :event_people, dependent: :destroy
-  has_many :location_people, dependent: :destroy
-
-  has_many :aliases, dependent: :destroy
+  has_many :document_people,  dependent: :destroy
+  has_many :event_people,     dependent: :destroy
+  has_many :location_people,  dependent: :destroy
+  has_many :book_people,      dependent: :destroy
+  has_many :aliases,          dependent: :destroy
 
   has_one_attached :profile_pic
 

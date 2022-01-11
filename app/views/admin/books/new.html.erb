@@ -1,0 +1,79 @@
+<% content_for :meta_title, "Admin — Créer un livre" %>
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<%= link_to admin_books_path, class: "back_link" do %>
+  <i class="material-icons">arrow_back_ios</i>
+  <span>Annuler et revenir à l'index</span>
+<% end %>
+<h1>Créer un nouveau livre</h1>
+<%= simple_form_for [:admin, @book] do |f| %>
+  <div class="form-half">
+    <div class="left">
+      <div class="input">
+        <label>Photo d'illustration</label>
+        <div class="previews"></div>
+        <%= f.file_field :cover, 
+              class: "file_uploader",
+              on: {:change => "readURL(this);"} %>
+      </div>
+    </div>
+    <div class="right">
+      <%= f.input :title,
+                  label: "Titre",
+                  as: :string,
+                  input_html: { autocomplete: 'off' },
+                  required: true,
+                  placeholder: "ex : Notre-Dame-de-Paris" %>
+      <%= f.input :privacy,
+                  label: "Livre privé ?",
+                  as: :boolean %>
+    </div>
+  </div>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :author, 
+                  label: "Auteur", 
+                  as: :string,
+                  required: true %>
+    </div>
+    <div class="right">
+      <%= f.input :publisher, 
+                  label: "Éditeur", 
+                  as: :string %>
+    </div>
+  </div>
+  <div class="form-half">
+    <div class="left">
+      <%= f.input :date_publication, 
+                  input_html: { autocomplete: 'off' },
+                  label: "Date de publication", 
+                  as: :date_picker %>
+    </div>
+    <div class="right">
+      <%= f.input :isbn, 
+                  input_html: { autocomplete: 'off' },
+                  label: "Numéro ISBN", 
+                  as: :string %>
+    </div>
+  </div>
+  <hr>
+  <%= f.input :summary, 
+              label: "Résumé et informations générales", 
+              as: :text,
+              placeholder: "Renseigner le résumé de l'ouvrage, ou bien le texte sur sa quatrième de couverture." %>
+  <%= f.input :notes, 
+              label: "Notes et commentaires", 
+              as: :text,
+              placeholder: "Renseigner ici les commentaires historiographiques qui concernent ce livre. Par exemple, l'intérêt qu'il présente pour le travail historiographique, ou ses liens avec la famille." %>
+  <%= button_tag type: "submit", class: "btn" do %>
+    <i class="material-icons-outlined">bookmark_add</i> Créer la fiche
+  <% end %>
+<% end %>
+
+<%= javascript_pack_tag 'file_upload_previews' %>
+
+<script>
+  // DatePicker
+  $("input.date_picker").datepicker({ format: 'dd-mm-yyyy' });
+</script>
