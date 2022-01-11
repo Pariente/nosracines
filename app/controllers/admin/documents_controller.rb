@@ -23,6 +23,7 @@ class Admin::DocumentsController < ApplicationController
     @document_people    = @document.document_people
     @event_documents    = @document.event_documents
     @location_documents = @document.location_documents
+    @book_documents     = @document.book_documents
   end
 
   def new

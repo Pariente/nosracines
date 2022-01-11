@@ -8,6 +8,11 @@ class Book < ApplicationRecord
 
   paginates_per 25
 
+  def title_and_author
+    result = self.title + " (" + self.author + ")"
+    return result
+  end
+
   def documents
     book_documents = self.book_documents
     documents = []
