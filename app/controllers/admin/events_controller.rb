@@ -23,6 +23,7 @@ class Admin::EventsController < ApplicationController
     @event_documents  = @event.event_documents
     @event_people     = @event.event_people
     @location_events  = @event.location_events
+    @book_events      = @event.book_events
   end
 
   def index

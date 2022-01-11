@@ -1,0 +1,97 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<% @from = params[:from] %>
+<% if @from == "event" %>
+  <% content_for :meta_title, "Admin — Lier des livres à " + @event.name %>
+  <%= link_to admin_event_path(@event), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des livres à <%= @event.name %></h1>
+  <%= simple_form_for [:admin, @book_event] do |d| %>
+    <div class="book-event">
+      <%= d.input :from, as: :hidden, input_html: { value: @from } %>
+      <%= d.input :book_id,
+                      label: "Livre",
+                      collection: Book.order(:title), 
+                      prompt: "Liste des livres",
+                      label_method: :title_and_author, 
+                      input_html: { name: 'book_event[0][book_id]' },
+                      value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-book-event block hidden mr10">Enlever le dernier livre</button>
+      <button class="btn btn-mini add-book-event block"><i class="material-icons">add</i> Ajouter un livre</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "event_id", value: @event.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% elsif @from == "book" %>
+  <% content_for :meta_title, "Admin — Lier des évènements à " + @book.title %>
+  <%= link_to admin_book_path(@book), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des évènements à <%= @book.title %></h1>
+  <%= simple_form_for [:admin, @book_event] do |d| %>
+    <div class="book-event">
+      <%= d.input :from, as: :hidden, input_html: { value: @from } %>
+      <%= d.input :event_id,
+                    label: "Évènement",
+                    collection: Event.order(:name), 
+                    prompt: "Liste des Évènements",
+                    label_method: :name, 
+                    input_html: { name: 'book_event[0][event_id]' },
+                    value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-book-event block hidden mr10">Enlever le dernier évènement</button>
+      <button class="btn btn-mini add-book-event block"><i class="material-icons">add</i> Ajouter un évènement</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "book_id", value: @book.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% end %>
+
+<script>
+  // Add Book Event
+  var i = $('.book-event').length;
+
+  $('.add-book-event').click(function(event){
+    event.preventDefault();
+    var bookEvent     = $('.book-event').length;
+    var lastBookEvent = $('.book-event').last();
+    var removeButton  = $('.remove-book-event').last();
+    removeButton.removeClass('hidden');
+
+    var newBookEvent  = lastBookEvent.clone();
+    var select        = newBookEvent.find('select');
+    if (select.attr('id') == "book_event_event_id") {
+      select.attr('name', 'book_event['+i+'][event_id]');
+    } else {
+      select.attr('name', 'book_event['+i+'][book_id]');
+    }
+    select.removeAttr('id');
+    lastBookEvent.after(newBookEvent);
+    i++;
+  });
+
+  // Remove Event Person
+  $('.remove-book-event').click(function(event){
+    event.preventDefault();
+
+    var removeButton  = $('.remove-book-event').last();
+    var bookEvent     = $('.book-event').length;
+    var lastBookEvent = $('.book-event').last();
+
+    if (bookEvent == 2) {
+      removeButton.addClass('hidden');
+      lastBookEvent.remove();
+    } else {
+      lastBookEvent.remove();
+    }
+  });
+</script>

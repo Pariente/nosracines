@@ -136,6 +136,51 @@
       <i class="material-icons">note_add</i> Lier un document au livre
     <% end %>
   </div>
+
+  <div class="show-section">
+    <h3><i class="material-icons">event</i>Évènements liés</h3>
+    <% unless @book_events == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Nom</th>
+            <th class="center">Date de début</th>
+            <th class="center">Date de fin</th>
+            <th>Action</th>
+          </tr>
+          <% @book_events.each do |be| %>
+            <% event = be.event %>
+            <tr>
+              <td class="center">
+                <%= event.id %>
+              </td>
+              <td class="pic_cell">
+                <% pic = event.illustration.present? ? event.illustration.key : "default_profile_pic" %>
+                <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_event_path(event.id) do %>
+                  <%= event.name %>
+                <% end %>
+              </td>
+              <td class="center"><%= event.date_start %></td>
+              <td class="center"><%= event.date_end %></td>
+              <td>
+                <%= link_to admin_book_event_delete_path(be.id, redirection: "book") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_book_event_path(from: "book", book_id: @book.id), class: "btn btn-mini" do %>
+      <i class="material-icons">add</i> Lier un évènement au livre
+    <% end %>
+  </div>
   
   
   <div class="show-section">
