@@ -174,4 +174,33 @@ module SearchHelper
 
     return {locations: locations, count: locations_count}
   end
+
+  def search_books(params)
+    keywords        = params[:keywords]
+    private_access  = params[:private_access]
+    limit           = params[:limit]
+
+    title     = Book.arel_table[:title]
+    author    = Book.arel_table[:author]
+    publisher = Book.arel_table[:publisher]
+    isbn      = Book.arel_table[:isbn]
+    books     = Book.where(title.matches("%#{keywords}%")).or(
+                Book.where(author.matches("%#{keywords}%"))).or(
+                Book.where(publisher.matches("%#{keywords}%"))).or(
+                Book.where(isbn.matches("%#{keywords}%"))
+                ).order(title: :asc)
+
+    # Filter if user should access private content
+    unless private_access
+      books  = books.select {|l| !l.privacy}
+    end
+
+    books_count = books.count
+
+    unless limit.nil?
+      books = books.first(limit)
+    end
+
+    return {books: books, count: books_count}
+  end
 end

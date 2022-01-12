@@ -1,0 +1,98 @@
+<% content_for :meta_title, "À tous les miens — " + @book.title %>
+<div class="container">
+  <div class="person_header admin-show">
+    <% pic = @book.cover.present? ? @book.cover : "default_book_pic" %>
+    <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
+    <div class="person_header_info">
+      <h1><%= @book.title %></h1>
+      <div class="half">
+        <% unless @book.author.nil? %>
+          <div class="left">
+            <label>Auteur</label>
+            <p><%= @book.author %></p>
+          </div>
+        <% end %>
+        <% unless @book.publisher.nil? %>
+          <div class="left">
+            <label>Éditeur</label>
+            <p><%= @book.publisher %></p>
+          </div>
+        <% end %>
+      </div>
+      <div class="half">
+        <% unless @book.date_publication.nil? %>
+          <div class="left">
+            <label>Date de publication</label>
+            <p><%= @book.date_publication %></p>
+          </div>
+        <% end %>
+        <% unless @book.isbn.nil? %>
+          <div class="left">
+            <label>Numéro ISBN</label>
+            <p><%= @book.isbn %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-show">
+    <% unless @book.summary == "" %>
+      <div class="show-section">
+        <h2>Résumé et informations générales</h2>
+        <p><%= @book.summary %></p>
+      </div>
+    <% end %>
+
+    <% unless @book.notes == "" %>
+      <div class="show-section">
+        <h2>Notes et commentaires</h2>
+        <p><%= @book.notes %></p>
+      </div>
+    <% end %>
+
+    <% unless @documents == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">text_snippet</i>Documents liés</h2>
+        <div class="slideshow">
+          <% @documents.each do |doc| %>
+            <%= render "documents/card", doc: doc %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @events == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">text_snippet</i>Évènements liés</h2>
+        <div class="slideshow">
+          <% @events.each do |e| %>
+            <%= render "events/card", event: e %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @people == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">people</i>Personnes liées</h2>
+        <div class="slideshow">
+          <% @people.each do |p| %>
+            <%= render "people/card", person: p, link: "" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @locations == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">place</i>Lieux liés</h2>
+        <div class="slideshow">
+          <% @locations.each do |l| %>
+            <%= render "locations/card", location: l %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
