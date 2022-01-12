@@ -18,6 +18,7 @@ class PeopleController < ApplicationController
     @aliases    = @person.aliases
     @events     = @person.events
     @locations  = @person.locations
+    @books      = @person.books
 
     # Filter access-restricted contents if the user should not have access to them
     unless private_access

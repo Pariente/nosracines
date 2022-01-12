@@ -47,6 +47,16 @@ class Document < ApplicationRecord
     return locations
   end
 
+  def books
+    book_documents = self.book_documents
+    books       = []
+    book_documents.each do |q|
+      books << q.book
+    end
+
+    return books
+  end
+
   def self.fund
     fund = Fund.find(self.fund_id)
     return fund

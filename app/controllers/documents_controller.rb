@@ -11,6 +11,7 @@ class DocumentsController < ApplicationController
 
     @people     = @document.people
     @events     = @document.events
+    @books      = @document.books
     @locations  = @document.locations
 
     # Filter access-restricted contents if the user should not have access to them

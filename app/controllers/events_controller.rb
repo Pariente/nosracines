@@ -12,6 +12,7 @@ class EventsController < ApplicationController
     @documents  = @event.documents
     @people     = @event.people
     @locations  = @event.locations
+    @books      = @event.books
   end
 
   def index

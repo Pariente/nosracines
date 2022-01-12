@@ -26,7 +26,7 @@ class Person < ApplicationRecord
 
   def documents
     document_people = self.document_people
-    docs = []
+    docs            = []
     document_people.each do |q|
       docs << q.document
     end
@@ -35,8 +35,8 @@ class Person < ApplicationRecord
   end
 
   def events
-    event_people = self.event_people
-    events = []
+    event_people  = self.event_people
+    events        = []
     event_people.each do |ep|
       events << ep.event
     end
@@ -46,12 +46,22 @@ class Person < ApplicationRecord
 
   def locations
     location_people = self.location_people
-    locations = []
+    locations       = []
     location_people.each do |q|
       locations << q.location
     end
 
     return locations
+  end
+
+  def books
+    book_people = self.book_people
+    books       = []
+    book_people.each do |q|
+      books << q.book
+    end
+
+    return books
   end
 
   def family_links

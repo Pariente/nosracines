@@ -104,6 +104,17 @@
         </div>
       </div>
     <% end %>
+
+    <% unless @books == [] %>
+      <div class="show-section">
+        <h2><i class="material-icons">book</i>Livres liés</h2>
+        <div class="slideshow">
+          <% @books.each do |book| %>
+            <%= render "books/card", book: book %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 

@@ -64,4 +64,14 @@ class Event < ApplicationRecord
 
     return locations
   end
+
+  def books
+    book_events = self.book_events
+    books       = []
+    book_events.each do |q|
+      books << q.book
+    end
+
+    return books
+  end
 end

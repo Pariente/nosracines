@@ -34,6 +34,7 @@ class LocationsController < ApplicationController
 
     @documents  = @location.documents
     @events     = @location.events
+    @books      = @location.books
     @people     = @location.people
 
     # Filter access-restricted contents if the user should not have access to them

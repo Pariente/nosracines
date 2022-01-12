@@ -94,6 +94,14 @@
         <% end %>
       </div>
     <% end %>
+    <% unless @books == [] %>
+      <div class="row">
+        <i class="material-icons">book</i>
+        <% @books.each do |b| %>
+          <%= link_to b.title, book_path(b) %>
+        <% end %>
+      </div>
+    <% end %>
     <% unless @document.notes == "" || @document.notes.nil? %>
       <div class="row">
         <i class="material-icons">short_text</i>
