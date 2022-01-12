@@ -144,5 +144,13 @@
         description: "État civil, papiers d’archive, faux papiers, fiches de déportés."
       %>
     <% end %>
+
+    <%= link_to books_path(category: "Livres"), class: "category-link" do %>
+      <%= render "landing/category",
+        title: "Livres",
+        icon: "book",
+        description: "Ouvrages recueillis, utiles et pertinents dans le travail historiographique sur la famille Milgrom-Sankowicz."
+      %>
+    <% end %>
   </div>
 </div>

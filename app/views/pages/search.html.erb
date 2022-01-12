@@ -67,3 +67,9 @@
         locations:  @locations,
         count:      @locations_count %>
 <% end %>
+
+<% unless @books == [] %>
+  <%= render "pages/search_category_books",
+        books: @books,
+        count: @books_count %>
+<% end %>

@@ -70,6 +70,15 @@ class PagesController < ApplicationController
       })
       @locations       = search_locations[:locations]
       @locations_count = search_locations[:count]
+
+      # Books
+      search_books = helpers.search_books({
+        keywords: @keywords, 
+        private_access: private_access,
+        limit: 12
+      })
+      @books        = search_books[:books]
+      @books_count  = search_books[:count]
     end
   end
 end

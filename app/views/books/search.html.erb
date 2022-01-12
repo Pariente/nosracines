@@ -1,20 +1,20 @@
-<% content_for :meta_title, "À tous les miens — Résultats de la recherche (évènements)" %>
+<% content_for :meta_title, "À tous les miens — Résultats de la recherche (livres)" %>
 <div class="section search_header">
   <h1>Résultats de la recherche</h1>
   <%= render "pages/search_input", value: @keywords %>
 </div>
-<!-- *** EVENTS *** -->
+<!-- *** BOOKS *** -->
 <div class="section search_category">
   <div class="search_category_header">
-    <i class="material-icons">event</i>
-    <h2>Évènements</h2>
+    <i class="material-icons">book</i>
+    <h2>Livres</h2>
   </div>
   <div class="search_results">
-    <% @events.each do |event| %>
-      <%= render "events/card", event: event %>
+    <% @books.each do |book| %>
+      <%= render "books/card", book: book %>
     <% end %>
   </div>
 </div>
 <div class="pagination_row">
-  <%= paginate @events %>
+  <%= paginate @books %>
 </div>

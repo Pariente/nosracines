@@ -1,13 +1,13 @@
 <div class="result_card">
-  <%= link_to event_path(event) do %>
-    <% pic = event.illustration.present? ? event.illustration.key : "default_event_pic" %>
+  <%= link_to book_path(book) do %>
+    <% pic = book.cover.present? ? book.cover : "default_book_pic" %>
     <%= cl_image_tag pic, width: "600", height: "600", crop: "fill", gravity: "face", class: "img-300" %>
     <div class="result_card_info">
-      <span class="name"><%= event.name %></span>
+      <span class="name"><%= book.title %></span>
       <div class="flex flex-column">
-        <span class="date"><%= event.date_start.strftime("%e %b %Y") %> <% unless event.date_end.nil? %>- <%= event.date_end.strftime("%e %b %Y") %><% end %></span>
+        <span class="date"><%= book.author %> <% unless book.date_publication.nil? %>- <%= book.date_publication&.year %><% end %></span>
       </div>
-      <% if event.privacy? %>
+      <% if book.privacy? %>
         <div>
           <span class="private-content">
             <i class="material-icons">security</i> Privé

@@ -1,0 +1,17 @@
+<!-- *** BOOKS *** -->
+<div class="section search_category">
+  <div class="search_category_header">
+    <i class="material-icons">book</i>
+    <h2>Livres</h2>
+  </div>
+  <div class="search_results">
+    <% books.each do |book| %>
+      <%= render "books/card", book: book %>
+    <% end %>
+  </div>
+  <% if count > 12 %>
+    <%= link_to search_books_path(keywords: @keywords) do %>
+      Voir les <%= count %> résultats
+    <% end %>
+  <% end %>
+</div>
