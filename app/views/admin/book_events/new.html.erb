@@ -13,12 +13,12 @@
     <div class="book-event">
       <%= d.input :from, as: :hidden, input_html: { value: @from } %>
       <%= d.input :book_id,
-                      label: "Livre",
-                      collection: Book.order(:title), 
-                      prompt: "Liste des livres",
-                      label_method: :title_and_author, 
-                      input_html: { name: 'book_event[0][book_id]' },
-                      value_method: :id %>
+                    label: "Livre",
+                    collection: Book.order(:title), 
+                    prompt: "Liste des livres",
+                    label_method: :title_and_author, 
+                    input_html: { name: 'book_event[0][book_id]' },
+                    value_method: :id %>
     </div>
     <div class="flex flex-row">
       <button class="btn btn-red btn-mini remove-book-event block hidden mr10">Enlever le dernier livre</button>
@@ -79,7 +79,7 @@
     i++;
   });
 
-  // Remove Event Person
+  // Remove Book Event
   $('.remove-book-event').click(function(event){
     event.preventDefault();
 

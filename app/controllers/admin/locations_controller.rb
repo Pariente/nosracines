@@ -31,10 +31,11 @@ class Admin::LocationsController < ApplicationController
   end
 
   def show
-    @location            = Location.find(params[:id])
-    @location_documents  = @location.location_documents
-    @location_events     = @location.location_events
-    @location_people     = @location.location_people
+    @location           = Location.find(params[:id])
+    @location_documents = @location.location_documents
+    @location_events    = @location.location_events
+    @location_people    = @location.location_people
+    @book_locations     = @location.book_locations
   end
 
   def index

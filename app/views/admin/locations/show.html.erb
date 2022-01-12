@@ -226,6 +226,53 @@
       <i class="material-icons">add</i> Lier un évènement au lieu
     <% end %>
   </div>
+
+
+  <!-- BOOKS -->
+  <div class="show-section">
+    <h3><i class="material-icons">book</i>Livres liés</h3>
+    <% unless @book_locations == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Publication</th>
+            <th>Actions</th>
+          </tr>
+          <% @book_locations.each do |bl| %>
+            <% book = bl.book %>
+            <tr>
+              <td class="center">
+                <%= book.id %>
+              </td>
+              <td class="pic_cell">
+                <% pic = book.cover.present? ? book.cover : "default_book_pic" %>
+                <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_book_path(book.id) do %>
+                  <%= book.title %>
+                <% end %>
+              </td>
+              <td><%= book.author %></td>
+              <td><%= book.publisher %></td>
+              <td>
+                <%= link_to admin_book_location_delete_path(bl, redirection: "location") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_book_location_path(from: "location", location_id: @location.id), class: "btn btn-mini" do %>
+      <i class="material-icons">bookmark_add</i> Lier un livre au lieu
+    <% end %>
+  </div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>

@@ -1,0 +1,97 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<% @from = params[:from] %>
+<% if @from == "location" %>
+  <% content_for :meta_title, "Admin — Lier des livres à " + @location.name %>
+  <%= link_to admin_location_path(@location), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des livres à <%= @location.name %></h1>
+  <%= simple_form_for [:admin, @book_location] do |d| %>
+    <div class="book-location">
+      <%= d.input :from, as: :hidden, input_html: { value: @from } %>
+      <%= d.input :book_id,
+                    label: "Livre",
+                    collection: Book.order(:title), 
+                    prompt: "Liste des livres",
+                    label_method: :title_and_author, 
+                    input_html: { name: 'book_location[0][book_id]' },
+                    value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-book-location block hidden mr10">Enlever le dernier livre</button>
+      <button class="btn btn-mini add-book-location block"><i class="material-icons">add</i> Ajouter un livre</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "location_id", value: @location.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% elsif @from == "book" %>
+  <% content_for :meta_title, "Admin — Lier des lieux à " + @book.title %>
+  <%= link_to admin_book_path(@book), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des lieux à <%= @book.title %></h1>
+  <%= simple_form_for [:admin, @book_location] do |d| %>
+    <div class="book-location">
+      <%= d.input :from, as: :hidden, input_html: { value: @from } %>
+      <%= d.input :location_id,
+                    label: "Lieu",
+                    collection: Location.order(:name), 
+                    prompt: "Liste des Lieux",
+                    label_method: :name, 
+                    input_html: { name: 'book_location[0][location_id]' },
+                    value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-book-location block hidden mr10">Enlever le dernier lieu</button>
+      <button class="btn btn-mini add-book-location block"><i class="material-icons">add</i> Ajouter un lieu</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "book_id", value: @book.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% end %>
+
+<script>
+  // Add Book Location
+  var i = $('.book-location').length;
+
+  $('.add-book-location').click(function(location){
+    location.preventDefault();
+    var bookLocation      = $('.book-location').length;
+    var lastBookLocation  = $('.book-location').last();
+    var removeButton      = $('.remove-book-location').last();
+    removeButton.removeClass('hidden');
+
+    var newBookLocation = lastBookLocation.clone();
+    var select          = newBookLocation.find('select');
+    if (select.attr('id') == "book_location_location_id") {
+      select.attr('name', 'book_location['+i+'][location_id]');
+    } else {
+      select.attr('name', 'book_location['+i+'][book_id]');
+    }
+    select.removeAttr('id');
+    lastBookLocation.after(newBookLocation);
+    i++;
+  });
+
+  // Remove Book Location
+  $('.remove-book-location').click(function(event){
+    event.preventDefault();
+
+    var removeButton      = $('.remove-book-location').last();
+    var bookLocation      = $('.book-location').length;
+    var lastBookLocation  = $('.book-location').last();
+
+    if (bookLocation == 2) {
+      removeButton.addClass('hidden');
+      lastBookLocation.remove();
+    } else {
+      lastBookLocation.remove();
+    }
+  });
+</script>
