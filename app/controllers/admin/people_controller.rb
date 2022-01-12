@@ -25,6 +25,7 @@ class Admin::PeopleController < ApplicationController
     @document_people  = @person.document_people
     @event_people     = @person.event_people
     @location_people  = @person.location_people
+    @book_people      = @person.book_people
     @a_links          = @person.a_links
     @b_links          = @person.b_links
     @links            = @a_links + @b_links

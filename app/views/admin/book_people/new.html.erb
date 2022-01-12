@@ -1,0 +1,97 @@
+<% content_for :navbar do %>
+  <%= render "pages/admin_navbar" %>
+<% end %>
+<% @from = params[:from] %>
+<% if @from == "person" %>
+  <% content_for :meta_title, "Admin — Lier des livres à " + @person.name %>
+  <%= link_to admin_person_path(@person), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des livres à <%= @person.name %></h1>
+  <%= simple_form_for [:admin, @book_person] do |d| %>
+    <div class="book-person">
+      <%= d.input :from, as: :hidden, input_html: { value: @from } %>
+      <%= d.input :book_id,
+                    label: "Livre",
+                    collection: Book.order(:title), 
+                    prompt: "Liste des livres",
+                    label_method: :title_and_author, 
+                    input_html: { name: 'book_person[0][book_id]' },
+                    value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-book-person block hidden mr10">Enlever le dernier livre</button>
+      <button class="btn btn-mini add-book-person block"><i class="material-icons">add</i> Ajouter un livre</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "person_id", value: @person.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% elsif @from == "book" %>
+  <% content_for :meta_title, "Admin — Lier des personnes à " + @book.title %>
+  <%= link_to admin_book_path(@book), class: "back_link" do %>
+    <i class="material-icons">arrow_back_ios</i>
+    <span>Annuler</span>
+  <% end %>
+  <h1>Lier des personnes à <%= @book.title %></h1>
+  <%= simple_form_for [:admin, @book_person] do |d| %>
+    <div class="book-person">
+      <%= d.input :from, as: :hidden, input_html: { value: @from } %>
+      <%= d.input :person_id,
+                    label: "Personne",
+                    collection: Person.order(:last_name), 
+                    prompt: "Liste des Personnes",
+                    label_method: :full_name_index, 
+                    input_html: { name: 'book_person[0][person_id]' },
+                    value_method: :id %>
+    </div>
+    <div class="flex flex-row">
+      <button class="btn btn-red btn-mini remove-book-person block hidden mr10">Enlever la dernière personne</button>
+      <button class="btn btn-mini add-book-person block"><i class="material-icons">add</i> Ajouter une personne</button>
+    </div>
+    <%= button_tag type: "submit", class: "btn", name: "book_id", value: @book.id do %>
+      Valider
+    <% end %>
+  <% end %>
+<% end %>
+
+<script>
+  // Add Book Person
+  var i = $('.book-person').length;
+
+  $('.add-book-person').click(function(location){
+    location.preventDefault();
+    var bookPerson      = $('.book-person').length;
+    var lastBookPerson  = $('.book-person').last();
+    var removeButton    = $('.remove-book-person').last();
+    removeButton.removeClass('hidden');
+
+    var newBookPerson = lastBookPerson.clone();
+    var select        = newBookPerson.find('select');
+    if (select.attr('id') == "book_person_person_id") {
+      select.attr('name', 'book_person['+i+'][person_id]');
+    } else {
+      select.attr('name', 'book_person['+i+'][book_id]');
+    }
+    // select.removeAttr('id');
+    lastBookPerson.after(newBookPerson);
+    i++;
+  });
+
+  // Remove Book Person
+  $('.remove-book-person').click(function(event){
+    event.preventDefault();
+
+    var removeButton    = $('.remove-book-person').last();
+    var bookPerson      = $('.book-person').length;
+    var lastBookPerson  = $('.book-person').last();
+
+    if (bookPerson == 2) {
+      removeButton.addClass('hidden');
+      lastBookPerson.remove();
+    } else {
+      lastBookPerson.remove();
+    }
+  });
+</script>

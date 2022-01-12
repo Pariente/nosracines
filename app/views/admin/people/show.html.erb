@@ -127,7 +127,8 @@
       <p><%= @person.notes %></p>
     </div>
   <% end %>
-
+  
+  <!-- FAMILY LINKS -->
   <div class="show-section">
     <h3>Liens de parenté</h3>
     <% unless @links == [] %>
@@ -185,6 +186,7 @@
     <% end %>
   </div>
 
+  <!-- DOCUMENTS -->
   <div class="show-section">
     <h3><i class="material-icons">text_snippet</i>Documents liés</h3>
     <% unless @document_people == [] %>
@@ -238,6 +240,7 @@
     <% end %>
   </div>
 
+  <!-- EVENTS -->
   <div class="show-section">
     <h3><i class="material-icons">event</i>Évènements liés</h3>
     <% unless @event_people == [] %>
@@ -283,6 +286,7 @@
     <% end %>
   </div>
 
+  <!-- LOCATIONS -->
   <div class="show-section">
     <h3><i class="material-icons">place</i>Lieux liés</h3>
     <% unless @location_people == [] %>
@@ -327,6 +331,52 @@
     <% end %>
     <%= link_to new_admin_location_person_path(from: "person", person_id: @person.id), class: "btn btn-mini" do %>
       <i class="material-icons">add_location</i> Lier un lieu à la personne
+    <% end %>
+  </div>
+
+  <!-- BOOKS -->
+  <div class="show-section">
+    <h3><i class="material-icons">book</i>Livres liés</h3>
+    <% unless @book_people == [] %>
+      <div class="admin_table_container">
+        <table class="admin_table">
+          <tr>
+            <th class="center">ID</th>
+            <th class="pic_cell">Aperçu</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Publication</th>
+            <th>Actions</th>
+          </tr>
+          <% @book_people.each do |bp| %>
+            <% book = bp.book %>
+            <tr>
+              <td class="center">
+                <%= book.id %>
+              </td>
+              <td class="pic_cell">
+                <% pic = book.cover.present? ? book.cover : "default_book_pic" %>
+                <%= cl_image_tag pic, width: "160", height: "160", crop: "fill", gravity: "face", class: "img-100" %>
+              </td>
+              <td>
+                <%= link_to admin_book_path(book.id) do %>
+                  <%= book.title %>
+                <% end %>
+              </td>
+              <td><%= book.author %></td>
+              <td><%= book.publisher %></td>
+              <td>
+                <%= link_to admin_book_person_delete_path(bp, redirection: "person") do %>
+                  Supprimer le lien
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+    <%= link_to new_admin_book_person_path(from: "person", person_id: @person.id), class: "btn btn-mini" do %>
+      <i class="material-icons">bookmark_add</i> Lier un livre à la personne
     <% end %>
   </div>
 </div>
