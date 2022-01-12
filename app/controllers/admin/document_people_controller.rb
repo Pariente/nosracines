@@ -18,17 +18,25 @@ class Admin::DocumentPeopleController < ApplicationController
     when "document"
       @document = Document.find(params[:document_id])
       dp.each do |q|
-        @document.document_people.create(
-          document_id:  @document.id,
-          person_id:    q[1]["person_id"])
+        unless DocumentPerson.exists?(
+            document_id:  @document.id,
+            person_id:    q[1]["person_id"])
+          @document.document_people.create(
+            document_id:  @document.id,
+            person_id:    q[1]["person_id"])
+        end
       end
       redirect_to admin_document_path(@document)
     when "person"
       @person = Person.find(params[:person_id])
       dp.each do |q|
-        @person.document_people.create(
-          document_id:  q[1]["document_id"],
-          person_id:    @person.id)
+        unless DocumentPerson.exists?(
+            document_id:  q[1]["document_id"],
+            person_id:    @person.id)
+          @person.document_people.create(
+            document_id:  q[1]["document_id"],
+            person_id:    @person.id)
+        end
       end
       redirect_to admin_person_path(@person)
     end

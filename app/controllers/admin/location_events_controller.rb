@@ -18,17 +18,25 @@ class Admin::LocationEventsController < ApplicationController
     when "location"
       @location = Location.find(params[:location_id])
       le.each do |q|
-        @location.location_events.create(
-          location_id:  @location.id,
-          event_id:     q[1]["event_id"])
+        unless LocationEvent.exists?(
+            location_id:  @location.id,
+            event_id:     q[1]["event_id"])
+          @location.location_events.create(
+            location_id:  @location.id,
+            event_id:     q[1]["event_id"])
+        end
       end
       redirect_to admin_location_path(@location)
     when "event"
       @event = Event.find(params[:event_id])
       le.each do |q|
-        @event.location_events.create(
-          location_id:  q[1]["location_id"],
-          event_id:     @event.id)
+        unless LocationEvent.exists?(
+            location_id:  q[1]["location_id"],
+            event_id:     @event.id)
+          @event.location_events.create(
+            location_id:  q[1]["location_id"],
+            event_id:     @event.id)
+        end
       end
       redirect_to admin_event_path(@event)
     end

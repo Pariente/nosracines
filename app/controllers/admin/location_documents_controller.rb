@@ -18,17 +18,25 @@ class Admin::LocationDocumentsController < ApplicationController
     when "location"
       @location = Location.find(params[:location_id])
       ld.each do |q|
-        @location.location_documents.create(
-          location_id: @location.id,
-          document_id: q[1]["document_id"])
+        unless LocationDocument.exists?(
+            location_id: @location.id,
+            document_id: q[1]["document_id"])
+          @location.location_documents.create(
+            location_id: @location.id,
+            document_id: q[1]["document_id"])
+        end
       end
       redirect_to admin_location_path(@location)
     when "document"
       @document = Document.find(params[:document_id])
       ld.each do |q|
-        @document.location_documents.create(
-          location_id: q[1]["location_id"],
-          document_id: @document.id)
+        unless LocationDocument.exists?(
+            location_id: q[1]["location_id"],
+            document_id: @document.id)
+          @document.location_documents.create(
+            location_id: q[1]["location_id"],
+            document_id: @document.id)
+        end
       end
       redirect_to admin_document_path(@document)
     end

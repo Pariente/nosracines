@@ -68,14 +68,14 @@
     var removeButton      = $('.remove-location-person').last();
     removeButton.removeClass('hidden');
 
-    var newLocationPerson  = lastLocationPerson.clone();
+    var newLocationPerson = lastLocationPerson.clone();
     var select            = newLocationPerson.find('select');
     if (select.attr('id') == "location_person_person_id") {
       select.attr('name', 'location_person['+i+'][person_id]');
     } else {
       select.attr('name', 'location_person['+i+'][location_id]');
     }
-    select.removeAttr('id');
+    // select.removeAttr('id');
     lastLocationPerson.after(newLocationPerson);
     i++;
   });

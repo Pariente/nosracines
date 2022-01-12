@@ -18,17 +18,25 @@ class Admin::LocationPeopleController < ApplicationController
     when "location"
       @location = Location.find(params[:location_id])
       lp.each do |q|
-        @location.location_people.create(
-          location_id:  @location.id,
-          person_id:    q[1]["person_id"])
+        unless LocationPerson.exists?(
+            location_id:  @location.id,
+            person_id:    q[1]["person_id"])
+          @location.location_people.create(
+            location_id:  @location.id,
+            person_id:    q[1]["person_id"])
+        end
       end
       redirect_to admin_location_path(@location)
     when "person"
       @person = Person.find(params[:person_id])
       lp.each do |q|
-        @person.location_people.create(
-          location_id:  q[1]["location_id"],
-          person_id:    @person.id)
+        unless LocationPerson.exists?(
+            location_id:  q[1]["location_id"],
+            person_id:    @person.id)
+          @person.location_people.create(
+            location_id:  q[1]["location_id"],
+            person_id:    @person.id)
+        end
       end
       redirect_to admin_person_path(@person)
     end

@@ -17,17 +17,25 @@ class Admin::EventDocumentsController < ApplicationController
     when "document"
       @document = Document.find(params[:document_id])
       ed.each do |q|
-        @document.event_documents.create(
-          document_id:  @document.id,
-          event_id:     q[1]["event_id"])
+        unless EventDocument.exists?(
+            document_id:  @document.id,
+            event_id:     q[1]["event_id"])
+          @document.event_documents.create(
+            document_id:  @document.id,
+            event_id:     q[1]["event_id"])
+        end
       end
       redirect_to admin_document_path(@document)
     when "event"
       @event  = Event.find(params[:event_id])
       ed.each do |q|
-        @event.event_documents.create(
-          document_id:  q[1]["document_id"],
-          event_id:     @event.id)
+        unless EventDocument.exists?(
+            document_id:  q[1]["document_id"],
+            event_id:     @event.id)
+          @event.event_documents.create(
+            document_id:  q[1]["document_id"],
+            event_id:     @event.id)
+        end
       end
       redirect_to admin_event_path(@event)
     end

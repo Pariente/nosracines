@@ -17,17 +17,25 @@ class Admin::EventPeopleController < ApplicationController
     when "person"
       @person = Person.find(params[:person_id])
       ep.each do |q|
-        @person.event_people.create(
-          person_id:  @person.id,
-          event_id:   q[1]["event_id"])
+        unless EventPerson.exists?(
+            person_id:  @person.id,
+            event_id:   q[1]["event_id"])
+          @person.event_people.create(
+            person_id:  @person.id,
+            event_id:   q[1]["event_id"])
+        end
       end
       redirect_to admin_person_path(@person)
     when "event"
       @event  = Event.find(params[:event_id])
       ep.each do |q|
-        @event.event_people.create(
-          person_id:  q[1]["person_id"],
-          event_id:   @event.id)
+        unless EventPerson.exists?(
+            person_id:  q[1]["person_id"],
+            event_id:   @event.id)
+          @event.event_people.create(
+            person_id:  q[1]["person_id"],
+            event_id:   @event.id)
+        end
       end
       redirect_to admin_event_path(@event)
     end

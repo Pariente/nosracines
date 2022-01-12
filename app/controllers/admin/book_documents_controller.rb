@@ -18,17 +18,25 @@ class Admin::BookDocumentsController < ApplicationController
     when "document"
       @document = Document.find(params[:document_id])
       bd.each do |q|
-        @document.book_documents.create(
-          document_id:  @document.id,
-          book_id:      q[1]["book_id"])
+        unless BookDocument.exists?(
+            document_id:  @document.id,
+            book_id:      q[1]["book_id"])
+          @document.book_documents.create(
+            document_id:  @document.id,
+            book_id:      q[1]["book_id"])
+        end
       end
       redirect_to admin_document_path(@document)
     when "book"
       @book = Book.find(params[:book_id])
       bd.each do |q|
-        @book.book_documents.create(
-          document_id:  q[1]["document_id"],
-          book_id:      @book.id)
+        unless BookDocument.exists?(
+            document_id:  q[1]["document_id"],
+            book_id:      @book.id)
+          @book.book_documents.create(
+            document_id:  q[1]["document_id"],
+            book_id:      @book.id)
+        end
       end
       redirect_to admin_book_path(@book)
     end

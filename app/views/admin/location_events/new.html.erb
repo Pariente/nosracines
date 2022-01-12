@@ -75,7 +75,7 @@
     } else {
       select.attr('name', 'location_event['+i+'][location_id]');
     }
-    select.removeAttr('id');
+    // select.removeAttr('id');
     lastLocationEvent.after(newLocationEvent);
     i++;
   });
@@ -84,7 +84,7 @@
   $('.remove-location-event').click(function(event){
     event.preventDefault();
 
-    var removeButton       = $('.remove-location-event').last();
+    var removeButton      = $('.remove-location-event').last();
     var locationEvent     = $('.location-event').length;
     var lastLocationEvent = $('.location-event').last();
 

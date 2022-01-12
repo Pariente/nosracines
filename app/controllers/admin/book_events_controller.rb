@@ -18,17 +18,25 @@ class Admin::BookEventsController < ApplicationController
     when "event"
       @event = Event.find(params[:event_id])
       be.each do |q|
-        @event.book_events.create(
-          event_id: @event.id,
-          book_id:  q[1]["book_id"])
+        unless BookEvent.exists?(
+            event_id: @event.id,
+            book_id:  q[1]["book_id"])
+          @event.book_events.create(
+            event_id: @event.id,
+            book_id:  q[1]["book_id"])
+        end
       end
       redirect_to admin_event_path(@event)
     when "book"
       @book = Book.find(params[:book_id])
       be.each do |q|
-        @book.book_events.create(
-          event_id: q[1]["event_id"],
-          book_id:  @book.id)
+        unless BookEvent.exists?(
+            event_id: q[1]["event_id"],
+            book_id:  @book.id)
+          @book.book_events.create(
+            event_id: q[1]["event_id"],
+            book_id:  @book.id)
+        end
       end
       redirect_to admin_book_path(@book)
     end
