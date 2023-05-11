@@ -20,6 +20,8 @@ gem 'jbuilder', '~> 2.7'
 # Devise for Users
 gem 'devise'
 
+gem 'psych'
+
 # Cloudinary
 gem 'carrierwave'
 gem 'cloudinary'
