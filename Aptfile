@@ -1,0 +1,10 @@
+Package libssl1.0-dev is not available, but is referred to by another package.
+remote:        This may mean that the package is missing, has been obsoleted, or
+remote:        is only available from another source
+remote:        
+remote: E: Package 'libssl1.0-dev' has no installation candidate
+remote:  !     Push rejected, failed to compile Apt app.
+remote: 
+remote:  !     Push failed
+remote: Verifying deploy...
+remote: 
