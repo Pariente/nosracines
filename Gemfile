@@ -19,7 +19,7 @@ gem 'jbuilder'
 gem 'devise'
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~>3.0'
+gem 'webpacker'
 gem 'psych', '< 4'
 
 # Cloudinary
