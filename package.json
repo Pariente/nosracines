@@ -5,7 +5,7 @@
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "4.3.0",
+    "@rails/webpacker": "^5.4.4",
     "jquery": "^3.6.0",
     "jquery-datepicker": "^1.12.3",
     "jquery-ui": "^1.12.1",
@@ -13,9 +13,9 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^4.15.0"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   }
 }
