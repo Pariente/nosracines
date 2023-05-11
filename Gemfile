@@ -22,6 +22,8 @@ gem 'devise'
 gem 'webpacker'
 gem 'psych', '< 4'
 
+gem 'openssl'
+
 # Cloudinary
 gem 'carrierwave'
 gem 'cloudinary'
