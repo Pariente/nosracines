@@ -16,7 +16,7 @@
     "webpack-dev-server": "^4.15.0"
   },
   "engines": {
-    "node": "20.x"
+    "node": "16.x"
   },
   "scripts": {
     "start": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
